@@ -1,1 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEW FOUND BULL — $NFB · Pump.fun Launch on Solana</title>
+<meta name="description" content="$NFB — New Found Bull. Fair launch on pump.fun. 0/0 tax. LP burned. Mint revoked. The bull was never gone.">
+<link rel="icon" type="image/png" href="bull3.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;700;800;900&display=swap">
+<style>
+:root {
+  --bg: #000000;
+  --deep-black: #0a0a0a;
+  --card: #141414;
+  --text: #ffffff;
+  --text-soft: rgba(255,255,255,0.6);
+  --text-mute: rgba(255,255,255,0.3);
+  --line: rgba(255,255,255,0.12);
+  --line-bright: rgba(255,255,255,0.22);
+  --highlight: #c8aa82;
+  --ease-quiet: cubic-bezier(.22, 1, .36, 1);
+  --ease-precise: cubic-bezier(.4, 0, .2, 1);
+  --ease-emphasis: cubic-bezier(.16, 1, .3, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+@media (pointer: coarse) { body { cursor: auto; } }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: none; background: none; border: none; color: inherit; }
+@media (pointer: coarse) { button { cursor: pointer; } }
+::selection { background: var(--highlight); color: var(--bg); }
 
+/* Background Image Layer */
+.bg-image {
+  position: fixed;
+  inset: 0;
+  background-image: url('background%20bull.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -2;
+}
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  z-index: -1;
+}
+
+/* particle canvas */
+#particle-canvas {
+  position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: 0; pointer-events: none;
+}
+
+/* custom cursor */
+#custom-cursor {
+  position: fixed; top: 0; left: 0;
+  width: 12px; height: 12px;
+  border-radius: 50%; background: var(--text);
+  mix-blend-mode: difference;
+  pointer-events: none; z-index: 9999;
+  will-change: transform, width, height;
+  transition: width .3s var(--ease-quiet), height .3s var(--ease-quiet), opacity .3s var(--ease-quiet);
+}
+@media (pointer: coarse) { #custom-cursor { display: none; } }
+
+/* nav */
+.nav {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+  padding: 1.25rem 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--line);
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.nav-brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.nav-brand .dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--highlight);
+  border-radius: 50%;
+  animation: pulse-dot 2.4s var(--ease-quiet) infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.nav-brand span { color: var(--highlight); }
+.nav-links {
+  display: flex; gap: 2.25rem; align-items: center;
+}
+.nav-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  transition: color 300ms var(--ease-quiet);
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute;
+  left: 0; bottom: -4px;
+  width: 0; height: 1px;
+  background: var(--highlight);
+  transition: width 400ms var(--ease-quiet);
+}
+.nav-links a:hover { color: var(--highlight); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  padding: 0.65rem 1.1rem;
+  border: 1px solid var(--highlight);
+  color: var(--highlight);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 300ms var(--ease-quiet);
+}
+.nav-cta:hover { background: var(--highlight); color: var(--bg); }
+@media (max-width: 768px) {
+  .nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+}
+
+/* hero */
+.hero {
+  position: relative;
+  width: 100vw; height: 100vh;
+  min-height: 720px;
+  overflow: hidden;
+  perspective: 1200px;
+  z-index: 2;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+}
+.grid-cell {
+  position: absolute;
+  background-size: cover;
+  background-repeat: no-repeat;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  border: 0.5px solid rgba(0,0,0,0.6);
+}
+.grid-cell.is-amber { background: var(--highlight); }
+.grid-cell.is-black { background: var(--deep-black); }
+.grid-cell.is-text {
+  background: var(--deep-black);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--highlight);
+  letter-spacing: 0.1em;
+}
+.grid-cell.is-image {
+  filter: grayscale(0.6) contrast(1.05) brightness(0.45);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 70%;
+  background: linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.6) 45%, transparent 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 2rem 2rem 3.5rem;
+  z-index: 5;
+  pointer-events: none;
+}
+.hero-overlay > * { pointer-events: auto; }
+
+.hero-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--highlight);
+  margin-bottom: 1.75rem;
+  display: flex; align-items: center; gap: 0.85rem;
+}
+.hero-label::before {
+  content: ''; width: 32px; height: 1px; background: var(--highlight);
+}
+
+.hero-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(2.6rem, 10vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  margin-bottom: 2rem;
+  color: var(--text);
+}
+.hero-title .accent { color: var(--highlight); }
+.hero-title .ticker {
+  display: inline-block;
+  font-size: 0.35em;
+  vertical-align: super;
+  color: var(--text-mute);
+  margin-left: 0.4em;
+  letter-spacing: 0.02em;
+}
+
+.hero-sub {
+  max-width: 580px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-soft);
+  margin-bottom: 2.5rem;
+}
+.hero-sub strong { color: var(--text); font-weight: 700; }
+.hero-sub .amber { color: var(--highlight); font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  padding: 1.05rem 1.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid var(--line-bright);
+  background: transparent;
+  color: var(--text);
+  transition: all 300ms var(--ease-quiet);
+  text-decoration: none;
+}
+.btn:hover { border-color: var(--highlight); color: var(--highlight); }
+.btn-primary {
+  background: var(--highlight);
+  border-color: var(--highlight);
+  color: var(--bg);
+  font-weight: 700;
+}
+.btn-primary:hover {
+  background: var(--text); border-color: var(--text); color: var(--bg);
+}
+.btn .arrow {
+  font-family: 'JetBrains Mono', monospace;
+  transition: transform 300ms var(--ease-quiet);
+}
+.btn:hover .arrow { transform: translate(2px, -2px); }
+
+/* marquee */
+.marquee {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  padding: 1.4rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+}
+.marquee-track {
+  display: inline-block;
+  animation: marquee-scroll 38s linear infinite;
+  will-change: transform;
+}
+.marquee-track span {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  margin-right: 3rem;
+  color: var(--text);
+  display: inline-block;
+}
+.marquee-track span.dim { color: var(--text-mute); font-weight: 400; }
+.marquee-track span.amber { color: var(--highlight); }
+.marquee-track span.bull { font-size: 1.6rem; }
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* section base */
+section { position: relative; z-index: 2; }
+.section-pad { padding: 8rem 2rem; }
+.container { max-width: 1400px; margin: 0 auto; }
+.container-narrow { max-width: 860px; margin: 0 auto; }
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--highlight);
+  margin-bottom: 2rem;
+  display: flex; align-items: center; gap: 0.85rem;
+}
+.section-label::before {
+  content: ''; width: 32px; height: 1px; background: var(--highlight);
+}
+
+.section-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.3rem, 5.5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  margin-bottom: 4rem;
+}
+.section-title .amber { color: var(--highlight); }
+.section-title em {
+  font-style: normal;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 0.85em;
+  letter-spacing: -0.02em;
+}
+
+/* fade up */
+.fade-up {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 1000ms var(--ease-quiet), transform 1000ms var(--ease-quiet);
+  will-change: transform, opacity;
+}
+.fade-up.is-in { opacity: 1; transform: none; }
+
+/* about / sticky two-col */
+.sticky-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: start;
+}
+.sticky-pair .left {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 0;
+}
+.sticky-pair .right {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  padding: 4rem 0;
+}
+
+.about-block p {
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--text-soft);
+  margin-bottom: 1.5rem;
+}
+.about-block p strong { color: var(--text); font-weight: 700; }
+.about-block p .amber {
+  color: var(--highlight);
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+.about-block h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  line-height: 1.15;
+}
+.about-image {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(0.4) contrast(1.05) brightness(0.85);
+  position: relative;
+  overflow: hidden;
+}
+.about-image::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 50%, rgba(200,170,130,0.15) 100%);
+  pointer-events: none;
+}
+.about-image-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-top: 0.85rem;
+  display: flex; justify-content: space-between;
+}
+
+@media (max-width: 900px) {
+  .sticky-pair { grid-template-columns: 1fr; gap: 3rem; }
+  .sticky-pair .left {
+    position: static; height: auto; padding: 2rem 0;
+  }
+  .sticky-pair .right { gap: 3rem; padding: 1rem 0 2rem; }
+}
+
+/* tokenomics */
+.token-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  margin-bottom: 6rem;
+}
+.stat-cell {
+  padding: 2.5rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(0,0,0,0.6);
+  transition: background 400ms var(--ease-quiet);
+  position: relative;
+  overflow: hidden;
+}
+.stat-cell::before {
+  content: ''; position: absolute;
+  left: 0; top: 0;
+  width: 2px; height: 0;
+  background: var(--highlight);
+  transition: height 600ms var(--ease-quiet);
+}
+.stat-cell:hover::before { height: 100%; }
+.stat-cell:hover { background: rgba(200,170,130,0.06); }
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-bottom: 1rem;
+}
+.stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.75rem, 3.8vw, 2.6rem);
+  line-height: 1;
+  color: var(--highlight);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+.stat-note {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+@media (max-width: 768px) {
+  .token-stats { grid-template-columns: 1fr; }
+}
+
+.dist-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  margin-bottom: 3rem;
+}
+
+.distribution-row {
+  display: grid;
+  grid-template-columns: 220px 1fr 80px;
+  gap: 2rem;
+  align-items: center;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.distribution-row::before {
+  content: ''; position: absolute;
+  left: -2rem; top: 0;
+  width: 2px; height: 0;
+  background: var(--highlight);
+  transition: height 600ms var(--ease-quiet);
+}
+.distribution-row:hover::before { height: 100%; }
+.distribution-row:first-child { border-top: 1px solid var(--line); }
+.dist-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.dist-bar {
+  height: 4px;
+  background: var(--card);
+  position: relative;
+  overflow: hidden;
+}
+.dist-bar-fill {
+  position: absolute; left: 0; top: 0; height: 100%;
+  background: var(--highlight);
+  width: 0;
+  transition: width 1400ms var(--ease-emphasis);
+}
+.dist-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--highlight);
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .distribution-row { grid-template-columns: 1fr 60px; gap: 1rem; }
+  .dist-name { grid-column: 1 / -1; }
+  .dist-bar { grid-column: 1; }
+  .dist-pct { grid-column: 2; }
+}
+
+/* how to buy steps */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.step-card {
+  border: 1px solid var(--line);
+  padding: 2.5rem;
+  background: rgba(0,0,0,0.6);
+  transition: all 400ms var(--ease-quiet);
+  position: relative;
+  overflow: hidden;
+}
+.step-card::before {
+  content: ''; position: absolute;
+  left: 0; top: 0;
+  width: 0; height: 2px;
+  background: var(--highlight);
+  transition: width 500ms var(--ease-quiet);
+}
+.step-card:hover {
+  border-color: var(--line-bright);
+  transform: translateY(-4px);
+}
+.step-card:hover::before { width: 100%; }
+.step-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--highlight);
+  margin-bottom: 2rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.step-num::after {
+  content: ''; flex: 1; height: 1px;
+  background: var(--line);
+}
+.step-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+.step-body {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-soft);
+}
+.step-body strong { color: var(--text); font-weight: 700; }
+.step-body code {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--highlight);
+  font-size: 13px;
+  background: rgba(200,170,130,0.08);
+  padding: 0.1rem 0.4rem;
+}
+@media (max-width: 900px) {
+  .steps-grid { grid-template-columns: 1fr; }
+}
+
+/* roadmap */
+.roadmap-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.phase {
+  padding: 3rem 2rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  transition: background 400ms var(--ease-quiet);
+  background: rgba(0,0,0,0.5);
+}
+.phase:hover { background: rgba(200,170,130,0.05); }
+.phase::before {
+  content: ''; position: absolute;
+  left: 0; top: 0;
+  width: 2px; height: 0;
+  background: var(--highlight);
+  transition: height 500ms var(--ease-quiet);
+}
+.phase:hover::before { height: 100%; }
+.phase-marker {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--highlight);
+  margin-bottom: 1rem;
+}
+.phase-status {
+  display: inline-block;
+  padding: 0.3rem 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  margin-bottom: 1.5rem;
+  color: var(--text-soft);
+}
+.phase-status.live {
+  border-color: var(--highlight);
+  color: var(--highlight);
+  background: rgba(200,170,130,0.06);
+}
+.phase-status.live::before {
+  content: '●';
+  margin-right: 0.4rem;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+.phase-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+.phase-list {
+  list-style: none;
+}
+.phase-list li {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-soft);
+  padding-left: 1.2rem;
+  position: relative;
+  margin-bottom: 0.4rem;
+}
+.phase-list li::before {
+  content: '—';
+  position: absolute; left: 0; top: 0;
+  color: var(--highlight);
+}
+@media (max-width: 900px) {
+  .roadmap-track { grid-template-columns: 1fr; }
+}
+
+/* FAQ */
+.faq-list {
+  border-top: 1px solid var(--line);
+}
+.faq-item {
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  background: rgba(0,0,0,0.4);
+}
+.faq-item::before {
+  content: ''; position: absolute; left: 0; top: 0;
+  width: 2px; height: 0; background: var(--highlight);
+  transition: height 600ms var(--ease-quiet);
+}
+.faq-item.is-open::before { height: 100%; }
+.faq-item:hover::before { height: 30%; }
+.faq-item.is-open:hover::before { height: 100%; }
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+  padding: 2rem 2rem 2rem 2.5rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  letter-spacing: -0.01em;
+  transition: color 400ms var(--ease-quiet);
+  width: 100%;
+  text-align: left;
+  color: var(--text);
+}
+.faq-item.is-open .faq-q { color: var(--highlight); }
+.faq-icon {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--highlight);
+  transition: transform 400ms var(--ease-quiet);
+  flex-shrink: 0;
+}
+.faq-item.is-open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height 500ms var(--ease-quiet);
+  padding-left: 2.5rem; padding-right: 2rem;
+}
+.faq-item.is-open .faq-a { max-height: 500px; padding-bottom: 2rem; }
+.faq-a p {
+  font-size: 15px; line-height: 1.7; color: var(--text-soft);
+}
+.faq-a p code {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(200,170,130,0.08);
+  padding: 0.15rem 0.45rem;
+  font-size: 13px;
+  color: var(--highlight);
+}
+
+/* CTA section */
+.cta-section {
+  padding: 10rem 2rem;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  position: relative;
+  z-index: 2;
+}
+.cta-section .section-label {
+  justify-content: center;
+  display: inline-flex;
+  margin-bottom: 1.5rem;
+}
+.cta-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(2.3rem, 6.5vw, 5.5rem);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  margin-bottom: 1.5rem;
+}
+.cta-title .amber { color: var(--highlight); }
+.cta-sub {
+  max-width: 560px;
+  margin: 0 auto 3rem;
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1.65;
+}
+.ca-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1rem 1rem 1.5rem;
+  border: 1px solid var(--line-bright);
+  background: var(--card);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 2.5rem;
+  max-width: 100%;
+  overflow: hidden;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.ca-box .ca-label {
+  color: var(--text-mute);
+  letter-spacing: 0.18em;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.ca-box .ca-value {
+  color: var(--highlight);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  word-break: break-all;
+}
+.copy-btn {
+  background: transparent;
+  border: 1px solid var(--highlight);
+  color: var(--highlight);
+  padding: 0.55rem 0.9rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: all 300ms var(--ease-quiet);
+  font-weight: 700;
+}
+.copy-btn:hover { background: var(--highlight); color: var(--bg); }
+.copy-btn.copied { background: var(--highlight); color: var(--bg); }
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 4rem;
+}
+
+.social-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.social-link {
+  width: 56px; height: 56px;
+  border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  transition: all 300ms var(--ease-quiet);
+  position: relative;
+  overflow: hidden;
+  background: rgba(0,0,0,0.5);
+}
+.social-link::before {
+  content: ''; position: absolute; left: 0; top: 0;
+  width: 2px; height: 0; background: var(--highlight);
+  transition: height 400ms var(--ease-quiet);
+}
+.social-link:hover {
+  border-color: var(--highlight);
+  color: var(--highlight);
+}
+.social-link:hover::before { height: 100%; }
+.social-link span {
+  position: relative; z-index: 2;
+}
+
+/* footer */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 3.5rem 2rem 2.5rem;
+  position: relative; z-index: 2;
+  background: rgba(0,0,0,0.7);
+}
+.footer-inner {
+  max-width: 1400px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  flex-wrap: wrap; gap: 3rem;
+}
+.footer-brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+.footer-brand span { color: var(--highlight); }
+.footer-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.footer-disclaimer {
+  font-size: 12px;
+  color: var(--text-mute);
+  max-width: 460px;
+  line-height: 1.65;
+}
+.footer-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  line-height: 2;
+  text-align: right;
+}
+.footer-meta .amber { color: var(--highlight); font-weight: 700; }
+@media (max-width: 768px) {
+  .footer-meta { text-align: left; }
+}
+
+@media (max-width: 768px) {
+  .section-pad { padding: 5rem 1.5rem; }
+  .nav { padding: 1rem 1.25rem; }
+  .hero-overlay { padding: 1.5rem 1.5rem 2.5rem; }
+  .cta-section { padding: 6rem 1.5rem; }
+  .footer-inner { flex-direction: column; }
+  .stat-cell { padding: 1.75rem; }
+  .step-card { padding: 2rem; }
+  .phase { padding: 2.5rem 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-track { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-image"></div>
+<div class="bg-overlay"></div>
+<canvas id="particle-canvas"></canvas>
+<div id="custom-cursor"></div>
+
+<nav class="nav">
+  <a href="#hero" class="nav-brand">
+    <span class="dot"></span>
+    NEW FOUND BULL <span>· $NFB</span>
+  </a>
+  <div class="nav-links">
+    <a href="#about">Manifesto</a>
+    <a href="#tokenomics">Tokenomics</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="https://pump.fun/" target="_blank" rel="noopener" class="nav-cta">Buy on pump.fun ↗</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-grid" id="hero-grid"></div>
+  <div class="hero-overlay">
+    <div class="hero-label fade-up">SOLANA · PUMP.FUN · FAIR LAUNCH</div>
+    <h1 class="hero-title fade-up">NEW FOUND<br><span class="accent">BULL</span><span class="ticker">$NFB</span></h1>
+    <p class="hero-sub fade-up">The bull was lost. The bear market was long. Now the horns are sharpened and the herd is forming again. <strong>$NFB</strong> is the mascot of the next run — <span class="amber">launched fair on pump.fun</span>, no presale, no team tokens dumped, just a found bull running.</p>
+    <div class="hero-actions fade-up">
+      <a href="https://pump.fun/" target="_blank" rel="noopener" class="btn btn-primary">Buy on pump.fun <span class="arrow">↗</span></a>
+      <button class="btn" id="hero-copy-ca">Copy contract <span class="arrow">⎘</span></button>
+      <a href="#about" class="btn">Read the manifesto <span class="arrow">↓</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="amber bull">$NFB</span>
+    <span class="dim">NEW FOUND BULL</span>
+    <span>0/0 TAX</span>
+    <span class="dim">LP BURNED</span>
+    <span class="amber">MINT REVOKED</span>
+    <span class="dim">FAIR LAUNCH</span>
+    <span>SOLANA</span>
+    <span class="dim">PUMP.FUN</span>
+    <span class="amber bull">$NFB</span>
+    <span class="dim">NEW FOUND BULL</span>
+    <span>0/0 TAX</span>
+    <span class="dim">LP BURNED</span>
+    <span class="amber">MINT REVOKED</span>
+    <span class="dim">FAIR LAUNCH</span>
+    <span>SOLANA</span>
+    <span class="dim">PUMP.FUN</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section-pad" id="about">
+  <div class="container">
+    <div class="sticky-pair">
+      <div class="left">
+        <div class="section-label fade-up">001 / MANIFESTO</div>
+        <h2 class="section-title fade-up">The bull was<br>never gone.<br>It was <em class="amber">waiting.</em></h2>
+        <p class="fade-up" style="color: var(--text-soft); font-size: 16.5px; line-height: 1.7; max-width: 460px; margin-bottom: 1.5rem;">
+          Every cycle the herd panics. They say the bull is dead. They sell, they leave, they swear off crypto forever. And every cycle, the bull returns — leaner, louder, and ready to charge.
+        </p>
+        <p class="fade-up" style="color: var(--text-soft); font-size: 16.5px; line-height: 1.7; max-width: 460px;">
+          <span style="color:var(--highlight); font-family:'JetBrains Mono',monospace; font-weight:700;">$NFB</span> is for the ones who stayed. The ones who stacked through the dark. The ones who never stopped believing the bull would find its way back home.
+        </p>
+      </div>
+      <div class="right">
+        <div class="about-block fade-up">
+          <div class="about-image" style="background-image: url('bull1.png')"></div>
+          <div class="about-image-caption">
+            <span>FIG. 01 — THE CHARGE</span>
+            <span>SOL / 2025</span>
+          </div>
+        </div>
+        <div class="about-block fade-up">
+          <h3>A found bull, not a lost cause.</h3>
+          <p>Most memecoins die in the first 24 hours. They launch with team allocations, hidden mints, and roadmap promises written in crayon. <strong>$NFB</strong> is the opposite — <span class="amber">fair launch on pump.fun, no presale, mint revoked, LP burned at birth.</span></p>
+          <p>No VC unlocks. No advisor cliffs. No foundation wallet waiting to dump on your grandma. Just a bull that was lost, then found, then set free to run.</p>
+        </div>
+        <div class="about-block fade-up">
+          <div class="about-image" style="background-image: url('bull2.png'); aspect-ratio: 4/3;"></div>
+          <div class="about-image-caption">
+            <span>FIG. 02 — HORNS UP</span>
+            <span>ON-CHAIN</span>
+          </div>
+        </div>
+        <div class="about-block fade-up">
+          <h3>Born on Solana. Stamped on pump.fun.</h3>
+          <p>Solana is fast, cheap, and built for retail. Pump.fun is the most proven fair-launch venue in crypto history. <strong>$NFB</strong> launches there because that's where bulls belong — out in the open, not in some closed presale group.</p>
+          <p>Once the bonding curve fills, $NFB migrates to Raydium. From there: listings, integrations, and the long, slow charge toward the next all-time high.</p>
+        </div>
+        <div class="about-block fade-up">
+          <h3>The herd is the utility.</h3>
+          <p>Forget promises of metaverses and AI integrations that never ship. The utility of <strong>$NFB</strong> is the herd itself — a coordinated community of holders who raid, meme, and push the chart forward. Every holder is a horn on the bull's head.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOKENOMICS -->
+<section class="section-pad" id="tokenomics" style="border-top: 1px solid var(--line);">
+  <div class="container">
+    <div class="section-label fade-up">002 / TOKENOMICS</div>
+    <h2 class="section-title fade-up">Numbers that<br>aren't <span class="amber">suspicious.</span></h2>
+    
+    <div class="token-stats">
+      <div class="stat-cell fade-up">
+        <div class="stat-label">Total Supply</div>
+        <div class="stat-value">1,000,000,000</div>
+        <div class="stat-note">1 billion $NFB. Fixed at deploy. No more will ever exist.</div>
+      </div>
+      <div class="stat-cell fade-up">
+        <div class="stat-label">Tax · Buy / Sell</div>
+        <div class="stat-value">0% / 0%</div>
+        <div class="stat-note">Zero tax. Zero friction. Every SOL you put in buys $NFB.</div>
+      </div>
+      <div class="stat-cell fade-up">
+        <div class="stat-label">Liquidity Pool</div>
+        <div class="stat-value">BURNED</div>
+        <div class="stat-note">LP tokens sent to the burn address. Rugproof by construction.</div>
+      </div>
+      <div class="stat-cell fade-up">
+        <div class="stat-label">Mint Authority</div>
+        <div class="stat-value">REVOKED</div>
+        <div class="stat-note">Supply cannot be inflated. Ever. Verified on Solscan.</div>
+      </div>
+    </div>
+
+    <h3 class="dist-title fade-up">Allocation breakdown.</h3>
+    <div class="distribution fade-up">
+      <div class="distribution-row">
+        <div class="dist-name">Fairlaunch</div>
+        <div class="dist-bar"><div class="dist-bar-fill" data-pct="98"></div></div>
+        <div class="dist-pct">98%</div>
+      </div>
+      <div class="distribution-row">
+        <div class="dist-name">Team</div>
+        <div class="dist-bar"><div class="dist-bar-fill" data-pct="2"></div></div>
+        <div class="dist-pct">2%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO BUY -->
+<section class="section-pad" style="border-top: 1px solid var(--line);">
+  <div class="container">
+    <div class="section-label fade-up">003 / HOW TO BUY</div>
+    <h2 class="section-title fade-up">Three steps to<br>find the bull.</h2>
+    <div class="steps-grid">
+      <div class="step-card fade-up">
+        <div class="step-num">STEP 01</div>
+        <div class="step-title">Get a Solana wallet.</div>
+        <div class="step-body">Install <strong>Phantom</strong> or <strong>Solflare</strong> as a browser extension or mobile app. Create a fresh wallet, write down your seed phrase on paper, and never share it. Fund it with SOL from an exchange or another wallet.</div>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">STEP 02</div>
+        <div class="step-title">Open pump.fun.</div>
+        <div class="step-body">Head to <code>pump.fun</code> and paste the $NFB contract address into the search bar. Verify the ticker, supply, and that you're on the correct token page before swapping. Always check the CA — fakes exist.</div>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">STEP 03</div>
+        <div class="step-title">Swap SOL for $NFB.</div>
+        <div class="step-body">Enter the amount of SOL you want to spend, click buy, and confirm in your wallet. Once the bonding curve completes, $NFB migrates to Raydium for continuous trading. Welcome to the herd.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section-pad" id="roadmap" style="border-top: 1px solid var(--line);">
+  <div class="container">
+    <div class="section-label fade-up">004 / ROADMAP</div>
+    <h2 class="section-title fade-up">From lost<br>to leading<br>the <span class="amber">charge.</span></h2>
+    <div class="roadmap-track fade-up">
+      <div class="phase">
+        <div class="phase-marker">PHASE 01</div>
+        <div class="phase-status live">LIVE NOW</div>
+        <div class="phase-title">Genesis</div>
+        <ul class="phase-list">
+          <li>Stealth launch on pump.fun</li>
+          <li>Mint authority revoked</li>
+          <li>LP burned at bonding curve fill</li>
+          <li>Website & socials live</li>
+          <li>First 500 holders stamped</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-marker">PHASE 02</div>
+        <div class="phase-status">STAMPEDE</div>
+        <div class="phase-title">Stampede</div>
+        <ul class="phase-list">
+          <li>1,000 holder milestone</li>
+          <li>DexScreener & DexTools listings</li>
+          <li>Daily Spaces, daily raids</li>
+          <li>Meme contests with SOL prizes</li>
+          <li>Influencer herd activated</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-marker">PHASE 03</div>
+        <div class="phase-status">HORNS UP</div>
+        <div class="phase-title">Horns Up</div>
+        <ul class="phase-list">
+          <li>Raydium migration complete</li>
+          <li>10,000 holder milestone</li>
+          <li>First CEX listing (Tier-2)</li>
+          <li>NFB merch drop (limited)</li>
+          <li>Solana ecosystem partnerships</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-marker">PHASE 04</div>
+        <div class="phase-status">BULL RUN</div>
+        <div class="phase-title">Bull Run</div>
+        <ul class="phase-list">
+          <li>Tier-1 CEX listings</li>
+          <li>NFB utility: staking & rewards</li>
+          <li>Mobile game prototype</li>
+          <li>Real-world billboard campaigns</li>
+          <li>The bull is no longer found — it's leading</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-pad" id="faq">
+  <div class="container container-narrow">
+    <div class="section-label fade-up">005 / FAQ</div>
+    <h2 class="section-title fade-up">Questions<br>the herd asks.</h2>
+    <div class="faq-list fade-up">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">What exactly is NEW FOUND BULL ($NFB)?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>$NFB is a community-driven memecoin on Solana, launched fairly via pump.fun. It celebrates the return of the bull market and the people who held through the dark. No presale, no team allocation that can dump on day one — just a found bull, set loose on the open range of the Solana chain.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How do I buy $NFB?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Get a Solana wallet (Phantom or Solflare), fund it with SOL, then head to <code>pump.fun</code> and paste the $NFB contract address into the search bar. Swap SOL for $NFB. Once the bonding curve completes, $NFB migrates to Raydium for continuous trading.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Is there a buy or sell tax?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Zero. <code>0% buy</code>, <code>0% sell</code>. Every SOL you put in buys $NFB at the bonding curve price with no friction. The contract has no tax logic — it's a standard SPL token, audited and verified on Solscan.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Is the liquidity really burned?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Yes. LP tokens are sent to the burn address at the moment the bonding curve completes and $NFB migrates to Raydium. This means no one — not the team, not the deployer, not anyone — can pull liquidity. The pool is permanently locked. Verify it yourself on Solscan.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Is mint authority revoked?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Yes. Mint authority is revoked at deployment. The total supply of 1,000,000,000 $NFB is fixed forever. No additional tokens can ever be minted — no inflation, no surprise team unlocks, no supply games.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Where can I store $NFB?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Any Solana-compatible wallet works: <code>Phantom</code>, <code>Solflare</code>, <code>Backpack</code>. For hardware security, Ledger with Phantom integration is the recommended setup for holdings above what you'd be comfortable losing.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Was there a presale or team allocation?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>No presale. No private round. No OTC deals. The team holds 2% of supply. That allocation is for ongoing development and is publicly trackable on-chain. The other 98% went to the public via pump.fun's bonding curve fairlaunch.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Is $NFB financial advice?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Absolutely not. $NFB is a memecoin — a piece of internet culture on a blockchain. It has no intrinsic value, no promise of returns, no roadmap guarantee. Treat it as the speculative asset it is: never invest more than you can afford to lose, do your own research, and remember that even bulls rest sometimes.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How can I join the herd?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Telegram and X (Twitter) links are at the bottom of this page. Jump in, introduce yourself, and start memeing. The herd is open to anyone who believes the bull is back — no vetting, no alpha-group paywalls, just a found bull and the people who found it.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label fade-up">006 / JOIN THE HERD</div>
+  <h2 class="cta-title fade-up">FIND THE BULL.<br><span class="amber">BE THE HERD.</span></h2>
+  <p class="cta-sub fade-up">Copy the contract, head to pump.fun, and become part of the found-bull story. The next chapter is written by everyone who holds.</p>
+  
+  <div class="ca-box fade-up" id="ca-box">
+    <span class="ca-label">CA</span>
+    <span class="ca-value" id="ca-value">SOOON</span>
+    <button class="copy-btn" id="copy-ca-btn">Copy</button>
+  </div>
+  
+  <div class="cta-actions fade-up">
+    <a href="https://pump.fun/" target="_blank" rel="noopener" class="btn btn-primary">Buy on pump.fun <span class="arrow">↗</span></a>
+    <a href="https://raydium.io/" target="_blank" rel="noopener" class="btn">Trade on Raydium <span class="arrow">↗</span></a>
+    <a href="https://jup.ag/" target="_blank" rel="noopener" class="btn">Swap on Jupiter <span class="arrow">↗</span></a>
+  </div>
+
+  <div class="social-row fade-up">
+    <a href="#" class="social-link" title="Twitter / X"><span>X</span></a>
+    <a href="#" class="social-link" title="Telegram"><span>TG</span></a>
+    <a href="#" class="social-link" title="Discord"><span>DC</span></a>
+    <a href="https://pump.fun/" target="_blank" rel="noopener" class="social-link" title="pump.fun"><span>PF</span></a>
+    <a href="https://dexscreener.com/" target="_blank" rel="noopener" class="social-link" title="DexScreener"><span>DS</span></a>
+    <a href="https://solscan.io/" target="_blank" rel="noopener" class="social-link" title="Solscan"><span>SC</span></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">NEW FOUND BULL <span>· $NFB</span></div>
+      <div class="footer-tag">SOLANA · PUMP.FUN · FAIR LAUNCH</div>
+      <p class="footer-disclaimer">$NFB is a memecoin with no intrinsic value or expectation of financial return. Nothing on this site is financial advice. Always do your own research. Cryptocurrencies are volatile; only risk what you can afford to lose. The bull was lost. The bull is found. The bull runs.</p>
+    </div>
+    <div class="footer-meta">
+      © 2025 NEW FOUND BULL<br>
+      BUILT ON SOLANA<br>
+      LAUNCHED ON PUMP.FUN<br>
+      <span class="amber">THE BULL IS FOUND.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- three.js for particles -->
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.183/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+
+// ============ PARTICLE FIELD ============
+const canvas = document.getElementById('particle-canvas');
+let renderer, scene, camera, points, points2;
+let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
+let particleVisible = true;
+
+if (!reduceMotion) {
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.z = 8;
+
+    function makePoints(count, color, sizeMul, spread) {
+      const positions = new Float32Array(count * 3);
+      const sizes = new Float32Array(count);
+      const offsets = new Float32Array(count);
+      for (let i = 0; i < count; i++) {
+        positions[i*3]   = (Math.random()-0.5) * spread;
+        positions[i*3+1] = (Math.random()-0.5) * (spread * 0.7);
+        positions[i*3+2] = (Math.random()-0.5) * (spread * 0.7);
+        sizes[i]   = Math.random() * 1.6 + 0.4;
+        offsets[i] = Math.random() * Math.PI * 2;
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geo.setAttribute('aSize',    new THREE.BufferAttribute(sizes, 1));
+      geo.setAttribute('aOffset',  new THREE.BufferAttribute(offsets, 1));
+      const mat = new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0 },
+          uColor: { value: new THREE.Color(color) },
+          uSize: { value: sizeMul }
+        },
+        vertexShader: `
+          attribute float aSize; attribute float aOffset;
+          uniform float uTime; uniform float uSize;
+          varying float vAlpha;
+          void main() {
+            vec3 p = position;
+            p.y += sin(uTime*0.3 + aOffset) * 0.4;
+            p.x += cos(uTime*0.25 + aOffset*0.7) * 0.2;
+            vec4 mv = modelViewMatrix * vec4(p, 1.0);
+            gl_PointSize = aSize * uSize * (180.0 / -mv.z);
+            gl_Position = projectionMatrix * mv;
+            vAlpha = 0.55 + 0.45 * sin(uTime*0.6 + aOffset);
+          }`,
+        fragmentShader: `
+          varying float vAlpha; uniform vec3 uColor;
+          void main() {
+            vec2 uv = gl_PointCoord - vec2(0.5);
+            if (length(uv) > 0.5) discard;
+            gl_FragColor = vec4(uColor, smoothstep(0.5, 0.0, length(uv)) * vAlpha * 0.4);
+          }`,
+        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      });
+      return new THREE.Points(geo, mat);
+    }
+
+    points = makePoints(800, 0xc8aa82, 1.0, 20);
+    scene.add(points);
+    points2 = makePoints(600, 0xffffff, 0.7, 18);
+    scene.add(points2);
+
+    window.addEventListener('mousemove', e => {
+      mouseX = (e.clientX / window.innerWidth - 0.5);
+      mouseY = (e.clientY / window.innerHeight - 0.5);
+    });
+
+    window.addEventListener('resize', () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+    });
+
+    const clock = new THREE.Clock();
+    function animate() {
+      if (particleVisible) {
+        const t = clock.getElapsedTime();
+        points.material.uniforms.uTime.value = t;
+        points2.material.uniforms.uTime.value = t;
+        targetX += (mouseX - targetX) * 0.05;
+        targetY += (mouseY - targetY) * 0.05;
+        scene.rotation.y = targetX * 0.3;
+        scene.rotation.x = targetY * 0.2;
+        renderer.render(scene, camera);
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => particleVisible = e.isIntersecting);
+    });
+    observer.observe(canvas);
+  } catch (err) {
+    console.warn('Particle field disabled:', err);
+    canvas.style.display = 'none';
+  }
+}
+
+// ============ CUSTOM CURSOR ============
+if (!isCoarse) {
+  const cur = document.getElementById('custom-cursor');
+  const target = { x: 0, y: 0 }, pos = { x: 0, y: 0 };
+  let hover = false;
+  window.addEventListener('mousemove', e => {
+    target.x = e.clientX; target.y = e.clientY;
+  });
+  window.addEventListener('mouseover', e => {
+    const t = e.target;
+    hover = !!(t.closest('a,button,.faq-q,.step-card,.stat-cell,.phase,.social-link,.copy-btn,.distribution-row'));
+  });
+  (function loop(){
+    pos.x += (target.x - pos.x) * 0.18;
+    pos.y += (target.y - pos.y) * 0.18;
+    const s = hover ? 48 : 12;
+    cur.style.transform = `translate(${pos.x - s/2}px, ${pos.y - s/2}px)`;
+    cur.style.width = cur.style.height = s + 'px';
+    cur.style.opacity = hover ? 0.6 : 1;
+    requestAnimationFrame(loop);
+  })();
+}
+
+// ============ HERO TILE FLIP GRID ============
+const heroGrid = document.getElementById('hero-grid');
+const rows = 6, cols = 8;
+const amberCells = [
+  {r:0,c:3},{r:1,c:6},{r:2,c:1},{r:3,c:5},{r:4,c:2},{r:5,c:7}
+];
+const blackCells = [
+  {r:0,c:0},{r:1,c:2},{r:2,c:6},{r:3,c:0},{r:4,c:5},{r:5,c:3}
+];
+const textCells = [
+  {r:0,c:6, txt:'$NFB'},
+  {r:2,c:4, txt:'BULL'},
+  {r:4,c:7, txt:'SOL'},
+  {r:5,c:1, txt:'001'},
+];
+
+const cellW = 100 / cols;
+const cellH = 100 / rows;
+
+for (let r = 0; r < rows; r++) {
+  for (let c = 0; c < cols; c++) {
+    const isAmber = amberCells.some(p => p.r===r && p.c===c);
+    const isBlack = blackCells.some(p => p.r===r && p.c===c);
+    const textCell = textCells.find(p => p.r===r && p.c===c);
+    const cell = document.createElement('div');
+    cell.className = 'grid-cell';
+    if (isAmber) cell.classList.add('is-amber');
+    else if (isBlack) cell.classList.add('is-black');
+    else if (textCell) {
+      cell.classList.add('is-text');
+      cell.textContent = textCell.txt;
+    } else {
+      cell.classList.add('is-image');
+      cell.style.backgroundImage = "url('bull1.png')";
+      cell.style.backgroundPosition = `${c/(cols-1)*100}% ${r/(rows-1)*100}%`;
+      cell.style.backgroundSize = `${cols*100}% ${rows*100}%`;
+    }
+    cell.style.left = `${c*cellW}%`;
+    cell.style.top = `${r*cellH}%`;
+    cell.style.width = `${cellW}%`;
+    cell.style.height = `${cellH}%`;
+    heroGrid.appendChild(cell);
+  }
+}
+
+const allCells = heroGrid.querySelectorAll('.grid-cell');
+if (!reduceMotion) {
+  allCells.forEach(cell => {
+    cell.style.opacity = '0';
+    cell.style.transform = 'rotateX(90deg) translateY(-100px)';
+    cell.style.transformOrigin = 'top center';
+  });
+  // shuffle for random stagger
+  const indices = Array.from(allCells.keys()).sort(() => Math.random() - 0.5);
+  setTimeout(() => {
+    indices.forEach((idx, order) => {
+      const cell = allCells[idx];
+      cell.style.transition = 'opacity 900ms var(--ease-emphasis), transform 900ms var(--ease-emphasis)';
+      cell.style.transitionDelay = (order * 0.025) + 's';
+      requestAnimationFrame(() => {
+        cell.style.opacity = '1';
+        cell.style.transform = 'none';
+      });
+    });
+  }, 250);
+} else {
+  allCells.forEach(cell => {
+    cell.style.opacity = '1';
+    cell.style.transform = 'none';
+  });
+}
+
+// ============ FADE UP OBSERVER ============
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-in');
+      if (entry.target.classList.contains('distribution')) {
+        entry.target.querySelectorAll('.dist-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.pct + '%';
+        });
+      }
+      fadeObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+
+// ============ FAQ ACCORDION ============
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('is-open');
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('is-open');
+      i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) {
+      item.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+// ============ COPY CA ============
+const caValue = 'SOOON';
+const copyBtn = document.getElementById('copy-ca-btn');
+const heroCopyBtn = document.getElementById('hero-copy-ca');
+
+function copyCA(e) {
+  const fallback = () => {
+    const ta = document.createElement('textarea');
+    ta.value = caValue;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (err) {}
+    document.body.removeChild(ta);
+  };
+  const showCopied = (btn) => {
+    if (!btn) return;
+    const original = btn.innerHTML;
+    btn.innerHTML = 'Copied ✓';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = original;
+      btn.classList.remove('copied');
+    }, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(caValue).then(() => {
+      showCopied(copyBtn);
+      if (heroCopyBtn) {
+        const original = heroCopyBtn.innerHTML;
+        heroCopyBtn.innerHTML = 'Copied to clipboard <span class="arrow">✓</span>';
+        setTimeout(() => { heroCopyBtn.innerHTML = original; }, 2000);
+      }
+    }).catch(() => {
+      fallback();
+      showCopied(copyBtn);
+    });
+  } else {
+    fallback();
+    showCopied(copyBtn);
+  }
+}
+if (copyBtn) copyBtn.addEventListener('click', copyCA);
+if (heroCopyBtn) heroCopyBtn.addEventListener('click', copyCA);
+
+// ============ NAV SCROLL STATE ============
+let lastScroll = 0;
+const nav = document.querySelector('.nav');
+window.addEventListener('scroll', () => {
+  const cur = window.scrollY;
+  if (cur > 80) {
+    nav.style.background = 'rgba(0,0,0,0.92)';
+  } else {
+    nav.style.background = 'rgba(0,0,0,0.7)';
+  }
+  lastScroll = cur;
+}, { passive: true });
+
+</script>
+</body>
+</html>
