@@ -37,7 +37,7 @@ body {
   -webkit-font-smoothing: antialiased;
   position: relative;
 }
-@media (pointer: coarse) { body { cursor: auto; } }
+@media (pointer: coarse) { body { cursor: auto; } button, a { cursor: pointer; } }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: none; background: none; border: none; color: inherit; }
 @media (pointer: coarse) { button { cursor: pointer; } }
@@ -64,7 +64,9 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
 #particle-canvas {
   position: fixed; top: 0; left: 0;
   width: 100vw; height: 100vh;
-  z-index: 0; pointer-events: none;
+  z-index: 10; 
+  pointer-events: none;
+  mix-blend-mode: screen; 
 }
 
 /* custom cursor */
@@ -73,7 +75,7 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
   width: 12px; height: 12px;
   border-radius: 50%; background: var(--text);
   mix-blend-mode: difference;
-  pointer-events: none; z-index: 9999;
+  pointer-events: none; z-index: 99999;
   will-change: transform, width, height;
   transition: width .3s var(--ease-quiet), height .3s var(--ease-quiet), opacity .3s var(--ease-quiet);
 }
@@ -196,7 +198,7 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
   position: absolute; inset: 0;
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 2rem 2rem 3.5rem;
-  z-index: 5;
+  z-index: 20; 
   pointer-events: none;
 }
 .hero-overlay > * { pointer-events: auto; }
@@ -737,7 +739,7 @@ section { position: relative; z-index: 2; }
   transition: max-height 500ms var(--ease-quiet);
   padding-left: 2.5rem; padding-right: 2rem;
 }
-.faq-item.is-open .faq-a { max-height: 500px; padding-bottom: 2rem; }
+.faq-item.is-open .faq-a { max-height: 1000px; padding-bottom: 2rem; }
 .faq-a p {
   font-size: 15px; line-height: 1.7; color: var(--text-soft);
 }
@@ -1188,8 +1190,6 @@ footer {
           <li>1,000 holder milestone</li>
           <li>DexScreener & DexTools listings</li>
           <li>Daily Spaces, daily raids</li>
-          <li>Meme contests with SOL prizes</li>
-          <li>Influencer herd activated</li>
         </ul>
       </div>
       <div class="phase">
@@ -1199,8 +1199,6 @@ footer {
         <ul class="phase-list">
           <li>Raydium migration complete</li>
           <li>10,000 holder milestone</li>
-          <li>First CEX listing (Tier-2)</li>
-          <li>NFB merch drop (limited)</li>
           <li>Solana ecosystem partnerships</li>
         </ul>
       </div>
@@ -1209,9 +1207,6 @@ footer {
         <div class="phase-status">BULL RUN</div>
         <div class="phase-title">Bull Run</div>
         <ul class="phase-list">
-          <li>Tier-1 CEX listings</li>
-          <li>NFB utility: staking & rewards</li>
-          <li>Mobile game prototype</li>
           <li>Real-world billboard campaigns</li>
           <li>The bull is no longer found — it's leading</li>
         </ul>
@@ -1290,9 +1285,6 @@ footer {
     </a>
     <a href="#" class="social-link" title="Telegram">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.324-.437.891-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path></svg>
-    </a>
-    <a href="#" class="social-link" title="Discord">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"></path></svg>
     </a>
     <a href="https://pump.fun/" target="_blank" rel="noopener" class="social-link" title="pump.fun">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
@@ -1416,7 +1408,6 @@ if (!reduceMotion) {
         const t = clock.getElapsedTime();
         points.material.uniforms.uTime.value = t;
         points2.material.uniforms.uTime.value = t;
-        // Dibuat normal (0.05 -> 0.05)
         targetX += (mouseX - targetX) * 0.05;
         targetY += (mouseY - targetY) * 0.05;
         scene.rotation.y = targetX * 0.2;
@@ -1427,10 +1418,9 @@ if (!reduceMotion) {
     }
     animate();
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => particleVisible = e.isIntersecting);
+    document.addEventListener('visibilitychange', () => {
+      particleVisible = !document.hidden;
     });
-    observer.observe(canvas);
   } catch (err) {
     console.warn('Particle field disabled:', err);
     canvas.style.display = 'none';
@@ -1450,7 +1440,6 @@ if (!isCoarse) {
     hover = !!(t.closest('a,button,.faq-q,.step-card,.stat-cell,.phase,.social-link,.copy-btn,.distribution-row'));
   });
   (function loop(){
-    // Sensitivitas mouse dibuat normal (0.25)
     pos.x += (target.x - pos.x) * 0.25;
     pos.y += (target.y - pos.y) * 0.25;
     const s = hover ? 48 : 12;
@@ -1463,22 +1452,19 @@ if (!isCoarse) {
 
 // ============ HERO TILE FLIP GRID ============
 const heroGrid = document.getElementById('hero-grid');
-const rows = 6, cols = 8;
+const rows = 9, cols = 8; 
 const amberCells = [
-  {r:0,c:3},{r:1,c:6},{r:2,c:1},{r:3,c:5},{r:4,c:2},{r:5,c:7}
+  {r:1,c:3},{r:2,c:6},{r:4,c:1},{r:5,c:5},{r:7,c:2},{r:8,c:6}
 ];
 const blackCells = [
-  {r:0,c:0},{r:1,c:2},{r:2,c:6},{r:3,c:0},{r:4,c:5},{r:5,c:3}
+  {r:0,c:0},{r:1,c:5},{r:3,c:2},{r:4,c:7},{r:6,c:0},{r:8,c:4}
 ];
 const textCells = [
   {r:0,c:6, txt:'$NFB'},
-  {r:2,c:4, txt:'BULL'},
-  {r:4,c:7, txt:'SOL'},
-  {r:5,c:1, txt:'001'},
+  {r:3,c:4, txt:'BULL'},
+  {r:5,c:1, txt:'SOL'},
+  {r:7,c:5, txt:'001'},
 ];
-
-const cellW = 100 / cols;
-const cellH = 100 / rows;
 
 for (let r = 0; r < rows; r++) {
   for (let c = 0; c < cols; c++) {
@@ -1487,6 +1473,9 @@ for (let r = 0; r < rows; r++) {
     const textCell = textCells.find(p => p.r===r && p.c===c);
     const cell = document.createElement('div');
     cell.className = 'grid-cell';
+    cell.dataset.r = r; 
+    cell.dataset.c = c; 
+    
     if (isAmber) cell.classList.add('is-amber');
     else if (isBlack) cell.classList.add('is-black');
     else if (textCell) {
@@ -1494,11 +1483,11 @@ for (let r = 0; r < rows; r++) {
       cell.textContent = textCell.txt;
     } else {
       cell.classList.add('is-image');
-      // DIGANTI MENJADI bull.png
       cell.style.backgroundImage = "url('bull.png')";
-      cell.style.backgroundPosition = `${c/(cols-1)*100}% ${r/(rows-1)*100}%`;
-      cell.style.backgroundSize = `${cols*100}% ${rows*100}%`;
     }
+    
+    const cellW = 100 / cols;
+    const cellH = 100 / rows;
     cell.style.left = `${c*cellW}%`;
     cell.style.top = `${r*cellH}%`;
     cell.style.width = `${cellW}%`;
@@ -1508,6 +1497,43 @@ for (let r = 0; r < rows; r++) {
 }
 
 const allCells = heroGrid.querySelectorAll('.grid-cell');
+
+function updateHeroImageSize() {
+  const W = window.innerWidth;
+  const H = window.innerHeight;
+  const imgRatio = 16 / 9; 
+  let bgW, bgH;
+
+  if (W / H > imgRatio) {
+    bgW = W;
+    bgH = W / imgRatio;
+  } else {
+    bgH = H;
+    bgW = H * imgRatio;
+  }
+
+  // Posisi kanan (Right-Center): Ambil offset penuh ke kanan, vertikal tetap tengah
+  const offsetX = bgW - W; 
+  const offsetY = (bgH - H) / 2;
+
+  const cellWPx = W / cols;
+  const cellHPx = H / rows;
+
+  allCells.forEach(cell => {
+    if (cell.classList.contains('is-image')) {
+      const r = parseInt(cell.dataset.r);
+      const c = parseInt(cell.dataset.c);
+      cell.style.backgroundSize = `${bgW}px ${bgH}px`;
+      
+      // Posisi kanan secara presisi
+      cell.style.backgroundPosition = `-${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px`;
+    }
+  });
+}
+
+updateHeroImageSize();
+window.addEventListener('resize', updateHeroImageSize);
+
 if (!reduceMotion) {
   allCells.forEach(cell => {
     cell.style.opacity = '0';
@@ -1567,10 +1593,13 @@ document.querySelectorAll('.faq-q').forEach(btn => {
 });
 
 // ============ TOAST NOTIFICATION ============
+let toastTimeout; 
 function showToast() {
   const toast = document.getElementById('toast');
   toast.classList.add('show');
-  setTimeout(() => {
+  
+  clearTimeout(toastTimeout); 
+  toastTimeout = setTimeout(() => {
     toast.classList.remove('show');
   }, 2500); 
 }
