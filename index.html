@@ -155,17 +155,6 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
   perspective: 1200px;
   z-index: 2;
 }
-.hero-bg {
-  position: absolute; inset: 0;
-  background-image: url('background%20bull.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 1;
-  opacity: 0.45;
-  filter: grayscale(0.3) brightness(0.7);
-  pointer-events: none;
-}
 .hero-grid {
   position: absolute; inset: 0;
   transform-style: preserve-3d;
@@ -192,6 +181,19 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
 }
 .grid-cell.is-image {
   filter: grayscale(0.6) contrast(1.05) brightness(0.45);
+}
+/* Gelembung background menyatu di dalam gambar hero (bull.png) */
+.grid-cell.is-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('background%20bull.png');
+  background-size: 800% 600%;
+  background-position: var(--bubble-pos, 0% 0%);
+  mix-blend-mode: screen;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .hero::after {
@@ -419,13 +421,27 @@ section { position: relative; z-index: 2; }
   filter: grayscale(0.4) contrast(1.05) brightness(0.85);
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--line); /* Menggunakan border */
+  border: 1px solid var(--line);
+}
+/* Gelembung background menyatu di dalam gambar about (bull1x.png & bull2x.png) */
+.about-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('background%20bull.png');
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: screen;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 1;
 }
 .about-image::after {
   content: '';
   position: absolute; inset: 0;
   background: linear-gradient(135deg, transparent 50%, rgba(200,170,130,0.15) 100%);
   pointer-events: none;
+  z-index: 2;
 }
 .about-image-caption {
   font-family: 'JetBrains Mono', monospace;
@@ -1021,7 +1037,6 @@ footer {
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <div class="hero-bg"></div>
   <div class="hero-grid" id="hero-grid"></div>
   <div class="hero-overlay">
     <div class="hero-label fade-up">SOLANA · PUMP.FUN · FAIR LAUNCH</div>
@@ -1504,6 +1519,8 @@ for (let r = 0; r < rows; r++) {
       cell.style.backgroundImage = `url('${heroImgSrc}')`;
       cell.style.backgroundPosition = `${c/(cols-1)*100}% ${r/(rows-1)*100}%`;
       cell.style.backgroundSize = `${cols*100}% ${rows*100}%`;
+      // Set posisi gelembung supaya pas menyatu di seluruh grid
+      cell.style.setProperty('--bubble-pos', `${c/(cols-1)*100}% ${r/(rows-1)*100}%`);
     }
     cell.style.left = `${c*cellW}%`;
     cell.style.top = `${r*cellH}%`;
