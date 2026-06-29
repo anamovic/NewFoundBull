@@ -167,7 +167,7 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
   background-repeat: no-repeat;
   will-change: transform, opacity;
   backface-visibility: hidden;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.6); 
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15); 
 }
 .grid-cell.is-amber { background: var(--highlight); box-shadow: none; }
 .grid-cell.is-black { background: var(--deep-black); box-shadow: none; }
@@ -916,6 +916,11 @@ section { position: relative; z-index: 2; }
   .ca-box .ca-label { display: none; }
   .ca-box .ca-value { font-size: 12px; padding: 0 0.75rem; }
   .copy-btn { padding: 0 1rem; }
+  
+  /* Turunkan bayangan gelap di HP agar gambar bullhp.png jelas di tengah */
+  .hero::after { height: 55%; }
+  /* Pecerahkan gambar di HP */
+  .grid-cell.is-image { filter: grayscale(0.5) contrast(1.05) brightness(0.65); }
 }
 
 /* footer */
@@ -1443,18 +1448,39 @@ if (!isCoarse) {
 // ============ HERO TILE FLIP GRID ============
 const heroGrid = document.getElementById('hero-grid');
 const rows = 9, cols = 8; 
-const amberCells = [
-  {r:1,c:3},{r:2,c:6},{r:4,c:1},{r:5,c:5},{r:7,c:2},{r:8,c:6}
-];
-const blackCells = [
-  {r:0,c:0},{r:1,c:5},{r:3,c:2},{r:4,c:7},{r:6,c:0},{r:8,c:4}
-];
-const textCells = [
-  {r:0,c:6, txt:'$NFB'},
-  {r:3,c:4, txt:'BULL'},
-  {r:5,c:1, txt:'SOL'},
-  {r:7,c:5, txt:'001'},
-];
+
+const isMobileView = window.matchMedia("(max-width: 768px)").matches;
+
+let amberCells, blackCells, textCells;
+if (isMobileView) {
+  // Posisi pinggir untuk HP agar tengah gambar bullhp.png tidak tertutup kotak
+  amberCells = [
+    {r:0,c:2},{r:0,c:5},{r:8,c:2},{r:8,c:5},{r:3,c:0},{r:5,c:7}
+  ];
+  blackCells = [
+    {r:1,c:0},{r:1,c:7},{r:7,c:0},{r:7,c:7},{r:4,c:1},{r:4,c:6}
+  ];
+  textCells = [
+    {r:0,c:0, txt:'$NFB'},
+    {r:8,c:7, txt:'BULL'},
+    {r:4,c:0, txt:'SOL'},
+    {r:4,c:7, txt:'001'},
+  ];
+} else {
+  // Posisi desktop
+  amberCells = [
+    {r:1,c:3},{r:2,c:6},{r:4,c:1},{r:5,c:5},{r:7,c:2},{r:8,c:6}
+  ];
+  blackCells = [
+    {r:0,c:0},{r:1,c:5},{r:3,c:2},{r:4,c:7},{r:6,c:0},{r:8,c:4}
+  ];
+  textCells = [
+    {r:0,c:6, txt:'$NFB'},
+    {r:3,c:4, txt:'BULL'},
+    {r:5,c:1, txt:'SOL'},
+    {r:7,c:5, txt:'001'},
+  ];
+}
 
 for (let r = 0; r < rows; r++) {
   for (let c = 0; c < cols; c++) {
@@ -1473,7 +1499,6 @@ for (let r = 0; r < rows; r++) {
       cell.textContent = textCell.txt;
     } else {
       cell.classList.add('is-image');
-      // Default background di-set kosong, akan diatur oleh updateHeroImageSize()
     }
     
     const cellW = 100 / cols;
@@ -1492,12 +1517,8 @@ function updateHeroImageSize() {
   const W = heroGrid.offsetWidth;
   const H = heroGrid.offsetHeight;
   
-  // Deteksi apakah tampilan HP atau Desktop
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
-  
-  // Pilih file gambar dan rasio yang sesuai
   const imgUrl = isMobile ? "url('bullhp.png')" : "url('bull.png')";
-  // Asumsi bullhp.png itu portrait (9:16). Jika tidak, ubah rasio di bawah ini.
   const imgRatio = isMobile ? (9 / 16) : (16 / 9); 
   
   let bgW, bgH;
@@ -1509,7 +1530,6 @@ function updateHeroImageSize() {
     bgW = H * imgRatio;
   }
 
-  // Posisi tengah (Center) agar gambar terlihat pas
   const offsetX = (bgW - W) / 2; 
   const offsetY = (bgH - H) / 2; 
 
@@ -1520,7 +1540,7 @@ function updateHeroImageSize() {
     if (cell.classList.contains('is-image')) {
       const r = parseInt(cell.dataset.r);
       const c = parseInt(cell.dataset.c);
-      cell.style.backgroundImage = imgUrl; // Update gambar otomatis
+      cell.style.backgroundImage = imgUrl;
       cell.style.backgroundSize = `${bgW}px ${bgH}px`;
       cell.style.backgroundPosition = `-${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px`;
     }
