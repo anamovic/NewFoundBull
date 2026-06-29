@@ -47,7 +47,7 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
 .bg-image {
   position: fixed;
   inset: 0;
-  background-image: url('background bull.png');
+  background-image: url('background%20bull.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -155,6 +155,48 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
   perspective: 1200px;
   z-index: 2;
 }
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('background%20bull.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  opacity: 0.45;
+  filter: grayscale(0.3) brightness(0.7);
+  pointer-events: none;
+}
+
+/* ====== BUBBLE OVERLAY UNTUK HERO BG ====== */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120px 140px at 20% 30%, rgba(200,170,130,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 80px 100px at 22% 35%, rgba(200,170,130,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60px 70px at 55% 20%, rgba(200,170,130,0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 50px 60px at 57% 22%, rgba(200,170,130,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 90px 110px at 75% 55%, rgba(200,170,130,0.16) 0%, transparent 70%),
+    radial-gradient(ellipse 70px 85px at 77% 52%, rgba(200,170,130,0.11) 0%, transparent 70%),
+    radial-gradient(ellipse 45px 55px at 40% 70%, rgba(200,170,130,0.13) 0%, transparent 70%),
+    radial-gradient(ellipse 55px 65px at 42% 68%, rgba(200,170,130,0.09) 0%, transparent 70%),
+    radial-gradient(ellipse 100px 120px at 85% 25%, rgba(200,170,130,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 65px 80px at 15% 65%, rgba(200,170,130,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40px 50px at 60% 80%, rgba(200,170,130,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 75px 90px at 30% 45%, rgba(200,170,130,0.11) 0%, transparent 70%);
+  filter: url(#bubble-turbulence);
+  mix-blend-mode: screen;
+  animation: bubble-drift 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes bubble-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(8px, -12px) scale(1.02); }
+  66% { transform: translate(-6px, 8px) scale(0.98); }
+  100% { transform: translate(4px, -4px) scale(1.01); }
+}
+
 .hero-grid {
   position: absolute; inset: 0;
   transform-style: preserve-3d;
@@ -181,8 +223,6 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
 }
 .grid-cell.is-image {
   filter: grayscale(0.6) contrast(1.05) brightness(0.45);
-  /* Gelembung menyatu langsung di background image tile */
-  background-blend-mode: screen;
 }
 
 .hero::after {
@@ -401,19 +441,99 @@ section { position: relative; z-index: 2; }
   line-height: 1.15;
 }
 
-/* Bordered Image Styling (Kembali ke awal) */
-.about-image {
-  width: 100%;
-  aspect-ratio: 4/5;
-  background-size: cover, cover;
-  background-position: center, center;
-  filter: grayscale(0.4) contrast(1.05) brightness(0.85);
+/* ====== ABOUT IMAGE DENGAN BUBBLE OVERLAY ====== */
+.about-image-wrap {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--line);
-  /* Gelembung menyatu langsung di background image about */
-  background-blend-mode: screen;
 }
+.about-image {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(0.4) contrast(1.05) brightness(0.85);
+  position: relative;
+  display: block;
+}
+
+/* Lapisan gelembung menyatu — SVG turbulence displacement */
+.about-image-wrap .bubble-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  /* Gradient amber sebagai "bahan" gelembung */
+  background:
+    radial-gradient(ellipse 90px 110px at 25% 20%, rgba(200,170,130,0.28) 0%, transparent 70%),
+    radial-gradient(ellipse 60px 75px at 27% 23%, rgba(200,170,130,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 70px 85px at 70% 35%, rgba(200,170,130,0.24) 0%, transparent 70%),
+    radial-gradient(ellipse 50px 60px at 72% 33%, rgba(200,170,130,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 55px 65px at 40% 60%, rgba(200,170,130,0.20) 0%, transparent 70%),
+    radial-gradient(ellipse 40px 50px at 42% 58%, rgba(200,170,130,0.13) 0%, transparent 70%),
+    radial-gradient(ellipse 80px 95px at 80% 70%, rgba(200,170,130,0.22) 0%, transparent 70%),
+    radial-gradient(ellipse 45px 55px at 82% 68%, rgba(200,170,130,0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 65px 80px at 15% 75%, rgba(200,170,130,0.19) 0%, transparent 70%),
+    radial-gradient(ellipse 35px 45px at 55% 85%, rgba(200,170,130,0.16) 0%, transparent 70%),
+    radial-gradient(ellipse 50px 60px at 85% 15%, rgba(200,170,130,0.17) 0%, transparent 70%),
+    radial-gradient(ellipse 75px 90px at 35% 40%, rgba(200,170,130,0.20) 0%, transparent 70%);
+  /* Turbulence filter membuat gradient ini menyatu secara organik */
+  filter: url(#bubble-turbulence);
+  mix-blend-mode: screen;
+  opacity: 0.7;
+  animation: bubble-float-1 14s ease-in-out infinite alternate;
+}
+
+/* Variasi animasi untuk gambar kedua (bull2x) */
+.about-image-wrap.bubble-variant .bubble-layer {
+  animation: bubble-float-2 16s ease-in-out infinite alternate;
+}
+
+/* Highlight edge gelembung — garis tipis cahaya */
+.about-image-wrap .bubble-edge {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90px 110px at 25% 20%, transparent 55%, rgba(200,170,130,0.06) 68%, transparent 72%),
+    radial-gradient(ellipse 70px 85px at 70% 35%, transparent 55%, rgba(200,170,130,0.05) 68%, transparent 72%),
+    radial-gradient(ellipse 55px 65px at 40% 60%, transparent 55%, rgba(200,170,130,0.06) 68%, transparent 72%),
+    radial-gradient(ellipse 80px 95px at 80% 70%, transparent 55%, rgba(200,170,130,0.05) 68%, transparent 72%),
+    radial-gradient(ellipse 65px 80px at 15% 75%, transparent 55%, rgba(200,170,130,0.05) 68%, transparent 72%);
+  filter: url(#bubble-turbulence);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  animation: bubble-float-1 14s ease-in-out infinite alternate;
+}
+.about-image-wrap.bubble-variant .bubble-edge {
+  animation: bubble-float-2 16s ease-in-out infinite alternate;
+}
+
+/* Gradient amber asli tetap ada di atas semua */
+.about-image-wrap .about-image-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(135deg, transparent 50%, rgba(200,170,130,0.15) 100%);
+}
+
+@keyframes bubble-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(6px, -10px) scale(1.03); }
+  50%  { transform: translate(-4px, 6px) scale(0.97); }
+  75%  { transform: translate(8px, 4px) scale(1.02); }
+  100% { transform: translate(-2px, -6px) scale(1.01); }
+}
+@keyframes bubble-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(-8px, 6px) scale(0.98); }
+  50%  { transform: translate(5px, -8px) scale(1.04); }
+  75%  { transform: translate(-3px, -4px) scale(0.99); }
+  100% { transform: translate(6px, 8px) scale(1.02); }
+}
+
 .about-image-caption {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
@@ -778,7 +898,7 @@ section { position: relative; z-index: 2; }
   line-height: 1.65;
 }
 
-/* CA Box (Tinggi sama, Copy di pinggir) */
+/* CA Box */
 .ca-box {
   display: inline-flex;
   align-items: stretch;
@@ -792,7 +912,7 @@ section { position: relative; z-index: 2; }
   min-width: 450px;
   max-width: 90%;
   overflow: hidden;
-  height: 50px; 
+  height: 50px;
 }
 .ca-box .ca-label {
   display: flex;
@@ -822,7 +942,7 @@ section { position: relative; z-index: 2; }
   border: none;
   border-left: 1px solid var(--highlight);
   color: var(--highlight);
-  padding: 0 1.75rem; 
+  padding: 0 1.75rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.18em;
@@ -854,7 +974,7 @@ section { position: relative; z-index: 2; }
   width: 56px; height: 56px;
   border: 1px solid var(--line);
   display: flex; align-items: center; justify-content: center;
-  color: var(--highlight); 
+  color: var(--highlight);
   transition: all 300ms var(--ease-quiet);
   position: relative;
   overflow: hidden;
@@ -874,7 +994,7 @@ section { position: relative; z-index: 2; }
 }
 .social-link:hover {
   border-color: var(--highlight);
-  color: var(--text); 
+  color: var(--text);
 }
 .social-link:hover::before { height: 100%; }
 
@@ -904,10 +1024,10 @@ section { position: relative; z-index: 2; }
 }
 @media (max-width: 768px) {
   .toast { bottom: 20px; font-size: 11px; padding: 0.8rem 1.5rem; }
-  .ca-box { 
-    min-width: unset; 
-    width: 100%; 
-    height: 50px; 
+  .ca-box {
+    min-width: unset;
+    width: 100%;
+    height: 50px;
   }
   .ca-box .ca-label { display: none; }
   .ca-box .ca-value { font-size: 12px; padding: 0 0.75rem; }
@@ -984,6 +1104,54 @@ footer {
 </head>
 <body>
 
+<!-- ====== SVG FILTER DEFINITIONS — INI INTI DARI EFEK GELEMBUNG MENYATU ====== -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
+  <defs>
+    <!--
+      Filter gelembung menyatu (coalescing bubbles):
+      1. feTurbulence menghasilkan noise organik yang secara alami membentuk pola "menyatu"
+      2. feDisplacementMap mendistorsi gradient radial sehingga bentuk bulat saling melebur
+      3. seed dan baseFrequency menentukan karakter gelembung
+    -->
+    <filter id="bubble-turbulence" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence
+        id="bubble-noise"
+        type="turbulence"
+        baseFrequency="0.015 0.018"
+        numOctaves="3"
+        seed="42"
+        result="turbulence"
+      />
+      <feDisplacementMap
+        in="SourceGraphic"
+        in2="turbulence"
+        scale="45"
+        xChannelSelector="R"
+        yChannelSelector="G"
+      />
+    </filter>
+
+    <!-- Filter variasi untuk gambar kedua — seed beda, frekuensi beda -->
+    <filter id="bubble-turbulence-2" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence
+        id="bubble-noise-2"
+        type="turbulence"
+        baseFrequency="0.018 0.014"
+        numOctaves="4"
+        seed="137"
+        result="turbulence"
+      />
+      <feDisplacementMap
+        in="SourceGraphic"
+        in2="turbulence"
+        scale="50"
+        xChannelSelector="G"
+        yChannelSelector="R"
+      />
+    </filter>
+  </defs>
+</svg>
+
 <div class="bg-image"></div>
 <div class="bg-overlay"></div>
 <canvas id="particle-canvas"></canvas>
@@ -1008,6 +1176,7 @@ footer {
 
 <!-- HERO -->
 <section class="hero" id="hero">
+  <div class="hero-bg"></div>
   <div class="hero-grid" id="hero-grid"></div>
   <div class="hero-overlay">
     <div class="hero-label fade-up">SOLANA · PUMP.FUN · FAIR LAUNCH</div>
@@ -1058,30 +1227,47 @@ footer {
         </p>
       </div>
       <div class="right">
+
+        <!-- Gambar bull1x dengan bubble overlay -->
         <div class="about-block fade-up">
-          <div class="about-image" style="background-image: url('bull1x.png'), url('background bull.png')"></div>
+          <div class="about-image-wrap">
+            <div class="about-image" style="background-image: url('bull1x.png')"></div>
+            <div class="bubble-layer"></div>
+            <div class="bubble-edge"></div>
+            <div class="about-image-glow"></div>
+          </div>
           <div class="about-image-caption">
             <span>FIG. 01 — THE CHARGE</span>
             <span>SOL / 2026</span>
           </div>
         </div>
+
         <div class="about-block fade-up">
           <h3>A found bull, not a lost cause.</h3>
           <p>Most memecoins die in the first 24 hours. They launch with team allocations, hidden mints, and roadmap promises written in crayon. <strong>$NFB</strong> is the opposite — <span class="amber">fair launch on pump.fun, no presale, mint revoked, LP burned at birth.</span></p>
           <p>No VC unlocks. No advisor cliffs. No foundation wallet waiting to dump on your grandma. Just a bull that was lost, then found, then set free to run.</p>
         </div>
+
+        <!-- Gambar bull2x dengan bubble overlay (variasi beda) -->
         <div class="about-block fade-up">
-          <div class="about-image" style="background-image: url('bull2x.png'), url('background bull.png'); aspect-ratio: 4/3;"></div>
+          <div class="about-image-wrap bubble-variant">
+            <div class="about-image" style="background-image: url('bull2x.png'); aspect-ratio: 4/3;"></div>
+            <div class="bubble-layer" style="filter: url(#bubble-turbulence-2);"></div>
+            <div class="bubble-edge" style="filter: url(#bubble-turbulence-2);"></div>
+            <div class="about-image-glow"></div>
+          </div>
           <div class="about-image-caption">
             <span>FIG. 02 — HORNS UP</span>
             <span>ON-CHAIN</span>
           </div>
         </div>
+
         <div class="about-block fade-up">
           <h3>Born on Solana. Stamped on pump.fun.</h3>
           <p>Solana is fast, cheap, and built for retail. Pump.fun is the most proven fair-launch venue in crypto history. <strong>$NFB</strong> launches there because that's where bulls belong — out in the open, not in some closed presale group.</p>
           <p>Once the bonding curve fills, $NFB migrates to Raydium. From there: listings, integrations, and the long, slow charge toward the next all-time high.</p>
         </div>
+
         <div class="about-block fade-up">
           <h3>The herd is the utility.</h3>
           <p>Forget promises of metaverses and AI integrations that never ship. The utility of <strong>$NFB</strong> is the herd itself — a coordinated community of holders who raid, meme, and push the chart forward. Every holder is a horn on the bull's head.</p>
@@ -1096,7 +1282,7 @@ footer {
   <div class="container">
     <div class="section-label fade-up">002 / TOKENOMICS</div>
     <h2 class="section-title fade-up">Numbers that<br>aren't <span class="amber">suspicious.</span></h2>
-    
+
     <div class="token-stats">
       <div class="stat-cell fade-up">
         <div class="stat-label">Total Supply</div>
@@ -1263,13 +1449,13 @@ footer {
   <div class="section-label fade-up">006 / JOIN THE HERD</div>
   <h2 class="cta-title fade-up">FIND THE BULL.<br><span class="amber">BE THE HERD.</span></h2>
   <p class="cta-sub fade-up">Copy the contract, head to pump.fun, and become part of the found-bull story. The next chapter is written by everyone who holds.</p>
-  
+
   <div class="ca-box fade-up" id="ca-box">
     <span class="ca-label">CA</span>
     <span class="ca-value" id="ca-value">SOOON</span>
     <button class="copy-btn" id="copy-ca-btn">Copy</button>
   </div>
-  
+
   <div class="cta-actions fade-up">
     <a href="https://pump.fun/" target="_blank" rel="noopener" class="btn btn-primary">Buy on pump.fun <span class="arrow">↗</span></a>
     <a href="https://raydium.io/" target="_blank" rel="noopener" class="btn">Trade on Raydium <span class="arrow">↗</span></a>
@@ -1321,9 +1507,32 @@ import * as THREE from 'three';
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-// Deteksi mode HP (mobile) — untuk tile flip grid, gunakan bullhp.png supaya tidak peyang
 const isMobile = window.matchMedia('(max-width: 768px)').matches;
 const heroImgSrc = isMobile ? 'bullhp.png' : 'bull.png';
+
+// ============ ANIMASI SVG TURBULENCE — Membuat gelembung "hidup" ============
+if (!reduceMotion) {
+  const bubbleNoise = document.getElementById('bubble-noise');
+  const bubbleNoise2 = document.getElementById('bubble-noise-2');
+  let t = 0;
+  function animateBubbles() {
+    t += 0.003;
+    // Menggeser seed secara halus membuat pola gelembung berubah-ubah
+    // Kita simulasi dengan mengubah baseFrequency sedikit
+    if (bubbleNoise) {
+      const bx = 0.015 + Math.sin(t * 0.7) * 0.004;
+      const by = 0.018 + Math.cos(t * 0.5) * 0.004;
+      bubbleNoise.setAttribute('baseFrequency', bx.toFixed(5) + ' ' + by.toFixed(5));
+    }
+    if (bubbleNoise2) {
+      const bx2 = 0.018 + Math.cos(t * 0.6) * 0.005;
+      const by2 = 0.014 + Math.sin(t * 0.8) * 0.005;
+      bubbleNoise2.setAttribute('baseFrequency', bx2.toFixed(5) + ' ' + by2.toFixed(5));
+    }
+    requestAnimationFrame(animateBubbles);
+  }
+  animateBubbles();
+}
 
 // ============ PARTICLE FIELD ============
 const canvas = document.getElementById('particle-canvas');
@@ -1405,10 +1614,9 @@ if (!reduceMotion) {
     const clock = new THREE.Clock();
     function animate() {
       if (particleVisible) {
-        const t = clock.getElapsedTime();
-        points.material.uniforms.uTime.value = t;
-        points2.material.uniforms.uTime.value = t;
-        // Dibuat normal (0.05 -> 0.05)
+        const t2 = clock.getElapsedTime();
+        points.material.uniforms.uTime.value = t2;
+        points2.material.uniforms.uTime.value = t2;
         targetX += (mouseX - targetX) * 0.05;
         targetY += (mouseY - targetY) * 0.05;
         scene.rotation.y = targetX * 0.2;
@@ -1442,7 +1650,6 @@ if (!isCoarse) {
     hover = !!(t.closest('a,button,.faq-q,.step-card,.stat-cell,.phase,.social-link,.copy-btn,.distribution-row'));
   });
   (function loop(){
-    // Sensitivitas mouse dibuat normal (0.25)
     pos.x += (target.x - pos.x) * 0.25;
     pos.y += (target.y - pos.y) * 0.25;
     const s = hover ? 48 : 12;
@@ -1474,85 +1681,102 @@ const cellH = 100 / rows;
 
 for (let r = 0; r < rows; r++) {
   for (let c = 0; c < cols; c++) {
-    const isAmber = amberCells.some(p => p.r===r && p.c===c);
-    const isBlack = blackCells.some(p => p.r===r && p.c===c);
-    const textCell = textCells.find(p => p.r===r && p.c===c);
-    const cell = document.createElement('div');
-    cell.className = 'grid-cell';
-    if (isAmber) cell.classList.add('is-amber');
-    else if (isBlack) cell.classList.add('is-black');
-    else if (textCell) {
-      cell.classList.add('is-text');
-      cell.textContent = textCell.txt;
-    } else {
-      cell.classList.add('is-image');
-      // Mobile -> bullhp.png | Desktop -> bull.png
-      // Layer 1: Gambar Bull | Layer 2: Gelembung background bull.png
-      cell.style.backgroundImage = `url('${heroImgSrc}'), url('background bull.png')`;
-      // Posisi & Size sama persis agar gelembung menutupi gambar dengan presisi
-      cell.style.backgroundPosition = `${c/(cols-1)*100}% ${r/(rows-1)*100}%`;
-      cell.style.backgroundSize = `${cols*100}% ${rows*100}%`;
+    const isAmber = amberCells.some(a => a.r === r && a.c === c);
+    const isBlack = blackCells.some(b => b.r === r && b.c === c);
+    const isText = textCells.find(t => t.r === r && t.c === c);
+    const isImage = !isAmber && !isBlack && !isText && Math.random() > 0.55;
+
+    const el = document.createElement('div');
+    el.className = 'grid-cell';
+    el.style.left = (c * cellW) + '%';
+    el.style.top = (r * cellH) + '%';
+    el.style.width = cellW + '%';
+    el.style.height = cellH + '%';
+
+    if (isAmber) {
+      el.classList.add('is-amber');
+    } else if (isBlack) {
+      el.classList.add('is-black');
+    } else if (isText) {
+      el.classList.add('is-text');
+      el.textContent = isText.txt;
+    } else if (isImage) {
+      el.classList.add('is-image');
+      el.style.backgroundImage = `url('${heroImgSrc}')`;
+      el.style.backgroundPosition = `${(c / (cols - 1)) * 100}% ${(r / (rows - 1)) * 100}%`;
     }
-    cell.style.left = `${c*cellW}%`;
-    cell.style.top = `${r*cellH}%`;
-    cell.style.width = `${cellW}%`;
-    cell.style.height = `${cellH}%`;
-    heroGrid.appendChild(cell);
+
+    heroGrid.appendChild(el);
   }
 }
 
-const allCells = heroGrid.querySelectorAll('.grid-cell');
+// ============ TILE FLIP ANIMATION ============
 if (!reduceMotion) {
-  allCells.forEach(cell => {
-    cell.style.opacity = '0';
-    cell.style.transform = 'rotateX(90deg) translateY(-100px)';
-    cell.style.transformOrigin = 'top center';
-  });
-  const indices = Array.from(allCells.keys()).sort(() => Math.random() - 0.5);
-  setTimeout(() => {
-    indices.forEach((idx, order) => {
-      const cell = allCells[idx];
-      cell.style.transition = 'opacity 900ms var(--ease-emphasis), transform 900ms var(--ease-emphasis)';
-      cell.style.transitionDelay = (order * 0.025) + 's';
-      requestAnimationFrame(() => {
-        cell.style.opacity = '1';
-        cell.style.transform = 'none';
-      });
+  const cells = document.querySelectorAll('.grid-cell');
+  let revealed = false;
+
+  function flipAll() {
+    if (revealed) return;
+    revealed = true;
+    cells.forEach((cell, i) => {
+      const row = Math.floor(i / cols);
+      const col = i % cols;
+      const delay = (row + col) * 80 + Math.random() * 60;
+      setTimeout(() => {
+        cell.style.transition = 'transform 0.7s cubic-bezier(.16, 1, .3, 1), opacity 0.7s cubic-bezier(.16, 1, .3, 1)';
+        cell.style.transform = 'rotateX(90deg)';
+        cell.style.opacity = '0';
+        setTimeout(() => {
+          cell.style.transform = 'rotateX(0deg)';
+          cell.style.opacity = '1';
+        }, 400);
+      }, delay);
     });
-  }, 250);
-} else {
-  allCells.forEach(cell => {
-    cell.style.opacity = '1';
-    cell.style.transform = 'none';
-  });
+  }
+
+  setTimeout(flipAll, 600);
+
+  // Ulangi flip setiap 8 detik
+  setInterval(() => {
+    revealed = false;
+    setTimeout(flipAll, 100);
+  }, 8000);
 }
 
-// ============ FADE UP OBSERVER ============
-const fadeObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-in');
-      if (entry.target.classList.contains('distribution')) {
-        entry.target.querySelectorAll('.dist-bar-fill').forEach(bar => {
-          bar.style.width = bar.dataset.pct + '%';
-        });
-      }
-      fadeObserver.unobserve(entry.target);
+// ============ SCROLL FADE-UP OBSERVER ============
+const fadeEls = document.querySelectorAll('.fade-up');
+const fadeObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('is-in');
     }
   });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+fadeEls.forEach(el => fadeObs.observe(el));
 
-document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+// ============ DISTRIBUTION BAR ANIMATION ============
+const distBars = document.querySelectorAll('.dist-bar-fill');
+const distObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const pct = e.target.getAttribute('data-pct');
+      e.target.style.width = pct + '%';
+    }
+  });
+}, { threshold: 0.3 });
+distBars.forEach(b => distObs.observe(b));
 
-// ============ FAQ ACCORDION ============
+// ============ FAQ TOGGLE ============
 document.querySelectorAll('.faq-q').forEach(btn => {
   btn.addEventListener('click', () => {
-    const item = btn.parentElement;
+    const item = btn.closest('.faq-item');
     const isOpen = item.classList.contains('is-open');
-    document.querySelectorAll('.faq-item').forEach(i => {
+    // Tutup semua
+    document.querySelectorAll('.faq-item.is-open').forEach(i => {
       i.classList.remove('is-open');
       i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
     });
+    // Buka yang diklik
     if (!isOpen) {
       item.classList.add('is-open');
       btn.setAttribute('aria-expanded', 'true');
@@ -1560,60 +1784,29 @@ document.querySelectorAll('.faq-q').forEach(btn => {
   });
 });
 
-// ============ TOAST NOTIFICATION ============
-function showToast() {
+// ============ COPY CA + TOAST ============
+function showToast(msg) {
   const toast = document.getElementById('toast');
+  toast.textContent = msg || 'BULL HAS BEEN ADDED';
   toast.classList.add('show');
-  setTimeout(() => {
-    toast.classList.remove('show');
-  }, 2500); 
+  setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
-// ============ COPY CA ============
-const caValue = 'SOOON';
-const copyBtn = document.getElementById('copy-ca-btn');
-const heroCopyBtn = document.getElementById('hero-copy-ca');
-
-function copyCA(e) {
-  const fallback = () => {
-    const ta = document.createElement('textarea');
-    ta.value = caValue;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); } catch (err) {}
-    document.body.removeChild(ta);
-  };
-  
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(caValue).then(() => {
-      showToast();
-    }).catch(() => {
-      fallback();
-      showToast();
-    });
-  } else {
-    fallback();
-    showToast();
+function copyCA() {
+  const ca = document.getElementById('ca-value').textContent;
+  if (ca === 'SOOON') {
+    showToast('CONTRACT ADDRESS SOON');
+    return;
   }
+  navigator.clipboard.writeText(ca).then(() => {
+    showToast('CONTRACT ADDRESS COPIED');
+  }).catch(() => {
+    showToast('COPY FAILED — TRY AGAIN');
+  });
 }
-if (copyBtn) copyBtn.addEventListener('click', copyCA);
-if (heroCopyBtn) heroCopyBtn.addEventListener('click', copyCA);
 
-// ============ NAV SCROLL STATE ============
-let lastScroll = 0;
-const nav = document.querySelector('.nav');
-window.addEventListener('scroll', () => {
-  const cur = window.scrollY;
-  if (cur > 80) {
-    nav.style.background = 'rgba(0,0,0,0.92)';
-  } else {
-    nav.style.background = 'rgba(0,0,0,0.7)';
-  }
-  lastScroll = cur;
-}, { passive: true });
-
+document.getElementById('copy-ca-btn').addEventListener('click', copyCA);
+document.getElementById('hero-copy-ca').addEventListener('click', copyCA);
 </script>
 </body>
 </html>
