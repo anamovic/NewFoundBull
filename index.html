@@ -167,7 +167,6 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
   background-repeat: no-repeat;
   will-change: transform, opacity;
   backface-visibility: hidden;
-  /* Hapus border agar tidak mengganggu perhitungan lebar gambar di HP */
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.6); 
 }
 .grid-cell.is-amber { background: var(--highlight); box-shadow: none; }
@@ -411,7 +410,7 @@ section { position: relative; z-index: 2; }
   filter: grayscale(0.4) contrast(1.05) brightness(0.85);
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--line); /* Menggunakan border */
+  border: 1px solid var(--line); 
 }
 .about-image::after {
   content: '';
@@ -783,7 +782,7 @@ section { position: relative; z-index: 2; }
   line-height: 1.65;
 }
 
-/* CA Box (Tinggi sama, Copy di pinggir) */
+/* CA Box */
 .ca-box {
   display: inline-flex;
   align-items: stretch;
@@ -994,7 +993,6 @@ footer {
 <canvas id="particle-canvas"></canvas>
 <div id="custom-cursor"></div>
 
-<!-- Toast Notification Element -->
 <div id="toast" class="toast">BULL HAS BEEN ADDED</div>
 
 <nav class="nav">
@@ -1011,7 +1009,6 @@ footer {
   <a href="https://pump.fun/" target="_blank" rel="noopener" class="nav-cta">Buy on pump.fun ↗</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-grid" id="hero-grid"></div>
   <div class="hero-overlay">
@@ -1026,7 +1023,6 @@ footer {
   </div>
 </section>
 
-<!-- MARQUEE -->
 <div class="marquee">
   <div class="marquee-track">
     <span class="amber bull">$NFB</span>
@@ -1048,7 +1044,6 @@ footer {
   </div>
 </div>
 
-<!-- ABOUT -->
 <section class="section-pad" id="about">
   <div class="container">
     <div class="sticky-pair">
@@ -1096,7 +1091,6 @@ footer {
   </div>
 </section>
 
-<!-- TOKENOMICS -->
 <section class="section-pad" id="tokenomics" style="border-top: 1px solid var(--line);">
   <div class="container">
     <div class="section-label fade-up">002 / TOKENOMICS</div>
@@ -1141,7 +1135,6 @@ footer {
   </div>
 </section>
 
-<!-- HOW TO BUY -->
 <section class="section-pad" style="border-top: 1px solid var(--line);">
   <div class="container">
     <div class="section-label fade-up">003 / HOW TO BUY</div>
@@ -1166,7 +1159,6 @@ footer {
   </div>
 </section>
 
-<!-- ROADMAP -->
 <section class="section-pad" id="roadmap" style="border-top: 1px solid var(--line);">
   <div class="container">
     <div class="section-label fade-up">004 / ROADMAP</div>
@@ -1217,7 +1209,6 @@ footer {
   </div>
 </section>
 
-<!-- FAQ -->
 <section class="section-pad" id="faq">
   <div class="container container-narrow">
     <div class="section-label fade-up">005 / FAQ</div>
@@ -1263,7 +1254,6 @@ footer {
   </div>
 </section>
 
-<!-- CTA -->
 <section class="cta-section">
   <div class="section-label fade-up">006 / JOIN THE HERD</div>
   <h2 class="cta-title fade-up">FIND THE BULL.<br><span class="amber">BE THE HERD.</span></h2>
@@ -1300,7 +1290,6 @@ footer {
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div>
@@ -1317,7 +1306,6 @@ footer {
   </div>
 </footer>
 
-<!-- three.js for particles -->
 <script type="importmap">
 { "imports": { "three": "https://unpkg.com/three@0.183/build/three.module.js" } }
 </script>
@@ -1485,7 +1473,7 @@ for (let r = 0; r < rows; r++) {
       cell.textContent = textCell.txt;
     } else {
       cell.classList.add('is-image');
-      cell.style.backgroundImage = "url('bull.png')";
+      // Default background di-set kosong, akan diatur oleh updateHeroImageSize()
     }
     
     const cellW = 100 / cols;
@@ -1501,25 +1489,28 @@ for (let r = 0; r < rows; r++) {
 const allCells = heroGrid.querySelectorAll('.grid-cell');
 
 function updateHeroImageSize() {
-  // Gunakan offsetWidth/Height dari heroGrid agar persis sama dengan ukuran element HTML 
-  // (menyelesaikan bug min-height: 720px di HP yang menyebabkan hitung window.height salah)
   const W = heroGrid.offsetWidth;
   const H = heroGrid.offsetHeight;
-  const imgRatio = 16 / 9; 
+  
+  // Deteksi apakah tampilan HP atau Desktop
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+  
+  // Pilih file gambar dan rasio yang sesuai
+  const imgUrl = isMobile ? "url('bullhp.png')" : "url('bull.png')";
+  // Asumsi bullhp.png itu portrait (9:16). Jika tidak, ubah rasio di bawah ini.
+  const imgRatio = isMobile ? (9 / 16) : (16 / 9); 
+  
   let bgW, bgH;
-
   if (W / H > imgRatio) {
-    // Landscape
     bgW = W;
     bgH = W / imgRatio;
   } else {
-    // Portrait (Mobile)
     bgH = H;
     bgW = H * imgRatio;
   }
 
-  // Posisi kanan (Right-Center) saat mobile
-  const offsetX = bgW - W; 
+  // Posisi tengah (Center) agar gambar terlihat pas
+  const offsetX = (bgW - W) / 2; 
   const offsetY = (bgH - H) / 2; 
 
   const cellWPx = W / cols;
@@ -1529,6 +1520,7 @@ function updateHeroImageSize() {
     if (cell.classList.contains('is-image')) {
       const r = parseInt(cell.dataset.r);
       const c = parseInt(cell.dataset.c);
+      cell.style.backgroundImage = imgUrl; // Update gambar otomatis
       cell.style.backgroundSize = `${bgW}px ${bgH}px`;
       cell.style.backgroundPosition = `-${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px`;
     }
