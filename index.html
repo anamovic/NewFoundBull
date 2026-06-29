@@ -37,7 +37,7 @@ body {
   -webkit-font-smoothing: antialiased;
   position: relative;
 }
-@media (pointer: coarse) { body { cursor: auto; } }
+@media (pointer: coarse) { body { cursor: auto; } button, a { cursor: pointer; } }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: none; background: none; border: none; color: inherit; }
 @media (pointer: coarse) { button { cursor: pointer; } }
@@ -64,7 +64,9 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
 #particle-canvas {
   position: fixed; top: 0; left: 0;
   width: 100vw; height: 100vh;
-  z-index: 0; pointer-events: none;
+  z-index: 10; 
+  pointer-events: none;
+  mix-blend-mode: screen; 
 }
 
 /* custom cursor */
@@ -73,7 +75,7 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
   width: 12px; height: 12px;
   border-radius: 50%; background: var(--text);
   mix-blend-mode: difference;
-  pointer-events: none; z-index: 9999;
+  pointer-events: none; z-index: 99999;
   will-change: transform, width, height;
   transition: width .3s var(--ease-quiet), height .3s var(--ease-quiet), opacity .3s var(--ease-quiet);
 }
@@ -158,7 +160,6 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
 .hero-grid {
   position: absolute; inset: 0;
   transform-style: preserve-3d;
-  z-index: 2;
 }
 .grid-cell {
   position: absolute;
@@ -178,24 +179,9 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
   font-size: 14px;
   color: var(--highlight);
   letter-spacing: 0.1em;
-  z-index: 2; /* Supaya tulisan tidak tertutup gelembung */
 }
 .grid-cell.is-image {
   filter: grayscale(0.6) contrast(1.05) brightness(0.45);
-}
-/* Gelembung background menyatu di atas gambar hero (bull.png) */
-.grid-cell.is-image::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('background%20bull.png');
-  background-position: var(--bubble-pos, 0% 0%);
-  background-size: var(--bubble-size, 100% 100%);
-  background-repeat: no-repeat;
-  mix-blend-mode: screen;
-  opacity: 0.9;
-  pointer-events: none;
-  z-index: 1;
 }
 
 .hero::after {
@@ -212,7 +198,7 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
   position: absolute; inset: 0;
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 2rem 2rem 3.5rem;
-  z-index: 5;
+  z-index: 20; 
   pointer-events: none;
 }
 .hero-overlay > * { pointer-events: auto; }
@@ -423,27 +409,13 @@ section { position: relative; z-index: 2; }
   filter: grayscale(0.4) contrast(1.05) brightness(0.85);
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--line);
-}
-/* Gelembung background menyatu di atas gambar about (bull1x.png & bull2x.png) */
-.about-image::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('background%20bull.png');
-  background-size: cover;
-  background-position: center;
-  mix-blend-mode: screen;
-  opacity: 0.9;
-  pointer-events: none;
-  z-index: 1;
+  border: 1px solid var(--line); /* Menggunakan border */
 }
 .about-image::after {
   content: '';
   position: absolute; inset: 0;
   background: linear-gradient(135deg, transparent 50%, rgba(200,170,130,0.15) 100%);
   pointer-events: none;
-  z-index: 2;
 }
 .about-image-caption {
   font-family: 'JetBrains Mono', monospace;
@@ -767,7 +739,7 @@ section { position: relative; z-index: 2; }
   transition: max-height 500ms var(--ease-quiet);
   padding-left: 2.5rem; padding-right: 2rem;
 }
-.faq-item.is-open .faq-a { max-height: 500px; padding-bottom: 2rem; }
+.faq-item.is-open .faq-a { max-height: 1000px; padding-bottom: 2rem; }
 .faq-a p {
   font-size: 15px; line-height: 1.7; color: var(--text-soft);
 }
@@ -1352,9 +1324,6 @@ import * as THREE from 'three';
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-// Deteksi mode HP (mobile) — untuk tile flip grid, gunakan bullhp.png supaya tidak peyang
-const isMobile = window.matchMedia('(max-width: 768px)').matches;
-const heroImgSrc = isMobile ? 'bullhp.png' : 'bull.png';
 
 // ============ PARTICLE FIELD ============
 const canvas = document.getElementById('particle-canvas');
@@ -1439,7 +1408,6 @@ if (!reduceMotion) {
         const t = clock.getElapsedTime();
         points.material.uniforms.uTime.value = t;
         points2.material.uniforms.uTime.value = t;
-        // Dibuat normal (0.05 -> 0.05)
         targetX += (mouseX - targetX) * 0.05;
         targetY += (mouseY - targetY) * 0.05;
         scene.rotation.y = targetX * 0.2;
@@ -1450,10 +1418,9 @@ if (!reduceMotion) {
     }
     animate();
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => particleVisible = e.isIntersecting);
+    document.addEventListener('visibilitychange', () => {
+      particleVisible = !document.hidden;
     });
-    observer.observe(canvas);
   } catch (err) {
     console.warn('Particle field disabled:', err);
     canvas.style.display = 'none';
@@ -1473,7 +1440,6 @@ if (!isCoarse) {
     hover = !!(t.closest('a,button,.faq-q,.step-card,.stat-cell,.phase,.social-link,.copy-btn,.distribution-row'));
   });
   (function loop(){
-    // Sensitivitas mouse dibuat normal (0.25)
     pos.x += (target.x - pos.x) * 0.25;
     pos.y += (target.y - pos.y) * 0.25;
     const s = hover ? 48 : 12;
@@ -1486,22 +1452,19 @@ if (!isCoarse) {
 
 // ============ HERO TILE FLIP GRID ============
 const heroGrid = document.getElementById('hero-grid');
-const rows = 6, cols = 8;
+const rows = 9, cols = 8; 
 const amberCells = [
-  {r:0,c:3},{r:1,c:6},{r:2,c:1},{r:3,c:5},{r:4,c:2},{r:5,c:7}
+  {r:1,c:3},{r:2,c:6},{r:4,c:1},{r:5,c:5},{r:7,c:2},{r:8,c:6}
 ];
 const blackCells = [
-  {r:0,c:0},{r:1,c:2},{r:2,c:6},{r:3,c:0},{r:4,c:5},{r:5,c:3}
+  {r:0,c:0},{r:1,c:5},{r:3,c:2},{r:4,c:7},{r:6,c:0},{r:8,c:4}
 ];
 const textCells = [
   {r:0,c:6, txt:'$NFB'},
-  {r:2,c:4, txt:'BULL'},
-  {r:4,c:7, txt:'SOL'},
-  {r:5,c:1, txt:'001'},
+  {r:3,c:4, txt:'BULL'},
+  {r:5,c:1, txt:'SOL'},
+  {r:7,c:5, txt:'001'},
 ];
-
-const cellW = 100 / cols;
-const cellH = 100 / rows;
 
 for (let r = 0; r < rows; r++) {
   for (let c = 0; c < cols; c++) {
@@ -1510,6 +1473,9 @@ for (let r = 0; r < rows; r++) {
     const textCell = textCells.find(p => p.r===r && p.c===c);
     const cell = document.createElement('div');
     cell.className = 'grid-cell';
+    cell.dataset.r = r; 
+    cell.dataset.c = c; 
+    
     if (isAmber) cell.classList.add('is-amber');
     else if (isBlack) cell.classList.add('is-black');
     else if (textCell) {
@@ -1517,17 +1483,11 @@ for (let r = 0; r < rows; r++) {
       cell.textContent = textCell.txt;
     } else {
       cell.classList.add('is-image');
-      // Mobile -> bullhp.png | Desktop -> bull.png
-      cell.style.backgroundImage = `url('${heroImgSrc}')`;
-      const pos = `${c/(cols-1)*100}% ${r/(rows-1)*100}%`;
-      const size = `${cols*100}% ${rows*100}%`;
-      cell.style.backgroundPosition = pos;
-      cell.style.backgroundSize = size;
-      
-      // Set variabel CSS untuk ::before gelembung supaya posisinya presisi dengan gambar utama
-      cell.style.setProperty('--bubble-pos', pos);
-      cell.style.setProperty('--bubble-size', size);
+      cell.style.backgroundImage = "url('bull.png')";
     }
+    
+    const cellW = 100 / cols;
+    const cellH = 100 / rows;
     cell.style.left = `${c*cellW}%`;
     cell.style.top = `${r*cellH}%`;
     cell.style.width = `${cellW}%`;
@@ -1537,6 +1497,43 @@ for (let r = 0; r < rows; r++) {
 }
 
 const allCells = heroGrid.querySelectorAll('.grid-cell');
+
+function updateHeroImageSize() {
+  const W = window.innerWidth;
+  const H = window.innerHeight;
+  const imgRatio = 16 / 9; 
+  let bgW, bgH;
+
+  if (W / H > imgRatio) {
+    bgW = W;
+    bgH = W / imgRatio;
+  } else {
+    bgH = H;
+    bgW = H * imgRatio;
+  }
+
+  // Posisi kanan (Right-Center): Ambil offset penuh ke kanan, vertikal tetap tengah
+  const offsetX = bgW - W; 
+  const offsetY = (bgH - H) / 2;
+
+  const cellWPx = W / cols;
+  const cellHPx = H / rows;
+
+  allCells.forEach(cell => {
+    if (cell.classList.contains('is-image')) {
+      const r = parseInt(cell.dataset.r);
+      const c = parseInt(cell.dataset.c);
+      cell.style.backgroundSize = `${bgW}px ${bgH}px`;
+      
+      // Posisi kanan secara presisi
+      cell.style.backgroundPosition = `-${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px`;
+    }
+  });
+}
+
+updateHeroImageSize();
+window.addEventListener('resize', updateHeroImageSize);
+
 if (!reduceMotion) {
   allCells.forEach(cell => {
     cell.style.opacity = '0';
@@ -1596,10 +1593,13 @@ document.querySelectorAll('.faq-q').forEach(btn => {
 });
 
 // ============ TOAST NOTIFICATION ============
+let toastTimeout; 
 function showToast() {
   const toast = document.getElementById('toast');
   toast.classList.add('show');
-  setTimeout(() => {
+  
+  clearTimeout(toastTimeout); 
+  toastTimeout = setTimeout(() => {
     toast.classList.remove('show');
   }, 2500); 
 }
