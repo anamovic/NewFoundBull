@@ -1483,7 +1483,9 @@ for (let r = 0; r < rows; r++) {
       cell.textContent = textCell.txt;
     } else {
       cell.classList.add('is-image');
-      cell.style.backgroundImage = "url('bull.png')";
+      cell.style.backgroundImage = window.innerWidth <= 768 
+  ? "url('bullhp.png')" 
+  : "url('bull.png')";
     }
     
     const cellW = 100 / cols;
