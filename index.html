@@ -921,6 +921,10 @@ section { position: relative; z-index: 2; }
   .hero::after { height: 55%; }
   /* Pecerahkan gambar di HP */
   .grid-cell.is-image { filter: grayscale(0.5) contrast(1.05) brightness(0.65); }
+  /* Hilangkan garis tepi kotak agar mulus */
+  .grid-cell { box-shadow: none !important; }
+  /* Tambahkan bayangan pada teks hero agar terbaca di atas gambar */
+  .hero-title, .hero-sub { text-shadow: 0 2px 15px rgba(0,0,0,0.9); }
 }
 
 /* footer */
@@ -1453,19 +1457,10 @@ const isMobileView = window.matchMedia("(max-width: 768px)").matches;
 
 let amberCells, blackCells, textCells;
 if (isMobileView) {
-  // Posisi pinggir untuk HP agar tengah gambar bullhp.png tidak tertutup kotak
-  amberCells = [
-    {r:0,c:2},{r:0,c:5},{r:8,c:2},{r:8,c:5},{r:3,c:0},{r:5,c:7}
-  ];
-  blackCells = [
-    {r:1,c:0},{r:1,c:7},{r:7,c:0},{r:7,c:7},{r:4,c:1},{r:4,c:6}
-  ];
-  textCells = [
-    {r:0,c:0, txt:'$NFB'},
-    {r:8,c:7, txt:'BULL'},
-    {r:4,c:0, txt:'SOL'},
-    {r:4,c:7, txt:'001'},
-  ];
+  // HAPUS SEMUA KOTAK SOLID di mode HP agar gambar utuh & mulus tanpa kotak putih/hitam
+  amberCells = [];
+  blackCells = [];
+  textCells = [];
 } else {
   // Posisi desktop
   amberCells = [
