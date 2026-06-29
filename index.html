@@ -398,15 +398,22 @@ section { position: relative; z-index: 2; }
   line-height: 1.15;
 }
 
-/* Transparent PNG Image Styling */
-.bull-img {
+/* Bordered Image Styling (Kembali ke awal) */
+.about-image {
   width: 100%;
-  min-height: 450px;
-  background-size: contain;
+  aspect-ratio: 4/5;
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  filter: grayscale(0.4) contrast(1.05) brightness(0.85);
   position: relative;
   overflow: hidden;
+  border: 1px solid var(--line); /* Menggunakan border */
+}
+.about-image::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 50%, rgba(200,170,130,0.15) 100%);
+  pointer-events: none;
 }
 .about-image-caption {
   font-family: 'JetBrains Mono', monospace;
@@ -425,7 +432,6 @@ section { position: relative; z-index: 2; }
     position: static; height: auto; padding: 2rem 0;
   }
   .sticky-pair .right { gap: 3rem; padding: 1rem 0 2rem; }
-  .bull-img { min-height: 350px; }
 }
 
 /* tokenomics */
@@ -773,7 +779,7 @@ section { position: relative; z-index: 2; }
   line-height: 1.65;
 }
 
-/* CA Box (Tinggi sama persis dengan tombol, Copy di pinggir) */
+/* CA Box (Tinggi sama, Copy di pinggir) */
 .ca-box {
   display: inline-flex;
   align-items: stretch;
@@ -787,7 +793,7 @@ section { position: relative; z-index: 2; }
   min-width: 450px;
   max-width: 90%;
   overflow: hidden;
-  height: 50px; /* Fixed height matching .btn */
+  height: 50px; 
 }
 .ca-box .ca-label {
   display: flex;
@@ -800,7 +806,7 @@ section { position: relative; z-index: 2; }
   border-right: 1px solid var(--line);
 }
 .ca-box .ca-value {
-  flex: 1; /* Memaksa tombol Copy ke pinggir kanan */
+  flex: 1;
   display: flex;
   align-items: center;
   padding: 0 1rem;
@@ -817,7 +823,7 @@ section { position: relative; z-index: 2; }
   border: none;
   border-left: 1px solid var(--highlight);
   color: var(--highlight);
-  padding: 0 1.75rem; /* Padding kiri-kanan sama dengan .btn */
+  padding: 0 1.75rem; 
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.18em;
@@ -1054,10 +1060,10 @@ footer {
       </div>
       <div class="right">
         <div class="about-block fade-up">
-          <div class="bull-img" style="background-image: url('bull1.png')"></div>
+          <div class="about-image" style="background-image: url('bull1.png')"></div>
           <div class="about-image-caption">
             <span>FIG. 01 — THE CHARGE</span>
-            <span>SOL / 2026</span>
+            <span>SOL / 2025</span>
           </div>
         </div>
         <div class="about-block fade-up">
@@ -1066,7 +1072,7 @@ footer {
           <p>No VC unlocks. No advisor cliffs. No foundation wallet waiting to dump on your grandma. Just a bull that was lost, then found, then set free to run.</p>
         </div>
         <div class="about-block fade-up">
-          <div class="bull-img" style="background-image: url('bull2.png');"></div>
+          <div class="about-image" style="background-image: url('bull2.png'); aspect-ratio: 4/3;"></div>
           <div class="about-image-caption">
             <span>FIG. 02 — HORNS UP</span>
             <span>ON-CHAIN</span>
@@ -1410,10 +1416,11 @@ if (!reduceMotion) {
         const t = clock.getElapsedTime();
         points.material.uniforms.uTime.value = t;
         points2.material.uniforms.uTime.value = t;
+        // Dibuat normal (0.05 -> 0.05)
         targetX += (mouseX - targetX) * 0.05;
         targetY += (mouseY - targetY) * 0.05;
-        scene.rotation.y = targetX * 0.3;
-        scene.rotation.x = targetY * 0.2;
+        scene.rotation.y = targetX * 0.2;
+        scene.rotation.x = targetY * 0.1;
         renderer.render(scene, camera);
       }
       requestAnimationFrame(animate);
@@ -1443,8 +1450,9 @@ if (!isCoarse) {
     hover = !!(t.closest('a,button,.faq-q,.step-card,.stat-cell,.phase,.social-link,.copy-btn,.distribution-row'));
   });
   (function loop(){
-    pos.x += (target.x - pos.x) * 0.18;
-    pos.y += (target.y - pos.y) * 0.18;
+    // Sensitivitas mouse dibuat normal (0.25)
+    pos.x += (target.x - pos.x) * 0.25;
+    pos.y += (target.y - pos.y) * 0.25;
     const s = hover ? 48 : 12;
     cur.style.transform = `translate(${pos.x - s/2}px, ${pos.y - s/2}px)`;
     cur.style.width = cur.style.height = s + 'px';
@@ -1486,7 +1494,8 @@ for (let r = 0; r < rows; r++) {
       cell.textContent = textCell.txt;
     } else {
       cell.classList.add('is-image');
-      cell.style.backgroundImage = "url('bull1.png')";
+      // DIGANTI MENJADI bull.png
+      cell.style.backgroundImage = "url('bull.png')";
       cell.style.backgroundPosition = `${c/(cols-1)*100}% ${r/(rows-1)*100}%`;
       cell.style.backgroundSize = `${cols*100}% ${rows*100}%`;
     }
@@ -1563,7 +1572,7 @@ function showToast() {
   toast.classList.add('show');
   setTimeout(() => {
     toast.classList.remove('show');
-  }, 2500); // Toast hilang setelah 2.5 detik
+  }, 2500); 
 }
 
 // ============ COPY CA ============
