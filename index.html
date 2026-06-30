@@ -1519,7 +1519,8 @@ const allCells = heroGrid.querySelectorAll('.grid-cell');
 function updateHeroImageSize() {
   const W = window.innerWidth;
   const H = window.innerHeight;
-  const imgRatio = 16 / 9; 
+  // Gunakan rasio 9:16 (Portrait) untuk HP, dan 16:9 (Landscape) untuk Desktop
+  const imgRatio = W <= 768 ? (9 / 16) : (16 / 9); 
   let bgW, bgH;
 
   if (W / H > imgRatio) {
@@ -1530,8 +1531,8 @@ function updateHeroImageSize() {
     bgW = H * imgRatio;
   }
 
-  // Posisi kanan (Right-Center): Ambil offset penuh ke kanan, vertikal tetap tengah
-  const offsetX = bgW - W; 
+  // Posisi: Di HP biarkan tengah (centered), di Desktop tetap ke kanan (right)
+  const offsetX = W <= 768 ? (bgW - W) / 2 : (bgW - W); 
   const offsetY = (bgH - H) / 2;
 
   const cellWPx = W / cols;
@@ -1542,14 +1543,11 @@ function updateHeroImageSize() {
       const r = parseInt(cell.dataset.r);
       const c = parseInt(cell.dataset.c);
       
-      // Menerapkan Logika Anda + Menggabungkan Gelembung (Layer 2)
-      const mainImg = window.innerWidth <= 768 ? "url('bullhp.png')" : "url('bull.png')";
+      const mainImg = W <= 768 ? "url('bullhp.png')" : "url('bull.png')";
       const bubbleImg = "url('background%20bull.png')";
       
       cell.style.backgroundImage = `${mainImg}, ${bubbleImg}`;
       cell.style.backgroundSize = `${bgW}px ${bgH}px, ${bgW}px ${bgH}px`;
-      
-      // Posisi kanan secara presisi (sama untuk gambar bull dan gelembung)
       cell.style.backgroundPosition = `-${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px, -${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px`;
     }
   });
