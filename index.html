@@ -182,6 +182,8 @@ button { font-family: inherit; cursor: none; background: none; border: none; col
 }
 .grid-cell.is-image {
   filter: grayscale(0.6) contrast(1.05) brightness(0.45);
+  /* Blend mode supaya gelembung background menyatu dengan bull.png */
+  background-blend-mode: normal, screen;
 }
 
 .hero::after {
@@ -409,13 +411,27 @@ section { position: relative; z-index: 2; }
   filter: grayscale(0.4) contrast(1.05) brightness(0.85);
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--line); /* Menggunakan border */
+  border: 1px solid var(--line);
+}
+/* Gelembung background menyatu di atas gambar about (bull1x.png & bull2x.png) */
+.about-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('background%20bull.png');
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 1;
 }
 .about-image::after {
   content: '';
   position: absolute; inset: 0;
   background: linear-gradient(135deg, transparent 50%, rgba(200,170,130,0.15) 100%);
   pointer-events: none;
+  z-index: 2;
 }
 .about-image-caption {
   font-family: 'JetBrains Mono', monospace;
@@ -1455,18 +1471,19 @@ const heroGrid = document.getElementById('hero-grid');
 const isMobile = window.innerWidth <= 768;
 const rows = isMobile ? 8 : 9;
 const cols = isMobile ? 4 : 8; 
-const amberCells = [
-  {r:1,c:3},{r:2,c:6},{r:4,c:1},{r:5,c:5},{r:7,c:2},{r:8,c:6}
-];
-const blackCells = [
-  {r:0,c:0},{r:1,c:5},{r:3,c:2},{r:4,c:7},{r:6,c:0},{r:8,c:4}
-];
-const textCells = [
-  {r:0,c:6, txt:'$NFB'},
-  {r:3,c:4, txt:'BULL'},
-  {r:5,c:1, txt:'SOL'},
-  {r:7,c:5, txt:'001'},
-];
+
+// Koordinat dipisah agar tidak out of bounds di HP (maks c:3, r:7)
+const amberCellsDesktop = [{r:1,c:3},{r:2,c:6},{r:4,c:1},{r:5,c:5},{r:7,c:2},{r:8,c:6}];
+const blackCellsDesktop = [{r:0,c:0},{r:1,c:5},{r:3,c:2},{r:4,c:7},{r:6,c:0},{r:8,c:4}];
+const textCellsDesktop = [{r:0,c:6, txt:'$NFB'},{r:3,c:4, txt:'BULL'},{r:5,c:1, txt:'SOL'},{r:7,c:5, txt:'001'}];
+
+const amberCellsMobile = [{r:1,c:2},{r:3,c:0},{r:4,c:3},{r:6,c:1}];
+const blackCellsMobile = [{r:0,c:0},{r:2,c:2},{r:5,c:0},{r:7,c:3}];
+const textCellsMobile = [{r:0,c:3, txt:'$NFB'},{r:2,c:1, txt:'BULL'},{r:5,c:2, txt:'SOL'},{r:7,c:0, txt:'001'}];
+
+const amberCells = isMobile ? amberCellsMobile : amberCellsDesktop;
+const blackCells = isMobile ? blackCellsMobile : blackCellsDesktop;
+const textCells = isMobile ? textCellsMobile : textCellsDesktop;
 
 for (let r = 0; r < rows; r++) {
   for (let c = 0; c < cols; c++) {
@@ -1485,9 +1502,6 @@ for (let r = 0; r < rows; r++) {
       cell.textContent = textCell.txt;
     } else {
       cell.classList.add('is-image');
-      cell.style.backgroundImage = window.innerWidth <= 768 
-  ? "url('bullhp.png')" 
-  : "url('bull.png')";
     }
     
     const cellW = 100 / cols;
@@ -1527,10 +1541,16 @@ function updateHeroImageSize() {
     if (cell.classList.contains('is-image')) {
       const r = parseInt(cell.dataset.r);
       const c = parseInt(cell.dataset.c);
-      cell.style.backgroundSize = `${bgW}px ${bgH}px`;
       
-      // Posisi kanan secara presisi
-      cell.style.backgroundPosition = `-${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px`;
+      // Menerapkan Logika Anda + Menggabungkan Gelembung (Layer 2)
+      const mainImg = window.innerWidth <= 768 ? "url('bullhp.png')" : "url('bull.png')";
+      const bubbleImg = "url('background%20bull.png')";
+      
+      cell.style.backgroundImage = `${mainImg}, ${bubbleImg}`;
+      cell.style.backgroundSize = `${bgW}px ${bgH}px, ${bgW}px ${bgH}px`;
+      
+      // Posisi kanan secara presisi (sama untuk gambar bull dan gelembung)
+      cell.style.backgroundPosition = `-${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px, -${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px`;
     }
   });
 }
