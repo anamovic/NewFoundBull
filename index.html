@@ -1484,12 +1484,12 @@ const rows = isMobile ? 8 : 9;
 const cols = isMobile ? 4 : 8; 
 
 // Koordinat dipisah agar tidak out of bounds di HP (maks c:3, r:7)
-const amberCellsDesktop = [{r:1,c:3},{r:5,c:7},{r:4,c:1},{r:5,c:5},{r:7,c:2},{r:8,c:6}];
+const amberCellsDesktop = [{r:1,c:3},{r:5,c:7},{r:4,c:3},{r:5,c:5},{r:7,c:2},{r:8,c:6}];
 const blackCellsDesktop = [{r:0,c:0},{r:1,c:5},{r:3,c:2},{r:4,c:7},{r:6,c:0},{r:8,c:4}];
 const textCellsDesktop = [{r:0,c:6, txt:'$NFB'},{r:3,c:4, txt:'BULL'},{r:5,c:1, txt:'SOL'},{r:7,c:5, txt:'001'}];
 
-const amberCellsMobile = [{r:1,c:2},{r:3,c:0},{r:4,c:3},{r:6,c:1}];
-const blackCellsMobile = [{r:0,c:0},{r:2,c:2},{r:5,c:0},{r:7,c:3}];
+const amberCellsMobile = [{r:1,c:2},{r:3,c:2},{r:4,c:3},{r:6,c:1}];
+const blackCellsMobile = [{r:0,c:0},{r:2,c:3},{r:5,c:0},{r:7,c:3}];
 const textCellsMobile = [{r:0,c:3, txt:'$NFB'},{r:2,c:1, txt:'BULL'},{r:5,c:2, txt:'SOL'},{r:7,c:0, txt:'001'}];
 
 const amberCells = isMobile ? amberCellsMobile : amberCellsDesktop;
