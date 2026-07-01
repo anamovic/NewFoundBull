@@ -1479,11 +1479,9 @@ if (!isCoarse) {
 
 // ============ HERO TILE FLIP GRID ============
 const heroGrid = document.getElementById('hero-grid');
-const isMobile = window.innerWidth <= 768;
-const rows = isMobile ? 8 : 9;
-const cols = isMobile ? 4 : 8; 
 
-// Koordinat dipisah agar tidak out of bounds di HP (maks c:3, r:7)
+let isMobile, rows, cols, amberCells, blackCells, textCells, allCells;
+
 const amberCellsDesktop = [{r:1,c:3},{r:5,c:7},{r:4,c:3},{r:5,c:5},{r:7,c:2},{r:8,c:6}];
 const blackCellsDesktop = [{r:0,c:0},{r:1,c:4},{r:6,c:3},{r:4,c:7},{r:6,c:0},{r:8,c:4}];
 const textCellsDesktop = [{r:0,c:6, txt:'$NFB'},{r:3,c:4, txt:'BULL'},{r:5,c:1, txt:'SOL'},{r:7,c:5, txt:'001'}];
@@ -1491,47 +1489,70 @@ const textCellsDesktop = [{r:0,c:6, txt:'$NFB'},{r:3,c:4, txt:'BULL'},{r:5,c:1, 
 const amberCellsMobile = [{r:6,c:3},{r:4,c:0},{r:4,c:3},{r:6,c:1}];
 const blackCellsMobile = [{r:0,c:0},{r:2,c:3},{r:5,c:0},{r:7,c:3}];
 const textCellsMobile = [{r:0,c:3, txt:'$NFB'},{r:1,c:0, txt:'BULL'},{r:5,c:2, txt:'SOL'},{r:7,c:0, txt:'001'}];
-  
-const amberCells = isMobile ? amberCellsMobile : amberCellsDesktop;
-const blackCells = isMobile ? blackCellsMobile : blackCellsDesktop;
-const textCells = isMobile ? textCellsMobile : textCellsDesktop;
 
-for (let r = 0; r < rows; r++) {
-  for (let c = 0; c < cols; c++) {
-    const isAmber = amberCells.some(p => p.r===r && p.c===c);
-    const isBlack = blackCells.some(p => p.r===r && p.c===c);
-    const textCell = textCells.find(p => p.r===r && p.c===c);
-    const cell = document.createElement('div');
-    cell.className = 'grid-cell';
-    cell.dataset.r = r; 
-    cell.dataset.c = c; 
-    
-    if (isAmber) cell.classList.add('is-amber');
-    else if (isBlack) cell.classList.add('is-black');
-    else if (textCell) {
-      cell.classList.add('is-text');
-      cell.textContent = textCell.txt;
-    } else {
-      cell.classList.add('is-image');
+function buildHeroGrid() {
+  const wasMobile = isMobile;
+  isMobile = window.innerWidth <= 768;
+
+  // Kalau breakpoint-nya nggak berubah (misal cuma sedikit resize di desktop),
+  // nggak perlu rebuild grid dari nol — cukup update posisi gambar.
+  if (wasMobile === isMobile && heroGrid.children.length > 0) {
+    updateHeroImageSize();
+    return;
+  }
+
+  rows = isMobile ? 8 : 9;
+  cols = isMobile ? 4 : 8;
+  amberCells = isMobile ? amberCellsMobile : amberCellsDesktop;
+  blackCells = isMobile ? blackCellsMobile : blackCellsDesktop;
+  textCells = isMobile ? textCellsMobile : textCellsDesktop;
+
+  heroGrid.innerHTML = ''; // bersihin sel lama sebelum rebuild
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const isAmber = amberCells.some(p => p.r===r && p.c===c);
+      const isBlack = blackCells.some(p => p.r===r && p.c===c);
+      const textCell = textCells.find(p => p.r===r && p.c===c);
+      const cell = document.createElement('div');
+      cell.className = 'grid-cell';
+      cell.dataset.r = r;
+      cell.dataset.c = c;
+
+      if (isAmber) cell.classList.add('is-amber');
+      else if (isBlack) cell.classList.add('is-black');
+      else if (textCell) {
+        cell.classList.add('is-text');
+        cell.textContent = textCell.txt;
+      } else {
+        cell.classList.add('is-image');
+      }
+
+      const cellW = 100 / cols;
+      const cellH = 100 / rows;
+      cell.style.left = `${c*cellW}%`;
+      cell.style.top = `${r*cellH}%`;
+      cell.style.width = `${cellW}%`;
+      cell.style.height = `${cellH}%`;
+      heroGrid.appendChild(cell);
     }
-    
-    const cellW = 100 / cols;
-    const cellH = 100 / rows;
-    cell.style.left = `${c*cellW}%`;
-    cell.style.top = `${r*cellH}%`;
-    cell.style.width = `${cellW}%`;
-    cell.style.height = `${cellH}%`;
-    heroGrid.appendChild(cell);
+  }
+
+  allCells = heroGrid.querySelectorAll('.grid-cell');
+  updateHeroImageSize();
+
+  // Replay animasi masuk hanya di build pertama (biar nggak flicker tiap resize)
+  if (wasMobile === undefined) {
+    playHeroGridEntranceAnimation();
+  } else {
+    allCells.forEach(cell => { cell.style.opacity = '1'; cell.style.transform = 'none'; });
   }
 }
-
-const allCells = heroGrid.querySelectorAll('.grid-cell');
 
 function updateHeroImageSize() {
   const W = window.innerWidth;
   const H = window.innerHeight;
-  // Gunakan rasio 9:16 (Portrait) untuk HP, dan 16:9 (Landscape) untuk Desktop
-  const imgRatio = W <= 768 ? (9 / 16) : (16 / 9); 
+  const imgRatio = W <= 768 ? (9 / 16) : (16 / 9);
   let bgW, bgH;
 
   if (W / H > imgRatio) {
@@ -1542,8 +1563,7 @@ function updateHeroImageSize() {
     bgW = H * imgRatio;
   }
 
-  // Posisi: Di HP biarkan tengah (centered), di Desktop tetap ke kanan (right)
-  const offsetX = W <= 768 ? (bgW - W) / 2 : (bgW - W); 
+  const offsetX = W <= 768 ? (bgW - W) / 2 : (bgW - W);
   const offsetY = W > 768 ? (bgH - H) * 0.2 : (bgH - H) / 2;
 
   const cellWPx = heroGrid.offsetWidth / cols;
@@ -1553,10 +1573,10 @@ function updateHeroImageSize() {
     if (cell.classList.contains('is-image')) {
       const r = parseInt(cell.dataset.r);
       const c = parseInt(cell.dataset.c);
-      
+
       const mainImg = W <= 768 ? "url('bullhp.png')" : "url('bull.png')";
       const bubbleImg = "url('background%20bull.png')";
-      
+
       cell.style.backgroundImage = `${mainImg}, ${bubbleImg}`;
       cell.style.backgroundSize = `${bgW}px ${bgH}px, ${bgW}px ${bgH}px`;
       cell.style.backgroundPosition = `-${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px, -${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px`;
@@ -1564,33 +1584,40 @@ function updateHeroImageSize() {
   });
 }
 
-updateHeroImageSize();
-window.addEventListener('resize', updateHeroImageSize);
-
-if (!reduceMotion) {
-  allCells.forEach(cell => {
-    cell.style.opacity = '0';
-    cell.style.transform = 'rotateX(90deg) translateY(-100px)';
-    cell.style.transformOrigin = 'top center';
-  });
-  const indices = Array.from(allCells.keys()).sort(() => Math.random() - 0.5);
-  setTimeout(() => {
-    indices.forEach((idx, order) => {
-      const cell = allCells[idx];
-      cell.style.transition = 'opacity 900ms var(--ease-emphasis), transform 900ms var(--ease-emphasis)';
-      cell.style.transitionDelay = (order * 0.025) + 's';
-      requestAnimationFrame(() => {
-        cell.style.opacity = '1';
-        cell.style.transform = 'none';
-      });
+function playHeroGridEntranceAnimation() {
+  if (!reduceMotion) {
+    allCells.forEach(cell => {
+      cell.style.opacity = '0';
+      cell.style.transform = 'rotateX(90deg) translateY(-100px)';
+      cell.style.transformOrigin = 'top center';
     });
-  }, 250);
-} else {
-  allCells.forEach(cell => {
-    cell.style.opacity = '1';
-    cell.style.transform = 'none';
-  });
+    const indices = Array.from(allCells.keys()).sort(() => Math.random() - 0.5);
+    setTimeout(() => {
+      indices.forEach((idx, order) => {
+        const cell = allCells[idx];
+        cell.style.transition = 'opacity 900ms var(--ease-emphasis), transform 900ms var(--ease-emphasis)';
+        cell.style.transitionDelay = (order * 0.025) + 's';
+        requestAnimationFrame(() => {
+          cell.style.opacity = '1';
+          cell.style.transform = 'none';
+        });
+      });
+    }, 250);
+  } else {
+    allCells.forEach(cell => {
+      cell.style.opacity = '1';
+      cell.style.transform = 'none';
+    });
+  }
 }
+
+buildHeroGrid();
+
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(buildHeroGrid, 200); // debounce 200ms
+});
 
 // ============ FADE UP OBSERVER ============
 const fadeObserver = new IntersectionObserver((entries) => {
