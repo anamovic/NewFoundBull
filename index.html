@@ -1533,7 +1533,7 @@ function updateHeroImageSize() {
 
   // Posisi: Di HP biarkan tengah (centered), di Desktop tetap ke kanan (right)
   const offsetX = W <= 768 ? (bgW - W) / 2 : (bgW - W); 
-  const offsetY = (bgH - H) / 2;
+  const offsetY = W > 768 ? (bgH - H) * 0.8 : (bgH - H) / 2;
 
   const cellWPx = heroGrid.offsetWidth / cols;
   const cellHPx = heroGrid.offsetHeight / rows;
