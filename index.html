@@ -42,898 +42,357 @@ a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: none; background: none; border: none; color: inherit; }
 @media (pointer: coarse) { button { cursor: pointer; } }
 ::selection { background: var(--highlight); color: var(--bg); }
-
-/* Background Image Layer */
 .bg-image {
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background-image: url('background%20bull.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
   z-index: -2;
 }
-.bg-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.78);
-  z-index: -1;
-}
-
-/* particle canvas */
+.bg-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.78); z-index: -1; }
 #particle-canvas {
   position: fixed; top: 0; left: 0;
   width: 100vw; height: 100vh;
-  z-index: 10; 
-  pointer-events: none;
-  mix-blend-mode: screen; 
+  z-index: 10; pointer-events: none; mix-blend-mode: screen;
 }
-
-/* custom cursor */
 #custom-cursor {
   position: fixed; top: 0; left: 0;
-  width: 12px; height: 12px;
-  border-radius: 50%; background: var(--text);
-  mix-blend-mode: difference;
-  pointer-events: none; z-index: 99999;
+  width: 12px; height: 12px; border-radius: 50%; background: var(--text);
+  mix-blend-mode: difference; pointer-events: none; z-index: 99999;
   will-change: transform, width, height;
   transition: width .3s var(--ease-quiet), height .3s var(--ease-quiet), opacity .3s var(--ease-quiet);
 }
 @media (pointer: coarse) { #custom-cursor { display: none; } }
-
-/* nav */
 .nav {
   position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
   padding: 1.25rem 2rem;
   display: flex; justify-content: space-between; align-items: center;
   border-bottom: 1px solid var(--line);
   background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
 }
 .nav-brand {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace; font-weight: 700;
+  font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase;
   display: flex; align-items: center; gap: 0.5rem;
 }
 .nav-brand .dot {
-  display: inline-block;
-  width: 6px; height: 6px;
-  background: var(--highlight);
-  border-radius: 50%;
+  display: inline-block; width: 6px; height: 6px;
+  background: var(--highlight); border-radius: 50%;
   animation: pulse-dot 2.4s var(--ease-quiet) infinite;
 }
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 .nav-brand span { color: var(--highlight); }
-.nav-links {
-  display: flex; gap: 2.25rem; align-items: center;
-}
+.nav-links { display: flex; gap: 2.25rem; align-items: center; }
 .nav-links a {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-soft);
-  transition: color 300ms var(--ease-quiet);
-  position: relative;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-soft);
+  transition: color 300ms var(--ease-quiet); position: relative;
 }
 .nav-links a::after {
-  content: ''; position: absolute;
-  left: 0; bottom: -4px;
-  width: 0; height: 1px;
-  background: var(--highlight);
+  content: ''; position: absolute; left: 0; bottom: -4px;
+  width: 0; height: 1px; background: var(--highlight);
   transition: width 400ms var(--ease-quiet);
 }
 .nav-links a:hover { color: var(--highlight); }
 .nav-links a:hover::after { width: 100%; }
 .nav-cta {
-  padding: 0.65rem 1.1rem;
-  border: 1px solid var(--highlight);
-  color: var(--highlight);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  padding: 0.65rem 1.1rem; border: 1px solid var(--highlight); color: var(--highlight);
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: 0.15em; text-transform: uppercase;
   transition: all 300ms var(--ease-quiet);
 }
 .nav-cta:hover { background: var(--highlight); color: var(--bg); }
-@media (max-width: 768px) {
-  .nav { padding: 1rem 1.25rem; }
-  .nav-links { display: none; }
-}
-
-/* hero */
+@media (max-width: 768px) { .nav { padding: 1rem 1.25rem; } .nav-links { display: none; } }
 .hero {
-  position: relative;
-  width: 100vw; height: 100vh;
-  min-height: 720px;
-  overflow: hidden;
-  perspective: 1200px;
-  z-index: 2;
+  position: relative; width: 100vw; height: 100vh; min-height: 720px;
+  overflow: hidden; perspective: 1200px; z-index: 2;
 }
-.hero-grid {
-  position: absolute; inset: 0;
-  transform-style: preserve-3d;
-}
+.hero-grid { position: absolute; inset: 0; transform-style: preserve-3d; }
 .grid-cell {
-  position: absolute;
-  background-size: cover;
-  background-repeat: no-repeat;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
+  position: absolute; background-size: cover; background-repeat: no-repeat;
+  will-change: transform, opacity; backface-visibility: hidden;
   border: 0.5px solid rgba(0,0,0,0.6);
 }
 .grid-cell.is-amber { background: var(--highlight); }
 .grid-cell.is-black { background: var(--deep-black); }
 .grid-cell.is-text {
-  background: var(--deep-black);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--highlight);
-  letter-spacing: 0.1em;
+  background: var(--deep-black); display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px;
+  color: var(--highlight); letter-spacing: 0.1em;
 }
-.grid-cell.is-image {
-  filter: grayscale(0.6) contrast(1.05) brightness(0.45);
-  /* Blend mode supaya gelembung background menyatu dengan bull.png */
-  background-blend-mode: normal, screen;
-}
-
+.grid-cell.is-image { filter: grayscale(0.6) contrast(1.05) brightness(0.45); background-blend-mode: normal, screen; }
 .hero::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 70%;
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 70%;
   background: linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.6) 45%, transparent 100%);
-  pointer-events: none;
-  z-index: 3;
+  pointer-events: none; z-index: 3;
 }
-
 .hero-overlay {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 2rem 2rem 3.5rem;
-  z-index: 20; 
-  pointer-events: none;
+  position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 2rem 2rem 3.5rem; z-index: 20; pointer-events: none;
 }
 .hero-overlay > * { pointer-events: auto; }
-
 .hero-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--highlight);
-  margin-bottom: 1.75rem;
-  display: flex; align-items: center; gap: 0.85rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: 0.25em; text-transform: uppercase; color: var(--highlight);
+  margin-bottom: 1.75rem; display: flex; align-items: center; gap: 0.85rem;
 }
-.hero-label::before {
-  content: ''; width: 32px; height: 1px; background: var(--highlight);
-}
-
+.hero-label::before { content: ''; width: 32px; height: 1px; background: var(--highlight); }
 .hero-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: clamp(2.6rem, 10vw, 9rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-  margin-bottom: 2rem;
-  color: var(--text);
+  font-family: 'JetBrains Mono', monospace; font-weight: 700;
+  font-size: clamp(2.6rem, 10vw, 9rem); line-height: 0.92;
+  letter-spacing: -0.04em; margin-bottom: 2rem; color: var(--text);
 }
 .hero-title .accent { color: var(--highlight); }
 .hero-title .ticker {
-  display: inline-block;
-  font-size: 0.35em;
-  vertical-align: super;
-  color: var(--text-mute);
-  margin-left: 0.4em;
-  letter-spacing: 0.02em;
+  display: inline-block; font-size: 0.35em; vertical-align: super;
+  color: var(--text-mute); margin-left: 0.4em; letter-spacing: 0.02em;
 }
-
-.hero-sub {
-  max-width: 580px;
-  font-size: 16px;
-  line-height: 1.65;
-  color: var(--text-soft);
-  margin-bottom: 2.5rem;
-}
+.hero-sub { max-width: 580px; font-size: 16px; line-height: 1.65; color: var(--text-soft); margin-bottom: 2.5rem; }
 .hero-sub strong { color: var(--text); font-weight: 700; }
 .hero-sub .amber { color: var(--highlight); font-family: 'JetBrains Mono', monospace; font-weight: 700; }
-
-.hero-actions {
-  display: flex; gap: 1rem; flex-wrap: wrap;
-  align-items: center;
-}
-
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
 .btn {
   display: inline-flex; align-items: center; gap: 0.75rem;
-  padding: 1.05rem 1.75rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  border: 1px solid var(--line-bright);
-  background: transparent;
-  color: var(--text);
-  transition: all 300ms var(--ease-quiet);
-  text-decoration: none;
+  padding: 1.05rem 1.75rem; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  border: 1px solid var(--line-bright); background: transparent; color: var(--text);
+  transition: all 300ms var(--ease-quiet); text-decoration: none;
 }
 .btn:hover { border-color: var(--highlight); color: var(--highlight); }
-.btn-primary {
-  background: var(--highlight);
-  border-color: var(--highlight);
-  color: var(--bg);
-  font-weight: 700;
-}
-.btn-primary:hover {
-  background: var(--text); border-color: var(--text); color: var(--bg);
-}
-.btn .arrow {
-  font-family: 'JetBrains Mono', monospace;
-  transition: transform 300ms var(--ease-quiet);
-}
+.btn-primary { background: var(--highlight); border-color: var(--highlight); color: var(--bg); font-weight: 700; }
+.btn-primary:hover { background: var(--text); border-color: var(--text); color: var(--bg); }
+.btn .arrow { font-family: 'JetBrains Mono', monospace; transition: transform 300ms var(--ease-quiet); }
 .btn:hover .arrow { transform: translate(2px, -2px); }
-
-/* marquee */
 .marquee {
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: var(--bg);
-  padding: 1.4rem 0;
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;
-  z-index: 2;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  background: var(--bg); padding: 1.4rem 0; overflow: hidden;
+  white-space: nowrap; position: relative; z-index: 2;
 }
-.marquee-track {
-  display: inline-block;
-  animation: marquee-scroll 38s linear infinite;
-  will-change: transform;
-}
+.marquee-track { display: inline-block; animation: marquee-scroll 38s linear infinite; will-change: transform; }
 .marquee-track span {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 1.35rem;
-  letter-spacing: -0.01em;
-  margin-right: 3rem;
-  color: var(--text);
-  display: inline-block;
+  font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.35rem;
+  letter-spacing: -0.01em; margin-right: 3rem; color: var(--text); display: inline-block;
 }
 .marquee-track span.dim { color: var(--text-mute); font-weight: 400; }
 .marquee-track span.amber { color: var(--highlight); }
 .marquee-track span.bull { font-size: 1.6rem; }
-@keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-/* section base */
+@keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 section { position: relative; z-index: 2; }
 .section-pad { padding: 8rem 2rem; }
 .container { max-width: 1400px; margin: 0 auto; }
 .container-narrow { max-width: 860px; margin: 0 auto; }
-
 .section-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--highlight);
-  margin-bottom: 2rem;
-  display: flex; align-items: center; gap: 0.85rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: 0.25em; text-transform: uppercase; color: var(--highlight);
+  margin-bottom: 2rem; display: flex; align-items: center; gap: 0.85rem;
 }
-.section-label::before {
-  content: ''; width: 32px; height: 1px; background: var(--highlight);
-}
-
+.section-label::before { content: ''; width: 32px; height: 1px; background: var(--highlight); }
 .section-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-size: clamp(2.3rem, 5.5vw, 4.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.025em;
-  margin-bottom: 4rem;
+  font-family: 'Inter', sans-serif; font-weight: 900;
+  font-size: clamp(2.3rem, 5.5vw, 4.5rem); line-height: 0.95;
+  letter-spacing: -0.025em; margin-bottom: 4rem;
 }
 .section-title .amber { color: var(--highlight); }
-.section-title em {
-  font-style: normal;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 400;
-  font-size: 0.85em;
-  letter-spacing: -0.02em;
-}
-
-/* fade up */
+.section-title em { font-style: normal; font-family: 'JetBrains Mono', monospace; font-weight: 400; font-size: 0.85em; letter-spacing: -0.02em; }
 .fade-up {
   opacity: 0; transform: translateY(40px);
   transition: opacity 1000ms var(--ease-quiet), transform 1000ms var(--ease-quiet);
   will-change: transform, opacity;
 }
 .fade-up.is-in { opacity: 1; transform: none; }
-
-/* about / sticky two-col */
-.sticky-pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
-  align-items: start;
-}
+.sticky-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
 .sticky-pair .left {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 4rem 0;
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; justify-content: center; padding: 4rem 0;
 }
-.sticky-pair .right {
-  display: flex;
-  flex-direction: column;
-  gap: 5rem;
-  padding: 4rem 0;
-}
-
-.about-block p {
-  font-size: 16.5px;
-  line-height: 1.75;
-  color: var(--text-soft);
-  margin-bottom: 1.5rem;
-}
+.sticky-pair .right { display: flex; flex-direction: column; gap: 5rem; padding: 4rem 0; }
+.about-block p { font-size: 16.5px; line-height: 1.75; color: var(--text-soft); margin-bottom: 1.5rem; }
 .about-block p strong { color: var(--text); font-weight: 700; }
-.about-block p .amber {
-  color: var(--highlight);
-  font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
-}
-.about-block h3 {
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 28px;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.5rem;
-  line-height: 1.15;
-}
-
-/* Bordered Image Styling (Kembali ke awal) */
+.about-block p .amber { color: var(--highlight); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.about-block h3 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 28px; letter-spacing: -0.02em; margin-bottom: 1.5rem; line-height: 1.15; }
 .about-image {
-  width: 100%;
-  aspect-ratio: 4/5;
-  background-size: cover;
-  background-position: center;
+  width: 100%; aspect-ratio: 4/5; background-size: cover; background-position: center;
   filter: grayscale(0.4) contrast(1.05) brightness(0.85);
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--line);
+  position: relative; overflow: hidden; border: 1px solid var(--line);
 }
-/* Gelembung background menyatu di atas gambar about (bull1x.png & bull2x.png) */
 .about-image::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('background%20bull.png');
-  background-size: cover;
-  background-position: center;
-  mix-blend-mode: screen;
-  opacity: 0.9;
-  pointer-events: none;
-  z-index: 1;
+  content: ''; position: absolute; inset: 0;
+  background-image: url('background%20bull.png'); background-size: cover; background-position: center;
+  mix-blend-mode: screen; opacity: 0.9; pointer-events: none; z-index: 1;
 }
 .about-image::after {
-  content: '';
-  position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0;
   background: linear-gradient(135deg, transparent 50%, rgba(200,170,130,0.15) 100%);
-  pointer-events: none;
-  z-index: 2;
+  pointer-events: none; z-index: 2;
 }
 .about-image-caption {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-mute);
-  margin-top: 0.85rem;
-  margin-bottom: 2rem;
-  display: flex; justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-mute);
+  margin-top: 0.85rem; margin-bottom: 2rem; display: flex; justify-content: space-between;
 }
-
 @media (max-width: 900px) {
   .sticky-pair { grid-template-columns: 1fr; gap: 3rem; }
-  .sticky-pair .left {
-    position: static; height: auto; padding: 2rem 0;
-  }
+  .sticky-pair .left { position: static; height: auto; padding: 2rem 0; }
   .sticky-pair .right { gap: 3rem; padding: 1rem 0 2rem; }
 }
-
-/* tokenomics */
 .token-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-  margin-bottom: 6rem;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+  border-top: 1px solid var(--line); border-left: 1px solid var(--line); margin-bottom: 6rem;
 }
 .stat-cell {
-  padding: 2.5rem;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: rgba(0,0,0,0.6);
-  transition: background 400ms var(--ease-quiet);
-  position: relative;
-  overflow: hidden;
+  padding: 2.5rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  background: rgba(0,0,0,0.6); transition: background 400ms var(--ease-quiet);
+  position: relative; overflow: hidden;
 }
 .stat-cell::before {
-  content: ''; position: absolute;
-  left: 0; top: 0;
-  width: 2px; height: 0;
-  background: var(--highlight);
+  content: ''; position: absolute; left: 0; top: 0;
+  width: 2px; height: 0; background: var(--highlight);
   transition: height 600ms var(--ease-quiet);
 }
 .stat-cell:hover::before { height: 100%; }
 .stat-cell:hover { background: rgba(200,170,130,0.06); }
-.stat-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-mute);
-  margin-bottom: 1rem;
-}
+.stat-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-mute); margin-bottom: 1rem; }
 .stat-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: clamp(1.75rem, 3.8vw, 2.6rem);
-  line-height: 1;
-  color: var(--highlight);
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.02em;
+  font-family: 'JetBrains Mono', monospace; font-weight: 700;
+  font-size: clamp(1.75rem, 3.8vw, 2.6rem); line-height: 1; color: var(--highlight);
+  margin-bottom: 0.75rem; letter-spacing: -0.02em;
 }
-.stat-note {
-  font-size: 13px;
-  color: var(--text-soft);
-  line-height: 1.55;
-}
-
-@media (max-width: 768px) {
-  .token-stats { grid-template-columns: 1fr; }
-}
-
-.dist-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 28px;
-  letter-spacing: -0.02em;
-  margin-bottom: 3rem;
-}
-
+.stat-note { font-size: 13px; color: var(--text-soft); line-height: 1.55; }
+@media (max-width: 768px) { .token-stats { grid-template-columns: 1fr; } }
+.dist-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 28px; letter-spacing: -0.02em; margin-bottom: 3rem; }
 .distribution-row {
-  display: grid;
-  grid-template-columns: 220px 1fr 80px;
-  gap: 2rem;
-  align-items: center;
-  padding: 1.75rem 0;
-  border-bottom: 1px solid var(--line);
-  position: relative;
+  display: grid; grid-template-columns: 220px 1fr 80px; gap: 2rem;
+  align-items: center; padding: 1.75rem 0; border-bottom: 1px solid var(--line); position: relative;
 }
 .distribution-row::before {
-  content: ''; position: absolute;
-  left: -2rem; top: 0;
-  width: 2px; height: 0;
-  background: var(--highlight);
+  content: ''; position: absolute; left: -2rem; top: 0;
+  width: 2px; height: 0; background: var(--highlight);
   transition: height 600ms var(--ease-quiet);
 }
 .distribution-row:hover::before { height: 100%; }
 .distribution-row:first-child { border-top: 1px solid var(--line); }
-.dist-name {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-.dist-bar {
-  height: 4px;
-  background: var(--card);
-  position: relative;
-  overflow: hidden;
-}
-.dist-bar-fill {
-  position: absolute; left: 0; top: 0; height: 100%;
-  background: var(--highlight);
-  width: 0;
-  transition: width 1400ms var(--ease-emphasis);
-}
-.dist-pct {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--highlight);
-  text-align: right;
-}
-
+.dist-name { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); }
+.dist-bar { height: 4px; background: var(--card); position: relative; overflow: hidden; }
+.dist-bar-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--highlight); width: 0; transition: width 1400ms var(--ease-emphasis); }
+.dist-pct { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 15px; color: var(--highlight); text-align: right; }
 @media (max-width: 768px) {
   .distribution-row { grid-template-columns: 1fr 60px; gap: 1rem; }
   .dist-name { grid-column: 1 / -1; }
   .dist-bar { grid-column: 1; }
   .dist-pct { grid-column: 2; }
 }
-
-/* how to buy steps */
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .step-card {
-  border: 1px solid var(--line);
-  padding: 2.5rem;
-  background: rgba(0,0,0,0.6);
-  transition: all 400ms var(--ease-quiet);
-  position: relative;
-  overflow: hidden;
+  border: 1px solid var(--line); padding: 2.5rem; background: rgba(0,0,0,0.6);
+  transition: all 400ms var(--ease-quiet); position: relative; overflow: hidden;
 }
 .step-card::before {
-  content: ''; position: absolute;
-  left: 0; top: 0;
-  width: 0; height: 2px;
-  background: var(--highlight);
+  content: ''; position: absolute; left: 0; top: 0;
+  width: 0; height: 2px; background: var(--highlight);
   transition: width 500ms var(--ease-quiet);
 }
-.step-card:hover {
-  border-color: var(--line-bright);
-  transform: translateY(-4px);
-}
+.step-card:hover { border-color: var(--line-bright); transform: translateY(-4px); }
 .step-card:hover::before { width: 100%; }
-.step-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  color: var(--highlight);
-  margin-bottom: 2rem;
-  display: flex; align-items: center; gap: 0.5rem;
-}
-.step-num::after {
-  content: ''; flex: 1; height: 1px;
-  background: var(--line);
-}
-.step-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 22px;
-  letter-spacing: -0.01em;
-  margin-bottom: 1rem;
-  line-height: 1.2;
-}
-.step-body {
-  font-size: 14px;
-  line-height: 1.65;
-  color: var(--text-soft);
-}
+.step-num { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; letter-spacing: 0.2em; color: var(--highlight); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem; }
+.step-num::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.step-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.01em; margin-bottom: 1rem; line-height: 1.2; }
+.step-body { font-size: 14px; line-height: 1.65; color: var(--text-soft); }
 .step-body strong { color: var(--text); font-weight: 700; }
-.step-body code {
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--highlight);
-  font-size: 13px;
-  background: rgba(200,170,130,0.08);
-  padding: 0.1rem 0.4rem;
-}
-@media (max-width: 900px) {
-  .steps-grid { grid-template-columns: 1fr; }
-}
-
-/* roadmap */
-.roadmap-track {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-}
+.step-body code { font-family: 'JetBrains Mono', monospace; color: var(--highlight); font-size: 13px; background: rgba(200,170,130,0.08); padding: 0.1rem 0.4rem; }
+@media (max-width: 900px) { .steps-grid { grid-template-columns: 1fr; } }
+.roadmap-track { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 .phase {
-  padding: 3rem 2rem;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  position: relative;
-  transition: background 400ms var(--ease-quiet);
-  background: rgba(0,0,0,0.5);
+  padding: 3rem 2rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  position: relative; transition: background 400ms var(--ease-quiet); background: rgba(0,0,0,0.5);
 }
 .phase:hover { background: rgba(200,170,130,0.05); }
-.phase::before {
-  content: ''; position: absolute;
-  left: 0; top: 0;
-  width: 2px; height: 0;
-  background: var(--highlight);
-  transition: height 500ms var(--ease-quiet);
-}
+.phase::before { content: ''; position: absolute; left: 0; top: 0; width: 2px; height: 0; background: var(--highlight); transition: height 500ms var(--ease-quiet); }
 .phase:hover::before { height: 100%; }
-.phase-marker {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  color: var(--highlight);
-  margin-bottom: 1rem;
-}
+.phase-marker { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11px; letter-spacing: 0.2em; color: var(--highlight); margin-bottom: 1rem; }
 .phase-status {
-  display: inline-block;
-  padding: 0.3rem 0.65rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  border: 1px solid var(--line);
-  margin-bottom: 1.5rem;
-  color: var(--text-soft);
+  display: inline-block; padding: 0.3rem 0.65rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  border: 1px solid var(--line); margin-bottom: 1.5rem; color: var(--text-soft);
 }
-.phase-status.live {
-  border-color: var(--highlight);
-  color: var(--highlight);
-  background: rgba(200,170,130,0.06);
-}
-.phase-status.live::before {
-  content: '●';
-  margin-right: 0.4rem;
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-.phase-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 22px;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.01em;
-}
-.phase-list {
-  list-style: none;
-}
-.phase-list li {
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--text-soft);
-  padding-left: 1.2rem;
-  position: relative;
-  margin-bottom: 0.4rem;
-}
-.phase-list li::before {
-  content: '—';
-  position: absolute; left: 0; top: 0;
-  color: var(--highlight);
-}
-@media (max-width: 900px) {
-  .roadmap-track { grid-template-columns: 1fr; }
-}
-
-/* FAQ */
-.faq-list {
-  border-top: 1px solid var(--line);
-}
-.faq-item {
-  border-bottom: 1px solid var(--line);
-  position: relative;
-  background: rgba(0,0,0,0.4);
-}
-.faq-item::before {
-  content: ''; position: absolute; left: 0; top: 0;
-  width: 2px; height: 0; background: var(--highlight);
-  transition: height 600ms var(--ease-quiet);
-}
+.phase-status.live { border-color: var(--highlight); color: var(--highlight); background: rgba(200,170,130,0.06); }
+.phase-status.live::before { content: '●'; margin-right: 0.4rem; animation: pulse-dot 2s ease-in-out infinite; }
+.phase-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+.phase-list { list-style: none; }
+.phase-list li { font-size: 13px; line-height: 1.7; color: var(--text-soft); padding-left: 1.2rem; position: relative; margin-bottom: 0.4rem; }
+.phase-list li::before { content: '—'; position: absolute; left: 0; top: 0; color: var(--highlight); }
+@media (max-width: 900px) { .roadmap-track { grid-template-columns: 1fr; } }
+.faq-list { border-top: 1px solid var(--line); }
+.faq-item { border-bottom: 1px solid var(--line); position: relative; background: rgba(0,0,0,0.4); }
+.faq-item::before { content: ''; position: absolute; left: 0; top: 0; width: 2px; height: 0; background: var(--highlight); transition: height 600ms var(--ease-quiet); }
 .faq-item.is-open::before { height: 100%; }
 .faq-item:hover::before { height: 30%; }
 .faq-item.is-open:hover::before { height: 100%; }
 .faq-q {
   display: flex; justify-content: space-between; align-items: center; gap: 2rem;
-  padding: 2rem 2rem 2rem 2.5rem;
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-  letter-spacing: -0.01em;
-  transition: color 400ms var(--ease-quiet);
-  width: 100%;
-  text-align: left;
-  color: var(--text);
+  padding: 2rem 2rem 2rem 2.5rem; font-family: 'Inter', sans-serif;
+  font-weight: 700; font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  letter-spacing: -0.01em; transition: color 400ms var(--ease-quiet);
+  width: 100%; text-align: left; color: var(--text);
 }
 .faq-item.is-open .faq-q { color: var(--highlight); }
-.faq-icon {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 400;
-  font-size: 22px;
-  color: var(--highlight);
-  transition: transform 400ms var(--ease-quiet);
-  flex-shrink: 0;
-}
+.faq-icon { font-family: 'JetBrains Mono', monospace; font-weight: 400; font-size: 22px; color: var(--highlight); transition: transform 400ms var(--ease-quiet); flex-shrink: 0; }
 .faq-item.is-open .faq-icon { transform: rotate(45deg); }
-.faq-a {
-  max-height: 0; overflow: hidden;
-  transition: max-height 500ms var(--ease-quiet);
-  padding-left: 2.5rem; padding-right: 2rem;
-}
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 500ms var(--ease-quiet); padding-left: 2.5rem; padding-right: 2rem; }
 .faq-item.is-open .faq-a { max-height: 1000px; padding-bottom: 2rem; }
-.faq-a p {
-  font-size: 15px; line-height: 1.7; color: var(--text-soft);
-}
-.faq-a p code {
-  font-family: 'JetBrains Mono', monospace;
-  background: rgba(200,170,130,0.08);
-  padding: 0.15rem 0.45rem;
-  font-size: 13px;
-  color: var(--highlight);
-}
-
-/* CTA section */
-.cta-section {
-  padding: 10rem 2rem;
-  text-align: center;
-  border-top: 1px solid var(--line);
-  position: relative;
-  z-index: 2;
-}
-.cta-section .section-label {
-  justify-content: center;
-  display: inline-flex;
-  margin-bottom: 1.5rem;
-}
-.cta-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: clamp(2.3rem, 6.5vw, 5.5rem);
-  letter-spacing: -0.04em;
-  line-height: 0.95;
-  margin-bottom: 1.5rem;
-}
+.faq-a p { font-size: 15px; line-height: 1.7; color: var(--text-soft); }
+.faq-a p code { font-family: 'JetBrains Mono', monospace; background: rgba(200,170,130,0.08); padding: 0.15rem 0.45rem; font-size: 13px; color: var(--highlight); }
+.cta-section { padding: 10rem 2rem; text-align: center; border-top: 1px solid var(--line); position: relative; z-index: 2; }
+.cta-section .section-label { justify-content: center; display: inline-flex; margin-bottom: 1.5rem; }
+.cta-title { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(2.3rem, 6.5vw, 5.5rem); letter-spacing: -0.04em; line-height: 0.95; margin-bottom: 1.5rem; }
 .cta-title .amber { color: var(--highlight); }
-.cta-sub {
-  max-width: 560px;
-  margin: 0 auto 3rem;
-  color: var(--text-soft);
-  font-size: 16px;
-  line-height: 1.65;
-}
-
-/* CA Box (Tinggi sama, Copy di pinggir) */
+.cta-sub { max-width: 560px; margin: 0 auto 3rem; color: var(--text-soft); font-size: 16px; line-height: 1.65; }
 .ca-box {
-  display: inline-flex;
-  align-items: stretch;
-  border: 1px solid var(--line-bright);
-  background: var(--card);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--text);
-  margin-bottom: 2.5rem;
-  width: fit-content;
-  min-width: 450px;
-  max-width: 90%;
-  overflow: hidden;
-  height: 50px; 
+  display: inline-flex; align-items: stretch;
+  border: 1px solid var(--line-bright); background: var(--card);
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text);
+  margin-bottom: 2.5rem; width: fit-content; min-width: 450px; max-width: 90%;
+  overflow: hidden; height: 50px;
 }
-.ca-box .ca-label {
-  display: flex;
-  align-items: center;
-  padding: 0 1rem 0 1.75rem;
-  color: var(--text-mute);
-  letter-spacing: 0.18em;
-  font-size: 10px;
-  text-transform: uppercase;
-  border-right: 1px solid var(--line);
-}
-.ca-box .ca-value {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  padding: 0 1rem;
-  color: var(--highlight);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 13px;
-}
+.ca-box .ca-label { display: flex; align-items: center; padding: 0 1rem 0 1.75rem; color: var(--text-mute); letter-spacing: 0.18em; font-size: 10px; text-transform: uppercase; border-right: 1px solid var(--line); }
+.ca-box .ca-value { flex: 1; display: flex; align-items: center; padding: 0 1rem; color: var(--highlight); font-weight: 700; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
 .copy-btn {
-  background: transparent;
-  border: none;
-  border-left: 1px solid var(--highlight);
-  color: var(--highlight);
-  padding: 0 1.75rem; 
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  transition: all 300ms var(--ease-quiet);
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  background: transparent; border: none; border-left: 1px solid var(--highlight);
+  color: var(--highlight); padding: 0 1.75rem; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  transition: all 300ms var(--ease-quiet); font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .copy-btn:hover { background: var(--highlight); color: var(--bg); }
-
-.cta-actions {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 4rem;
-}
-
-.social-row {
-  display: flex;
-  justify-content: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
+.cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+.social-row { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
 .social-link {
-  width: 56px; height: 56px;
-  border: 1px solid var(--line);
+  width: 56px; height: 56px; border: 1px solid var(--line);
   display: flex; align-items: center; justify-content: center;
-  color: var(--highlight); 
-  transition: all 300ms var(--ease-quiet);
-  position: relative;
-  overflow: hidden;
-  background: rgba(0,0,0,0.5);
+  color: var(--highlight); transition: all 300ms var(--ease-quiet);
+  position: relative; overflow: hidden; background: rgba(0,0,0,0.5);
 }
-.social-link svg {
-  fill: currentColor;
-  width: 22px;
-  height: 22px;
-  position: relative;
-  z-index: 2;
-}
-.social-link::before {
-  content: ''; position: absolute; left: 0; top: 0;
-  width: 2px; height: 0; background: var(--highlight);
-  transition: height 400ms var(--ease-quiet);
-}
-.social-link:hover {
-  border-color: var(--highlight);
-  color: var(--text); 
-}
+.social-link svg { fill: currentColor; width: 22px; height: 22px; position: relative; z-index: 2; }
+.social-link::before { content: ''; position: absolute; left: 0; top: 0; width: 2px; height: 0; background: var(--highlight); transition: height 400ms var(--ease-quiet); }
+.social-link:hover { border-color: var(--highlight); color: var(--text); }
 .social-link:hover::before { height: 100%; }
-
-/* Toast Notification */
 .toast {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: var(--highlight);
-  color: var(--bg);
-  padding: 1rem 2rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  z-index: 10000;
-  opacity: 0;
-  transition: all 400ms var(--ease-emphasis);
-  pointer-events: none;
-  border: 1px solid var(--highlight);
+  position: fixed; bottom: 30px; left: 50%;
+  transform: translateX(-50%) translateY(100px); background: var(--highlight); color: var(--bg);
+  padding: 1rem 2rem; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  z-index: 10000; opacity: 0; transition: all 400ms var(--ease-emphasis);
+  pointer-events: none; border: 1px solid var(--highlight);
 }
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 @media (max-width: 768px) {
   .toast { bottom: 20px; font-size: 11px; padding: 0.8rem 1.5rem; }
-  .ca-box { 
-    min-width: unset; 
-    width: 100%; 
-    height: 50px; 
-  }
+  .ca-box { min-width: unset; width: 100%; height: 50px; }
   .ca-box .ca-label { display: none; }
   .ca-box .ca-value { font-size: 12px; padding: 0 0.75rem; }
   .copy-btn { padding: 0 1rem; }
 }
-
-/* footer */
+  /* footer */
 footer {
   border-top: 1px solid var(--line);
   padding: 3.5rem 2rem 2.5rem;
@@ -942,8 +401,10 @@ footer {
 }
 .footer-inner {
   max-width: 1400px; margin: 0 auto;
-  display: flex; justify-content: space-between; align-items: flex-start;
-  flex-wrap: wrap; gap: 3rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 3rem;
 }
 .footer-brand {
   font-family: 'JetBrains Mono', monospace;
@@ -976,58 +437,44 @@ footer {
   line-height: 2;
   text-align: right;
 }
-.footer-left {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  flex: 1 1 auto;
-  min-width: 260px;
-}
-.footer-meta {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  color: var(--text-mute);
-  text-transform: uppercase;
-  line-height: 2;
-  text-align: left;
-}
 .footer-meta .amber { color: var(--highlight); font-weight: 700; }
-
 .footer-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  flex: 0 0 auto;
-  margin: 0 auto;
-  align-self: center;
 }
 .footer-logo img {
-  width: 96px;
-  height: 96px;
+  width: 110px;
+  height: 110px;
   object-fit: contain;
   opacity: 0.9;
 }
-
 @media (max-width: 768px) {
-  .footer-inner { flex-direction: column; align-items: stretch; }
-  .footer-left { order: 1; }
-  .footer-logo { order: 2; margin: 1rem auto 0; }
+  footer { padding: 2.5rem 1.5rem 2rem; }
+  .footer-inner {
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem;
+  }
+  .footer-inner > div:first-child {
+    grid-column: 1 / -1;
+  }
+  .footer-meta {
+    text-align: left;
+  }
+  .footer-logo img {
+    width: 56px;
+    height: 56px;
+  }
 }
-
 @media (max-width: 768px) {
   .section-pad { padding: 5rem 1.5rem; }
   .nav { padding: 1rem 1.25rem; }
   .hero-overlay { padding: 1.5rem 1.5rem 2.5rem; }
   .cta-section { padding: 6rem 1.5rem; }
-  .footer-inner { flex-wrap: wrap; row-gap: 1.5rem; }
-  .footer-inner > div:first-child { flex: 1 1 100%; }
   .stat-cell { padding: 1.75rem; }
   .step-card { padding: 2rem; }
   .phase { padding: 2.5rem 1.5rem; }
 }
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -1038,20 +485,13 @@ footer {
 </style>
 </head>
 <body>
-
 <div class="bg-image"></div>
 <div class="bg-overlay"></div>
 <canvas id="particle-canvas"></canvas>
 <div id="custom-cursor"></div>
-
-<!-- Toast Notification Element -->
 <div id="toast" class="toast">BULL HAS BEEN ADDED</div>
-
 <nav class="nav">
-  <a href="#hero" class="nav-brand">
-    <span class="dot"></span>
-    NEW FOUND BULL <span>· $NFB</span>
-  </a>
+  <a href="#hero" class="nav-brand"><span class="dot"></span>NEW FOUND BULL <span>· $NFB</span></a>
   <div class="nav-links">
     <a href="#about">Manifesto</a>
     <a href="#tokenomics">Tokenomics</a>
@@ -1060,8 +500,6 @@ footer {
   </div>
   <a href="https://pump.fun/" target="_blank" rel="noopener" class="nav-cta">Buy on pump.fun ↗</a>
 </nav>
-
-<!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-grid" id="hero-grid"></div>
   <div class="hero-overlay">
@@ -1075,50 +513,25 @@ footer {
     </div>
   </div>
 </section>
-
-<!-- MARQUEE -->
 <div class="marquee">
   <div class="marquee-track">
-    <span class="amber bull">$NFB</span>
-    <span class="dim">NEW FOUND BULL</span>
-    <span>0/0 TAX</span>
-    <span class="dim">LP BURNED</span>
-    <span class="amber">MINT REVOKED</span>
-    <span class="dim">FAIR LAUNCH</span>
-    <span>SOLANA</span>
-    <span class="dim">PUMP.FUN</span>
-    <span class="amber bull">$NFB</span>
-    <span class="dim">NEW FOUND BULL</span>
-    <span>0/0 TAX</span>
-    <span class="dim">LP BURNED</span>
-    <span class="amber">MINT REVOKED</span>
-    <span class="dim">FAIR LAUNCH</span>
-    <span>SOLANA</span>
-    <span class="dim">PUMP.FUN</span>
+    <span class="amber bull">$NFB</span><span class="dim">NEW FOUND BULL</span><span>0/0 TAX</span><span class="dim">LP BURNED</span><span class="amber">MINT REVOKED</span><span class="dim">FAIR LAUNCH</span><span>SOLANA</span><span class="dim">PUMP.FUN</span>
+    <span class="amber bull">$NFB</span><span class="dim">NEW FOUND BULL</span><span>0/0 TAX</span><span class="dim">LP BURNED</span><span class="amber">MINT REVOKED</span><span class="dim">FAIR LAUNCH</span><span>SOLANA</span><span class="dim">PUMP.FUN</span>
   </div>
 </div>
-
-<!-- ABOUT -->
 <section class="section-pad" id="about">
   <div class="container">
     <div class="sticky-pair">
       <div class="left">
         <div class="section-label fade-up">001 / MANIFESTO</div>
         <h2 class="section-title fade-up">The bull was<br>never gone.<br>It was <em class="amber">waiting.</em></h2>
-        <p class="fade-up" style="color: var(--text-soft); font-size: 16.5px; line-height: 1.7; max-width: 460px; margin-bottom: 1.5rem;">
-          Every cycle the herd panics. They say the bull is dead. They sell, they leave, they swear off crypto forever. And every cycle, the bull returns — leaner, louder, and ready to charge.
-        </p>
-        <p class="fade-up" style="color: var(--text-soft); font-size: 16.5px; line-height: 1.7; max-width: 460px;">
-          <span style="color:var(--highlight); font-family:'JetBrains Mono',monospace; font-weight:700;">$NFB</span> is for the ones who stayed. The ones who stacked through the dark. The ones who never stopped believing the bull would find its way back home.
-        </p>
+        <p class="fade-up" style="color:var(--text-soft);font-size:16.5px;line-height:1.7;max-width:460px;margin-bottom:1.5rem;">Every cycle the herd panics. They say the bull is dead. They sell, they leave, they swear off crypto forever. And every cycle, the bull returns — leaner, louder, and ready to charge.</p>
+        <p class="fade-up" style="color:var(--text-soft);font-size:16.5px;line-height:1.7;max-width:460px;"><span style="color:var(--highlight);font-family:'JetBrains Mono',monospace;font-weight:700;">$NFB</span> is for the ones who stayed. The ones who stacked through the dark. The ones who never stopped believing the bull would find its way back home.</p>
       </div>
       <div class="right">
         <div class="about-block fade-up">
-          <div class="about-image" style="background-image: url('bull1x.png')"></div>
-          <div class="about-image-caption">
-            <span>FIG. 01 — THE CHARGE</span>
-            <span>$NFB / 2026</span>
-          </div>
+          <div class="about-image" style="background-image:url('bull1x.png')"></div>
+          <div class="about-image-caption"><span>FIG. 01 — THE CHARGE</span><span>$NFB / 2026</span></div>
         </div>
         <div class="about-block fade-up">
           <h3>A found bull, not a lost cause.</h3>
@@ -1126,11 +539,8 @@ footer {
           <p>No VC unlocks. No advisor cliffs. No foundation wallet waiting to dump on your grandma. Just a bull that was lost, then found, then set free to run.</p>
         </div>
         <div class="about-block fade-up">
-          <div class="about-image" style="background-image: url('bull2x.png'); aspect-ratio: 4/3;"></div>
-          <div class="about-image-caption">
-            <span>FIG. 02 — HORNS UP</span>
-            <span>ON-CHAIN</span>
-          </div>
+          <div class="about-image" style="background-image:url('bull2x.png');aspect-ratio:4/3;"></div>
+          <div class="about-image-caption"><span>FIG. 02 — HORNS UP</span><span>ON-CHAIN</span></div>
         </div>
         <div class="about-block fade-up">
           <h3>Born on Solana. Stamped on pump.fun.</h3>
@@ -1145,229 +555,90 @@ footer {
     </div>
   </div>
 </section>
-
-<!-- TOKENOMICS -->
-<section class="section-pad" id="tokenomics" style="border-top: 1px solid var(--line);">
+<section class="section-pad" id="tokenomics" style="border-top:1px solid var(--line);">
   <div class="container">
     <div class="section-label fade-up">002 / TOKENOMICS</div>
     <h2 class="section-title fade-up">Numbers that<br>aren't <span class="amber">suspicious.</span></h2>
-    
     <div class="token-stats">
-      <div class="stat-cell fade-up">
-        <div class="stat-label">Total Supply</div>
-        <div class="stat-value">1,000,000,000</div>
-        <div class="stat-note">1 billion $NFB. Fixed at deploy. No more will ever exist.</div>
-      </div>
-      <div class="stat-cell fade-up">
-        <div class="stat-label">Tax · Buy / Sell</div>
-        <div class="stat-value">0% / 0%</div>
-        <div class="stat-note">Zero tax. Zero friction. Every SOL you put in buys $NFB.</div>
-      </div>
-      <div class="stat-cell fade-up">
-        <div class="stat-label">Liquidity Pool</div>
-        <div class="stat-value">BURNED</div>
-        <div class="stat-note">LP tokens sent to the burn address. Rugproof by construction.</div>
-      </div>
-      <div class="stat-cell fade-up">
-        <div class="stat-label">Mint Authority</div>
-        <div class="stat-value">REVOKED</div>
-        <div class="stat-note">Supply cannot be inflated. Ever. Verified on Solscan.</div>
-      </div>
+      <div class="stat-cell fade-up"><div class="stat-label">Total Supply</div><div class="stat-value">1,000,000,000</div><div class="stat-note">1 billion $NFB. Fixed at deploy. No more will ever exist.</div></div>
+      <div class="stat-cell fade-up"><div class="stat-label">Tax · Buy / Sell</div><div class="stat-value">0% / 0%</div><div class="stat-note">Zero tax. Zero friction. Every SOL you put in buys $NFB.</div></div>
+      <div class="stat-cell fade-up"><div class="stat-label">Liquidity Pool</div><div class="stat-value">BURNED</div><div class="stat-note">LP tokens sent to the burn address. Rugproof by construction.</div></div>
+      <div class="stat-cell fade-up"><div class="stat-label">Mint Authority</div><div class="stat-value">REVOKED</div><div class="stat-note">Supply cannot be inflated. Ever. Verified on Solscan.</div></div>
     </div>
-
     <h3 class="dist-title fade-up">Allocation breakdown.</h3>
     <div class="distribution fade-up">
-      <div class="distribution-row">
-        <div class="dist-name">Fairlaunch</div>
-        <div class="dist-bar"><div class="dist-bar-fill" data-pct="98"></div></div>
-        <div class="dist-pct">98%</div>
-      </div>
-      <div class="distribution-row">
-        <div class="dist-name">Team</div>
-        <div class="dist-bar"><div class="dist-bar-fill" data-pct="2"></div></div>
-        <div class="dist-pct">2%</div>
-      </div>
+      <div class="distribution-row"><div class="dist-name">Fairlaunch</div><div class="dist-bar"><div class="dist-bar-fill" data-pct="98"></div></div><div class="dist-pct">98%</div></div>
+      <div class="distribution-row"><div class="dist-name">Team</div><div class="dist-bar"><div class="dist-bar-fill" data-pct="2"></div></div><div class="dist-pct">2%</div></div>
     </div>
   </div>
 </section>
-
-<!-- HOW TO BUY -->
-<section class="section-pad" style="border-top: 1px solid var(--line);">
+<section class="section-pad" style="border-top:1px solid var(--line);">
   <div class="container">
     <div class="section-label fade-up">003 / HOW TO BUY</div>
     <h2 class="section-title fade-up">Three steps to<br>find the bull.</h2>
     <div class="steps-grid">
-      <div class="step-card fade-up">
-        <div class="step-num">STEP 01</div>
-        <div class="step-title">Get a Solana wallet.</div>
-        <div class="step-body">Install <strong>Phantom</strong> or <strong>Solflare</strong> as a browser extension or mobile app. Create a fresh wallet, write down your seed phrase on paper, and never share it. Fund it with SOL from an exchange or another wallet.</div>
-      </div>
-      <div class="step-card fade-up">
-        <div class="step-num">STEP 02</div>
-        <div class="step-title">Open pump.fun.</div>
-        <div class="step-body">Head to <code>pump.fun</code> and paste the $NFB contract address into the search bar. Verify the ticker, supply, and that you're on the correct token page before swapping. Always check the CA — fakes exist.</div>
-      </div>
-      <div class="step-card fade-up">
-        <div class="step-num">STEP 03</div>
-        <div class="step-title">Swap SOL for $NFB.</div>
-        <div class="step-body">Enter the amount of SOL you want to spend, click buy, and confirm in your wallet. Once the bonding curve completes, $NFB graduates automatically to PumpSwap for continuous trading. Welcome to the herd.</div>
-      </div>
+      <div class="step-card fade-up"><div class="step-num">STEP 01</div><div class="step-title">Get a Solana wallet.</div><div class="step-body">Install <strong>Phantom</strong> or <strong>Solflare</strong> as a browser extension or mobile app. Create a fresh wallet, write down your seed phrase on paper, and never share it. Fund it with SOL from an exchange or another wallet.</div></div>
+      <div class="step-card fade-up"><div class="step-num">STEP 02</div><div class="step-title">Open pump.fun.</div><div class="step-body">Head to <code>pump.fun</code> and paste the $NFB contract address into the search bar. Verify the ticker, supply, and that you're on the correct token page before swapping. Always check the CA — fakes exist.</div></div>
+      <div class="step-card fade-up"><div class="step-num">STEP 03</div><div class="step-title">Swap SOL for $NFB.</div><div class="step-body">Enter the amount of SOL you want to spend, click buy, and confirm in your wallet. Once the bonding curve completes, $NFB graduates automatically to PumpSwap for continuous trading. Welcome to the herd.</div></div>
     </div>
   </div>
 </section>
-
-<!-- ROADMAP -->
-<section class="section-pad" id="roadmap" style="border-top: 1px solid var(--line);">
+<section class="section-pad" id="roadmap" style="border-top:1px solid var(--line);">
   <div class="container">
     <div class="section-label fade-up">004 / ROADMAP</div>
     <h2 class="section-title fade-up">From lost<br>to leading<br>the <span class="amber">charge.</span></h2>
     <div class="roadmap-track fade-up">
-      <div class="phase">
-        <div class="phase-marker">PHASE 01</div>
-        <div class="phase-status live">LIVE NOW</div>
-        <div class="phase-title">Genesis</div>
-        <ul class="phase-list">
-          <li>Stealth launch on pump.fun</li>
-          <li>Mint authority revoked</li>
-          <li>LP burned at bonding curve fill</li>
-          <li>Website & socials live</li>
-          <li>First 500 holders stamped</li>
-        </ul>
-      </div>
-      <div class="phase">
-        <div class="phase-marker">PHASE 02</div>
-        <div class="phase-status">STAMPEDE</div>
-        <div class="phase-title">Stampede</div>
-        <ul class="phase-list">
-          <li>1,000 holder milestone</li>
-          <li>DexScreener & DexTools listings</li>
-          <li>Daily Spaces, daily raids</li>
-        </ul>
-      </div>
-      <div class="phase">
-        <div class="phase-marker">PHASE 03</div>
-        <div class="phase-status">HORNS UP</div>
-        <div class="phase-title">Horns Up</div>
-        <ul class="phase-list">
-          <li>PumpSwap graduation complete</li>
-          <li>10,000 holder milestone</li>
-          <li>Solana ecosystem partnerships</li>
-        </ul>
-      </div>
-      <div class="phase">
-        <div class="phase-marker">PHASE 04</div>
-        <div class="phase-status">BULL RUN</div>
-        <div class="phase-title">Bull Run</div>
-        <ul class="phase-list">
-          <li>Real-world billboard campaigns</li>
-          <li>The bull is no longer found — it's leading</li>
-        </ul>
-      </div>
+      <div class="phase"><div class="phase-marker">PHASE 01</div><div class="phase-status live">LIVE NOW</div><div class="phase-title">Genesis</div><ul class="phase-list"><li>Stealth launch on pump.fun</li><li>Mint authority revoked</li><li>LP burned at bonding curve fill</li><li>Website & socials live</li><li>First 500 holders stamped</li></ul></div>
+      <div class="phase"><div class="phase-marker">PHASE 02</div><div class="phase-status">STAMPEDE</div><div class="phase-title">Stampede</div><ul class="phase-list"><li>1,000 holder milestone</li><li>DexScreener & DexTools listings</li><li>Daily Spaces, daily raids</li></ul></div>
+      <div class="phase"><div class="phase-marker">PHASE 03</div><div class="phase-status">HORNS UP</div><div class="phase-title">Horns Up</div><ul class="phase-list"><li>PumpSwap graduation complete</li><li>10,000 holder milestone</li><li>Solana ecosystem partnerships</li></ul></div>
+      <div class="phase"><div class="phase-marker">PHASE 04</div><div class="phase-status">BULL RUN</div><div class="phase-title">Bull Run</div><ul class="phase-list"><li>Real-world billboard campaigns</li><li>The bull is no longer found — it's leading</li></ul></div>
     </div>
   </div>
 </section>
-
-<!-- FAQ -->
 <section class="section-pad" id="faq">
   <div class="container container-narrow">
     <div class="section-label fade-up">005 / FAQ</div>
     <h2 class="section-title fade-up">Questions<br>the herd asks.</h2>
     <div class="faq-list fade-up">
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">What exactly is NEW FOUND BULL ($NFB)?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>$NFB is a community-driven memecoin on Solana, launched fairly via pump.fun. It celebrates the return of the bull market and the people who held through the dark. No presale, no team allocation that can dump on day one — just a found bull, set loose on the open range of the Solana chain.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">How do I buy $NFB?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Get a Solana wallet (Phantom or Solflare), fund it with SOL, then head to <code>pump.fun</code> and paste the $NFB contract address into the search bar. Swap SOL for $NFB. Once the bonding curve completes, $NFB graduates automatically to PumpSwap for continuous trading.</p></div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Is there a buy or sell tax?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Zero. <code>0% buy</code>, <code>0% sell</code>. Every SOL you put in buys $NFB at the bonding curve price with no friction. The contract has no tax logic — it's a standard SPL token, audited and verified on Solscan.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Is the liquidity really burned?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Yes. LP tokens are automatically burned the moment the bonding curve completes and $NFB graduates to PumpSwap. This means no one — not the team, not the deployer, not anyone — can pull liquidity. The pool is permanently locked. Verify it yourself on Solscan.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Is mint authority revoked?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Yes. Mint authority is revoked at deployment. The total supply of 1,000,000,000 $NFB is fixed forever. No additional tokens can ever be minted — no inflation, no surprise team unlocks, no supply games.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Where can I store $NFB?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Any Solana-compatible wallet works: <code>Phantom</code>, <code>Solflare</code>, <code>Backpack</code>. For hardware security, Ledger with Phantom integration is the recommended setup for holdings above what you'd be comfortable losing.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Was there a presale or team allocation?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>No presale. No private round. No OTC deals. The team holds 2% of supply. That allocation is for ongoing development and is publicly trackable on-chain. The other 98% went to the public via pump.fun's bonding curve fairlaunch.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Is $NFB financial advice?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Absolutely not. $NFB is a memecoin — a piece of internet culture on a blockchain. It has no intrinsic value, no promise of returns, no roadmap guarantee. Treat it as the speculative asset it is: never invest more than you can afford to lose, do your own research, and remember that even bulls rest sometimes.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">How can I join the herd?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Telegram and X (Twitter) links are at the bottom of this page. Jump in, introduce yourself, and start memeing. The herd is open to anyone who believes the bull is back — no vetting, no alpha-group paywalls, just a found bull and the people who found it.</p></div>
-      </div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">What exactly is NEW FOUND BULL ($NFB)?<span class="faq-icon">+</span></button><div class="faq-a"><p>$NFB is a community-driven memecoin on Solana, launched fairly via pump.fun. It celebrates the return of the bull market and the people who held through the dark. No presale, no team allocation that can dump on day one — just a found bull, set loose on the open range of the Solana chain.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">How do I buy $NFB?<span class="faq-icon">+</span></button><div class="faq-a"><p>Get a Solana wallet (Phantom or Solflare), fund it with SOL, then head to <code>pump.fun</code> and paste the $NFB contract address into the search bar. Swap SOL for $NFB. Once the bonding curve completes, $NFB graduates automatically to PumpSwap for continuous trading.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Is there a buy or sell tax?<span class="faq-icon">+</span></button><div class="faq-a"><p>Zero. <code>0% buy</code>, <code>0% sell</code>. Every SOL you put in buys $NFB at the bonding curve price with no friction. The contract has no tax logic — it's a standard SPL token, audited and verified on Solscan.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Is the liquidity really burned?<span class="faq-icon">+</span></button><div class="faq-a"><p>Yes. LP tokens are automatically burned the moment the bonding curve completes and $NFB graduates to PumpSwap. This means no one — not the team, not the deployer, not anyone — can pull liquidity. The pool is permanently locked. Verify it yourself on Solscan.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Is mint authority revoked?<span class="faq-icon">+</span></button><div class="faq-a"><p>Yes. Mint authority is revoked at deployment. The total supply of 1,000,000,000 $NFB is fixed forever. No additional tokens can ever be minted — no inflation, no surprise team unlocks, no supply games.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Where can I store $NFB?<span class="faq-icon">+</span></button><div class="faq-a"><p>Any Solana-compatible wallet works: <code>Phantom</code>, <code>Solflare</code>, <code>Backpack</code>. For hardware security, Ledger with Phantom integration is the recommended setup for holdings above what you'd be comfortable losing.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Was there a presale or team allocation?<span class="faq-icon">+</span></button><div class="faq-a"><p>No presale. No private round. No OTC deals. The team holds 2% of supply. That allocation is for ongoing development and is publicly trackable on-chain. The other 98% went to the public via pump.fun's bonding curve fairlaunch.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Is $NFB financial advice?<span class="faq-icon">+</span></button><div class="faq-a"><p>Absolutely not. $NFB is a memecoin — a piece of internet culture on a blockchain. It has no intrinsic value, no promise of returns, no roadmap guarantee. Treat it as the speculative asset it is: never invest more than you can afford to lose, do your own research, and remember that even bulls rest sometimes.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">How can I join the herd?<span class="faq-icon">+</span></button><div class="faq-a"><p>Telegram and X (Twitter) links are at the bottom of this page. Jump in, introduce yourself, and start memeing. The herd is open to anyone who believes the bull is back — no vetting, no alpha-group paywalls, just a found bull and the people who found it.</p></div></div>
     </div>
   </div>
 </section>
-
-<!-- CTA -->
 <section class="cta-section">
   <div class="section-label fade-up">006 / JOIN THE HERD</div>
   <h2 class="cta-title fade-up">FIND THE BULL.<br><span class="amber">BE THE HERD.</span></h2>
   <p class="cta-sub fade-up">Copy the contract, head to pump.fun, and become part of the found-bull story. The next chapter is written by everyone who holds.</p>
-  
-  <div class="ca-box fade-up" id="ca-box">
-    <span class="ca-label">CA</span>
-    <span class="ca-value" id="ca-value">SOOON</span>
-    <button class="copy-btn" id="copy-ca-btn">Copy</button>
-  </div>
-  
+  <div class="ca-box fade-up" id="ca-box"><span class="ca-label">CA</span><span class="ca-value" id="ca-value">SOOON</span><button class="copy-btn" id="copy-ca-btn">Copy</button></div>
   <div class="cta-actions fade-up">
     <a href="https://pump.fun/" target="_blank" rel="noopener" class="btn btn-primary">Buy on pump.fun <span class="arrow">↗</span></a>
     <a href="https://raydium.io/" target="_blank" rel="noopener" class="btn">Trade on Raydium <span class="arrow">↗</span></a>
     <a href="https://jup.ag/" target="_blank" rel="noopener" class="btn">Swap on Jupiter <span class="arrow">↗</span></a>
   </div>
-
   <div class="social-row fade-up">
-    <a href="https://x.com/NewFoundBull" class="social-link" title="Twitter / X" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
-    </a>
-    <a href="https://t.me/newfoundbull" class="social-link" title="Telegram" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.324-.437.891-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path></svg>
-    </a>
-   <a href="https://pump.fun/" target="_blank" rel="noopener" class="social-link" title="pump.fun">
-  <svg viewBox="0 0 120 120" aria-hidden="true">
-    <g transform="rotate(45 60 60)">
-      <path d="M 30,60 L 30,30 A 30,30 0 0,1 90,30 L 90,60 Z" fill="currentColor" />
-      <path d="M 90,60 L 90,90 A 30,30 0 0,1 30,90 L 30,60 Z" fill="currentColor" />
-      <path d="M 50,20 C 50,20 45,35 50,45" stroke="#ffffff" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6"/>
-    </g>
-  </svg>
-</a>
-    <a href="https://dexscreener.com/" target="_blank" rel="noopener" class="social-link" title="DexScreener">
-  <svg viewBox="0 0 48 48" aria-hidden="true">
-    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12.951 10.765c-4.384 7.074.244 15.697-5.366 25.358l4.657-3.436v0l3.196 5.208l3.23-3.12L24 43.492l5.332-8.715l3.23 3.12l3.196-5.21l4.657 3.437c-5.61-9.66-.982-18.284-5.366-25.358"/>
-    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m19.89 23.502l-3.424 2.037c4.622.794 6.467 7.03 7.534 12.389c1.067-5.36 2.912-11.595 7.534-12.389l-3.423-2.037c.436-3.3-1.91-6.552-4.111-6.552s-4.547 3.253-4.11 6.552"/>
-    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M26.522 17.69c4.604-2.337 9.597-6.354 11.318-12.439c-1.07 1.375-2.66 2.767-4.518 3.283a15 15 0 0 0-.685-.66C29.536 5.057 27.25 4.508 24 4.508s-5.536.55-8.637 3.364q-.36.329-.685.661c-1.858-.516-3.449-1.908-4.518-3.283c1.72 6.085 6.714 10.102 11.318 12.44"/>
-    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M16.049 14.43c-1.098.875-1.352 2.643-.558 3.899c.928 1.47 3.689 2.26 5.117.995m11.343-4.894c1.098.875 1.352 2.643.558 3.899c-.928 1.47-3.689 2.26-5.117.995"/>
-  </svg>
-</a>
-    <a href="https://solscan.io/" target="_blank" rel="noopener" class="social-link" title="Solscan">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14zM4 4h6V2H2v4h2V4zm14 0v2h2V2h-6v2h4zM4 20H2v4h6v-2H4v-2zm16 0v2h-4v2h6v-4h-2v2z"></path></svg>
-    </a>
+    <a href="https://x.com/NewFoundBull" class="social-link" title="Twitter / X" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg></a>
+    <a href="https://t.me/newfoundbull" class="social-link" title="Telegram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.324-.437.891-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path></svg></a>
+    <a href="https://pump.fun/" target="_blank" rel="noopener" class="social-link" title="pump.fun"><svg viewBox="0 0 120 120" aria-hidden="true"><g transform="rotate(45 60 60)"><path d="M 30,60 L 30,30 A 30,30 0 0,1 90,30 L 90,60 Z" fill="currentColor"/><path d="M 90,60 L 90,90 A 30,30 0 0,1 30,90 L 30,60 Z" fill="currentColor"/><path d="M 50,20 C 50,20 45,35 50,45" stroke="#ffffff" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6"/></g></svg></a>
+    <a href="https://dexscreener.com/" target="_blank" rel="noopener" class="social-link" title="DexScreener"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12.951 10.765c-4.384 7.074.244 15.697-5.366 25.358l4.657-3.436v0l3.196 5.208l3.23-3.12L24 43.492l5.332-8.715l3.23 3.12l3.196-5.21l4.657 3.437c-5.61-9.66-.982-18.284-5.366-25.358"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m19.89 23.502l-3.424 2.037c4.622.794 6.467 7.03 7.534 12.389c1.067-5.36 2.912-11.595 7.534-12.389l-3.423-2.037c.436-3.3-1.91-6.552-4.111-6.552s-4.547 3.253-4.11 6.552"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M26.522 17.69c4.604-2.337 9.597-6.354 11.318-12.439c-1.07 1.375-2.66 2.767-4.518 3.283a15 15 0 0 0-.685-.66C29.536 5.057 27.25 4.508 24 4.508s-5.536.55-8.637 3.364q-.36.329-.685.661c-1.858-.516-3.449-1.908-4.518-3.283c1.72 6.085 6.714 10.102 11.318 12.44"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M16.049 14.43c-1.098.875-1.352 2.643-.558 3.899c.928 1.47 3.689 2.26 5.117.995m11.343-4.894c1.098.875 1.352 2.643.558 3.899c-.928 1.47-3.689 2.26-5.117.995"/></svg></a>
+    <a href="https://solscan.io/" target="_blank" rel="noopener" class="social-link" title="Solscan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14zM4 4h6V2H2v4h2V4zm14 0v2h2V2h-6v2h4zM4 20H2v4h6v-2H4v-2zm16 0v2h-4v2h6v-4h-2v2z"></path></svg></a>
   </div>
 </section>
-
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-  <div class="footer-left">
     <div>
       <div class="footer-brand">NEW FOUND BULL <span>· $NFB</span></div>
       <div class="footer-tag">SOLANA · PUMP.FUN · FAIR LAUNCH</div>
       <p class="footer-disclaimer">$NFB is a memecoin with no intrinsic value or expectation of financial return. Nothing on this site is financial advice. Always do your own research. Cryptocurrencies are volatile; only risk what you can afford to lose. The bull was lost. The bull is found. The bull runs.</p>
+    </div>
+    <div class="footer-logo">
+      <img src="logo.png" alt="New Found Bull Logo">
     </div>
     <div class="footer-meta">
       © 2026 NEW FOUND BULL<br>
@@ -1376,28 +647,17 @@ footer {
       <span class="amber">THE BULL IS FOUND.</span>
     </div>
   </div>
-  <div class="footer-logo">
-    <img src="logo.png" alt="New Found Bull Logo">
-  </div>
-</div>
 </footer>
-
-<!-- three.js for particles -->
 <script type="importmap">
 { "imports": { "three": "https://unpkg.com/three@0.183/build/three.module.js" } }
 </script>
 <script type="module">
 import * as THREE from 'three';
-
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-
-// ============ PARTICLE FIELD ============
 const canvas = document.getElementById('particle-canvas');
 let renderer, scene, camera, points, points2;
 let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-let particleVisible = true;
-
 if (!reduceMotion) {
   try {
     renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
@@ -1406,349 +666,106 @@ if (!reduceMotion) {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.z = 8;
-
     function makePoints(count, color, sizeMul, spread) {
       const positions = new Float32Array(count * 3);
       const sizes = new Float32Array(count);
       const offsets = new Float32Array(count);
       for (let i = 0; i < count; i++) {
-        positions[i*3]   = (Math.random()-0.5) * spread;
+        positions[i*3] = (Math.random()-0.5) * spread;
         positions[i*3+1] = (Math.random()-0.5) * (spread * 0.7);
         positions[i*3+2] = (Math.random()-0.5) * (spread * 0.7);
-        sizes[i]   = Math.random() * 1.6 + 0.4;
+        sizes[i] = Math.random() * 1.6 + 0.4;
         offsets[i] = Math.random() * Math.PI * 2;
       }
       const geo = new THREE.BufferGeometry();
       geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      geo.setAttribute('aSize',    new THREE.BufferAttribute(sizes, 1));
-      geo.setAttribute('aOffset',  new THREE.BufferAttribute(offsets, 1));
+      geo.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+      geo.setAttribute('aOffset', new THREE.BufferAttribute(offsets, 1));
       const mat = new THREE.ShaderMaterial({
-        uniforms: {
-          uTime: { value: 0 },
-          uColor: { value: new THREE.Color(color) },
-          uSize: { value: sizeMul }
-        },
-        vertexShader: `
-          attribute float aSize; attribute float aOffset;
-          uniform float uTime; uniform float uSize;
-          varying float vAlpha;
-          void main() {
-            vec3 p = position;
-            p.y += sin(uTime*0.3 + aOffset) * 0.4;
-            p.x += cos(uTime*0.25 + aOffset*0.7) * 0.2;
-            vec4 mv = modelViewMatrix * vec4(p, 1.0);
-            gl_PointSize = aSize * uSize * (180.0 / -mv.z);
-            gl_Position = projectionMatrix * mv;
-            vAlpha = 0.55 + 0.45 * sin(uTime*0.6 + aOffset);
-          }`,
-        fragmentShader: `
-          varying float vAlpha; uniform vec3 uColor;
-          void main() {
-            vec2 uv = gl_PointCoord - vec2(0.5);
-            if (length(uv) > 0.5) discard;
-            gl_FragColor = vec4(uColor, smoothstep(0.5, 0.0, length(uv)) * vAlpha * 0.4);
-          }`,
-        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+        uniforms: { uTime: { value: 0 }, uColor: { value: new THREE.Color(color) }, uSize: { value: sizeMul } },
+        vertexShader: `attribute float aSize; attribute float aOffset; uniform float uTime; uniform float uSize; varying float vAlpha; void main(){ vec3 p=position; p.y+=sin(uTime*0.3+aOffset)*0.4; p.x+=cos(uTime*0.25+aOffset*0.7)*0.2; vec4 mv=modelViewMatrix*vec4(p,1.0); gl_PointSize=uSize*aSize*(300.0/-mv.z); gl_Position=projectionMatrix*mv; vAlpha=smoothstep(0.0,0.5,aSize/2.0); }`,
+        fragmentShader: `uniform vec3 uColor; varying float vAlpha; void main(){ float d=length(gl_PointCoord-0.5); if(d>0.5) discard; float a=smoothstep(0.5,0.1,d)*vAlpha*0.7; gl_FragColor=vec4(uColor,a); }`,
+        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
       });
       return new THREE.Points(geo, mat);
     }
-
-    points = makePoints(800, 0xc8aa82, 1.0, 20);
-    scene.add(points);
-    points2 = makePoints(600, 0xffffff, 0.7, 18);
-    scene.add(points2);
-
-    window.addEventListener('mousemove', e => {
-      mouseX = (e.clientX / window.innerWidth - 0.5);
-      mouseY = (e.clientY / window.innerHeight - 0.5);
-    });
-
+    points = makePoints(600, '#c8aa82', 1.2, 18);
+    points2 = makePoints(300, '#ffffff', 0.6, 22);
+    scene.add(points); scene.add(points2);
     window.addEventListener('resize', () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
     });
-
-    const clock = new THREE.Clock();
-    function animate() {
-      if (particleVisible) {
-        const t = clock.getElapsedTime();
-        points.material.uniforms.uTime.value = t;
-        points2.material.uniforms.uTime.value = t;
-        targetX += (mouseX - targetX) * 0.05;
-        targetY += (mouseY - targetY) * 0.05;
-        scene.rotation.y = targetX * 0.2;
-        scene.rotation.x = targetY * 0.1;
-        renderer.render(scene, camera);
-      }
+    function animate(t) {
       requestAnimationFrame(animate);
+      const time = t * 0.001;
+      points.material.uniforms.uTime.value = time;
+      points2.material.uniforms.uTime.value = time;
+      targetX += (mouseX - targetX) * 0.05;
+      targetY += (mouseY - targetY) * 0.05;
+      points.rotation.y = targetX * 0.15;
+      points.rotation.x = targetY * 0.1;
+      points2.rotation.y = -targetX * 0.1;
+      points2.rotation.x = -targetY * 0.08;
+      renderer.render(scene, camera);
     }
-    animate();
-
-    document.addEventListener('visibilitychange', () => {
-      particleVisible = !document.hidden;
-    });
-  } catch (err) {
-    console.warn('Particle field disabled:', err);
-    canvas.style.display = 'none';
-  }
+    animate(0);
+  } catch(e) { console.warn('WebGL not supported', e); }
 }
-
-// ============ CUSTOM CURSOR ============
-if (!isCoarse) {
-  const cur = document.getElementById('custom-cursor');
-  const target = { x: 0, y: 0 }, pos = { x: 0, y: 0 };
-  let hover = false;
-  window.addEventListener('mousemove', e => {
-    target.x = e.clientX; target.y = e.clientY;
-  });
-  window.addEventListener('mouseover', e => {
-    const t = e.target;
-    hover = !!(t.closest('a,button,.faq-q,.step-card,.stat-cell,.phase,.social-link,.copy-btn,.distribution-row'));
-  });
-  (function loop(){
-    pos.x += (target.x - pos.x) * 0.25;
-    pos.y += (target.y - pos.y) * 0.25;
-    const s = hover ? 48 : 12;
-    cur.style.transform = `translate(${pos.x - s/2}px, ${pos.y - s/2}px)`;
-    cur.style.width = cur.style.height = s + 'px';
-    cur.style.opacity = hover ? 0.6 : 1;
-    requestAnimationFrame(loop);
-  })();
-}
-
-// ============ HERO TILE FLIP GRID ============
-const heroGrid = document.getElementById('hero-grid');
-
-let isMobile, rows, cols, amberCells, blackCells, textCells, allCells;
-
-const amberCellsDesktop = [{r:1,c:3},{r:5,c:7},{r:4,c:3},{r:5,c:5},{r:7,c:2},{r:8,c:6}];
-const blackCellsDesktop = [{r:0,c:0},{r:1,c:4},{r:6,c:3},{r:4,c:7},{r:6,c:0},{r:8,c:4}];
-const textCellsDesktop = [{r:0,c:6, txt:'$NFB'},{r:3,c:4, txt:'BULL'},{r:5,c:1, txt:'SOL'},{r:7,c:5, txt:'001'}];
-
-const amberCellsMobile = [{r:6,c:3},{r:4,c:0},{r:4,c:3},{r:6,c:1}];
-const blackCellsMobile = [{r:0,c:0},{r:2,c:3},{r:5,c:0},{r:7,c:3}];
-const textCellsMobile = [{r:0,c:3, txt:'$NFB'},{r:1,c:0, txt:'BULL'},{r:5,c:2, txt:'SOL'},{r:7,c:0, txt:'001'}];
-
-function buildHeroGrid() {
-  const wasMobile = isMobile;
-  isMobile = window.innerWidth <= 768;
-
-  // Kalau breakpoint-nya nggak berubah (misal cuma sedikit resize di desktop),
-  // nggak perlu rebuild grid dari nol — cukup update posisi gambar.
-  if (wasMobile === isMobile && heroGrid.children.length > 0) {
-    updateHeroImageSize();
-    return;
-  }
-
-  rows = isMobile ? 8 : 9;
-  cols = isMobile ? 4 : 8;
-  amberCells = isMobile ? amberCellsMobile : amberCellsDesktop;
-  blackCells = isMobile ? blackCellsMobile : blackCellsDesktop;
-  textCells = isMobile ? textCellsMobile : textCellsDesktop;
-
-  heroGrid.innerHTML = ''; // bersihin sel lama sebelum rebuild
-
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const isAmber = amberCells.some(p => p.r===r && p.c===c);
-      const isBlack = blackCells.some(p => p.r===r && p.c===c);
-      const textCell = textCells.find(p => p.r===r && p.c===c);
-      const cell = document.createElement('div');
-      cell.className = 'grid-cell';
-      cell.dataset.r = r;
-      cell.dataset.c = c;
-
-      if (isAmber) cell.classList.add('is-amber');
-      else if (isBlack) cell.classList.add('is-black');
-      else if (textCell) {
-        cell.classList.add('is-text');
-        cell.textContent = textCell.txt;
-      } else {
-        cell.classList.add('is-image');
-      }
-
-      const cellW = 100 / cols;
-      const cellH = 100 / rows;
-      cell.style.left = `${c*cellW}%`;
-      cell.style.top = `${r*cellH}%`;
-      cell.style.width = `${cellW}%`;
-      cell.style.height = `${cellH}%`;
-      heroGrid.appendChild(cell);
-    }
-  }
-
-  allCells = heroGrid.querySelectorAll('.grid-cell');
-  updateHeroImageSize();
-
-  // Replay animasi masuk hanya di build pertama (biar nggak flicker tiap resize)
-  if (wasMobile === undefined) {
-    playHeroGridEntranceAnimation();
-  } else {
-    allCells.forEach(cell => { cell.style.opacity = '1'; cell.style.transform = 'none'; });
-  }
-}
-
-function updateHeroImageSize() {
-  const W = window.innerWidth;
-  const H = window.innerHeight;
-  const imgRatio = W <= 768 ? (9 / 16) : (16 / 9);
-  let bgW, bgH;
-
-  if (W / H > imgRatio) {
-    bgW = W;
-    bgH = W / imgRatio;
-  } else {
-    bgH = H;
-    bgW = H * imgRatio;
-  }
-
-  const offsetX = W <= 768 ? (bgW - W) / 2 : (bgW - W);
-  const offsetY = W > 768 ? (bgH - H) * 0.2 : (bgH - H) / 2;
-
-  const cellWPx = heroGrid.offsetWidth / cols;
-  const cellHPx = heroGrid.offsetHeight / rows;
-
-  allCells.forEach(cell => {
-    if (cell.classList.contains('is-image')) {
-      const r = parseInt(cell.dataset.r);
-      const c = parseInt(cell.dataset.c);
-
-      const mainImg = W <= 768 ? "url('bullhp.png')" : "url('bull.png')";
-      const bubbleImg = "url('background%20bull.png')";
-
-      cell.style.backgroundImage = `${mainImg}, ${bubbleImg}`;
-      cell.style.backgroundSize = `${bgW}px ${bgH}px, ${bgW}px ${bgH}px`;
-      cell.style.backgroundPosition = `-${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px, -${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px`;
-    }
+document.addEventListener('mousemove', e => { mouseX = (e.clientX / window.innerWidth) * 2 - 1; mouseY = -(e.clientY / window.innerHeight) * 2 + 1; });
+</script>
+<script>
+// Custom Cursor
+const cursor = document.getElementById('custom-cursor');
+if (cursor && !window.matchMedia('(pointer: coarse)').matches) {
+  document.addEventListener('mousemove', e => { cursor.style.transform = `translate(${e.clientX - 6}px, ${e.clientY - 6}px)`; });
+  document.querySelectorAll('a, button, .faq-q').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width = '40px'; cursor.style.height = '40px'; cursor.style.marginLeft = '-14px'; cursor.style.marginTop = '-14px'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; cursor.style.marginLeft = '0'; cursor.style.marginTop = '0'; });
   });
 }
-
-function playHeroGridEntranceAnimation() {
-  if (!reduceMotion) {
-    allCells.forEach(cell => {
-      cell.style.opacity = '0';
-      cell.style.transform = 'rotateX(90deg) translateY(-100px)';
-      cell.style.transformOrigin = 'top center';
-    });
-    const indices = Array.from(allCells.keys()).sort(() => Math.random() - 0.5);
-    setTimeout(() => {
-      indices.forEach((idx, order) => {
-        const cell = allCells[idx];
-        cell.style.transition = 'opacity 900ms var(--ease-emphasis), transform 900ms var(--ease-emphasis)';
-        cell.style.transitionDelay = (order * 0.025) + 's';
-        requestAnimationFrame(() => {
-          cell.style.opacity = '1';
-          cell.style.transform = 'none';
-        });
-      });
-    }, 250);
-  } else {
-    allCells.forEach(cell => {
-      cell.style.opacity = '1';
-      cell.style.transform = 'none';
-    });
-  }
-}
-
-buildHeroGrid();
-
-let resizeTimeout;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(buildHeroGrid, 200); // debounce 200ms
-});
-
-// ============ FADE UP OBSERVER ============
-const fadeObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-in');
-      if (entry.target.classList.contains('distribution')) {
-        entry.target.querySelectorAll('.dist-bar-fill').forEach(bar => {
-          bar.style.width = bar.dataset.pct + '%';
-        });
-      }
-      fadeObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
-document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
-
-// ============ FAQ ACCORDION ============
-document.querySelectorAll('.faq-q').forEach(btn => {
+// Fade Up Observer
+const fadeObs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); fadeObs.unobserve(e.target); } }); }, { threshold: 0.15 });
+document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+// FAQ Accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  const btn = item.querySelector('.faq-q');
+  if (!btn) return;
   btn.addEventListener('click', () => {
-    const item = btn.parentElement;
     const isOpen = item.classList.contains('is-open');
-    document.querySelectorAll('.faq-item').forEach(i => {
-      i.classList.remove('is-open');
-      i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
-    });
-    if (!isOpen) {
-      item.classList.add('is-open');
-      btn.setAttribute('aria-expanded', 'true');
-    }
+    document.querySelectorAll('.faq-item.is-open').forEach(i => { i.classList.remove('is-open'); i.querySelector('.faq-q').setAttribute('aria-expanded', 'false'); });
+    if (!isOpen) { item.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); }
   });
 });
-
-// ============ TOAST NOTIFICATION ============
-let toastTimeout; 
-function showToast() {
-  const toast = document.getElementById('toast');
-  toast.classList.add('show');
-  
-  clearTimeout(toastTimeout); 
-  toastTimeout = setTimeout(() => {
-    toast.classList.remove('show');
-  }, 2500); 
-}
-
-// ============ COPY CA ============
-const caValue = 'SOOON';
-const copyBtn = document.getElementById('copy-ca-btn');
-const heroCopyBtn = document.getElementById('hero-copy-ca');
-
-function copyCA(e) {
-  const fallback = () => {
-    const ta = document.createElement('textarea');
-    ta.value = caValue;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); } catch (err) {}
-    document.body.removeChild(ta);
-  };
-  
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(caValue).then(() => {
-      showToast();
-    }).catch(() => {
-      fallback();
-      showToast();
-    });
-  } else {
-    fallback();
-    showToast();
+// Copy CA
+const caValue = document.getElementById('ca-value')?.textContent || 'SOOON';
+function showToast() { const t = document.getElementById('toast'); t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
+function copyCA() { navigator.clipboard.writeText(caValue).then(showToast).catch(() => { const ta = document.createElement('textarea'); ta.value = caValue; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast(); }); }
+document.getElementById('copy-ca-btn')?.addEventListener('click', copyCA);
+document.getElementById('hero-copy-ca')?.addEventListener('click', copyCA);
+// Distribution bars
+const distObs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('.dist-bar-fill').forEach(bar => { bar.style.width = bar.dataset.pct + '%'; }); distObs.unobserve(e.target); } }); }, { threshold: 0.3 });
+document.querySelectorAll('.distribution').forEach(el => distObs.observe(el));
+// Hero Grid
+(function buildHeroGrid() {
+  const grid = document.getElementById('hero-grid');
+  if (!grid) return;
+  const cols = 6, rows = 4, cw = 100 / cols, ch = 100 / rows;
+  const types = ['is-image','is-amber','is-black','is-text','is-black','is-image','is-black','is-text','is-image','is-black','is-amber','is-black','is-text','is-black','is-image','is-black','is-image','is-black','is-amber','is-black','is-text','is-black','is-image','is-black'];
+  const texts = ['$NFB','BULL','RUN','HODL'];
+  let ti = 0;
+  for (let i = 0; i < types.length; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'grid-cell ' + types[i];
+    const col = i % cols, row = Math.floor(i / cols);
+    cell.style.left = (col * cw) + '%'; cell.style.top = (row * ch) + '%';
+    cell.style.width = cw + '%'; cell.style.height = ch + '%';
+    if (types[i] === 'is-image') cell.style.backgroundImage = "url('bull1x.png')";
+    if (types[i] === 'is-text') cell.textContent = texts[ti++ % texts.length];
+    grid.appendChild(cell);
   }
-}
-if (copyBtn) copyBtn.addEventListener('click', copyCA);
-if (heroCopyBtn) heroCopyBtn.addEventListener('click', copyCA);
-
-// ============ NAV SCROLL STATE ============
-let lastScroll = 0;
-const nav = document.querySelector('.nav');
-window.addEventListener('scroll', () => {
-  const cur = window.scrollY;
-  if (cur > 80) {
-    nav.style.background = 'rgba(0,0,0,0.92)';
-  } else {
-    nav.style.background = 'rgba(0,0,0,0.7)';
-  }
-  lastScroll = cur;
-}, { passive: true });
-
+})();
 </script>
 </body>
 </html>
