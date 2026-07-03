@@ -976,25 +976,44 @@ footer {
   line-height: 2;
   text-align: right;
 }
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex: 1 1 auto;
+  min-width: 260px;
+}
+.footer-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  line-height: 2;
+  text-align: left;
+}
 .footer-meta .amber { color: var(--highlight); font-weight: 700; }
-  .footer-logo {
+
+.footer-logo {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  flex: 0 0 auto;
+  margin: 0 auto;
+  align-self: center;
 }
 .footer-logo img {
-  width: 64px;
-  height: 64px;
+  width: 96px;
+  height: 96px;
   object-fit: contain;
   opacity: 0.9;
 }
+
 @media (max-width: 768px) {
-  .footer-logo { order: 2; }
-  .footer-meta { order: 3; margin-left: auto; text-align: right; }
-}
-@media (max-width: 768px) {
-  .footer-meta { text-align: left; }
+  .footer-inner { flex-direction: column; align-items: stretch; }
+  .footer-left { order: 1; }
+  .footer-logo { order: 2; margin: 1rem auto 0; }
 }
 
 @media (max-width: 768px) {
@@ -1344,13 +1363,11 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
+  <div class="footer-left">
     <div>
       <div class="footer-brand">NEW FOUND BULL <span>· $NFB</span></div>
       <div class="footer-tag">SOLANA · PUMP.FUN · FAIR LAUNCH</div>
       <p class="footer-disclaimer">$NFB is a memecoin with no intrinsic value or expectation of financial return. Nothing on this site is financial advice. Always do your own research. Cryptocurrencies are volatile; only risk what you can afford to lose. The bull was lost. The bull is found. The bull runs.</p>
-    </div>
-    <div class="footer-logo">
-      <img src="logo.png" alt="New Found Bull Logo">
     </div>
     <div class="footer-meta">
       © 2026 NEW FOUND BULL<br>
@@ -1359,6 +1376,10 @@ footer {
       <span class="amber">THE BULL IS FOUND.</span>
     </div>
   </div>
+  <div class="footer-logo">
+    <img src="logo.png" alt="New Found Bull Logo">
+  </div>
+</div>
 </footer>
 
 <!-- three.js for particles -->
