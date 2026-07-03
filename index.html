@@ -977,6 +977,22 @@ footer {
   text-align: right;
 }
 .footer-meta .amber { color: var(--highlight); font-weight: 700; }
+  .footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.footer-logo img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  opacity: 0.9;
+}
+@media (max-width: 768px) {
+  .footer-logo { order: 2; }
+  .footer-meta { order: 3; margin-left: auto; text-align: right; }
+}
 @media (max-width: 768px) {
   .footer-meta { text-align: left; }
 }
@@ -986,7 +1002,8 @@ footer {
   .nav { padding: 1rem 1.25rem; }
   .hero-overlay { padding: 1.5rem 1.5rem 2.5rem; }
   .cta-section { padding: 6rem 1.5rem; }
-  .footer-inner { flex-direction: column; }
+  .footer-inner { flex-wrap: wrap; row-gap: 1.5rem; }
+  .footer-inner > div:first-child { flex: 1 1 100%; }
   .stat-cell { padding: 1.75rem; }
   .step-card { padding: 2rem; }
   .phase { padding: 2.5rem 1.5rem; }
@@ -1331,6 +1348,9 @@ footer {
       <div class="footer-brand">NEW FOUND BULL <span>· $NFB</span></div>
       <div class="footer-tag">SOLANA · PUMP.FUN · FAIR LAUNCH</div>
       <p class="footer-disclaimer">$NFB is a memecoin with no intrinsic value or expectation of financial return. Nothing on this site is financial advice. Always do your own research. Cryptocurrencies are volatile; only risk what you can afford to lose. The bull was lost. The bull is found. The bull runs.</p>
+    </div>
+    <div class="footer-logo">
+      <img src="logo.png" alt="New Found Bull Logo">
     </div>
     <div class="footer-meta">
       © 2026 NEW FOUND BULL<br>
