@@ -942,8 +942,10 @@ footer {
 }
 .footer-inner {
   max-width: 1400px; margin: 0 auto;
-  display: flex; justify-content: space-between; align-items: flex-start;
-  flex-wrap: wrap; gap: 3rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 3rem;
 }
 .footer-brand {
   font-family: 'JetBrains Mono', monospace;
@@ -984,17 +986,40 @@ footer {
   flex-shrink: 0;
 }
 .footer-logo img {
-  width: 64px;
-  height: 64px;
+  width: 104px;
+  height: 104px;
   object-fit: contain;
   opacity: 0.9;
 }
 @media (max-width: 768px) {
-  .footer-logo { order: 2; }
-  .footer-meta { order: 3; margin-left: auto; text-align: right; }
-}
-@media (max-width: 768px) {
-  .footer-meta { text-align: left; }
+  .footer-inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    row-gap: 1.75rem;
+    column-gap: 1rem;
+  }
+  .footer-inner > div:first-child {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .footer-meta {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+    margin-left: 0;
+    align-self: center;
+  }
+  .footer-logo {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: center;
+    align-self: center;
+  }
+  .footer-logo img {
+    width: 76px;
+    height: 76px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1002,8 +1027,6 @@ footer {
   .nav { padding: 1rem 1.25rem; }
   .hero-overlay { padding: 1.5rem 1.5rem 2.5rem; }
   .cta-section { padding: 6rem 1.5rem; }
-  .footer-inner { flex-wrap: wrap; row-gap: 1.5rem; }
-  .footer-inner > div:first-child { flex: 1 1 100%; }
   .stat-cell { padding: 1.75rem; }
   .step-card { padding: 2rem; }
   .phase { padding: 2.5rem 1.5rem; }
