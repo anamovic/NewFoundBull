@@ -1752,5 +1752,21 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 </script>
+
+<!-- Blokir shortcut lihat kode (klik kanan, Ctrl+U, DevTools) -->
+<script>
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  if (
+    e.key === 'F12' ||
+    (e.ctrlKey && e.key.toLowerCase() === 'u') ||
+    (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
+    (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'c') ||
+    (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'j')
+  ) {
+    e.preventDefault();
+  }
+});
+</script>
 </body>
 </html>
