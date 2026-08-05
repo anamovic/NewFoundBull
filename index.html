@@ -110,25 +110,22 @@ img,svg{display:block}
 
 .found-word{
   font-family:'Anton',sans-serif;
-  font-size:clamp(4.2rem,15vw,8.5rem);
-  line-height:.95;letter-spacing:.02em;
-  color:var(--red);
+  font-size:clamp(2.9rem,11vw,6.4rem);
+  line-height:1.08;letter-spacing:.02em;
+  color:var(--ink);
   text-align:center;
   text-transform:uppercase;
   position:relative;
 }
 .found-word .stamp-box{
-  display:inline-block;border:6px solid var(--red);padding:0 .25em;
+  display:inline-block;border:5px solid var(--red);padding:0 .22em;
+  color:var(--red);
   transform:rotate(-2deg);
   box-shadow:inset 0 0 12px rgba(194,50,28,.15);
 }
-.one-bull{
-  font-family:'Anton',sans-serif;
-  font-size:clamp(2.2rem,7.5vw,4rem);
-  letter-spacing:.06em;text-align:center;color:var(--ink);
-  margin-top:.9rem;text-transform:uppercase;
+.found-word .nfb-tick{
+  font-size:.34em;color:var(--green);vertical-align:super;letter-spacing:.04em;
 }
-.one-bull .ticker{color:var(--green)}
 
 .bull-figure{
   width:min(300px,64%);margin:1.6rem auto 1.2rem;
@@ -404,7 +401,7 @@ footer{
     <a href="#auction">Auction</a>
     <a href="#tokenomics">Tokenomics</a>
     <a href="#faq">FAQ</a>
-    <a class="nav-cta" href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener">View auction ↗</a>
+    <a class="nav-cta js-auction" href="#">View auction ↗</a>
   </div>
 </nav>
 
@@ -419,8 +416,7 @@ footer{
       <span class="live-dot">● AUCTION NOT LIVE YET</span>
     </div>
 
-    <h1 class="found-word"><span class="stamp-box">FOUND</span></h1>
-    <div class="one-bull">One bull <span class="ticker">· $NFB</span></div>
+    <h1 class="found-word">NEW <span class="stamp-box">FOUND</span><br>BULL <span class="nfb-tick">$NFB</span></h1>
 
     <div class="bull-figure" aria-hidden="true">
       <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" fill="none">
@@ -461,7 +457,7 @@ footer{
     </div>
 
     <div class="poster-actions">
-      <a class="btn btn-red" href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener">View the auction ↗</a>
+      <a class="btn btn-red js-auction" href="#">View the auction ↗</a>
       <a class="btn" href="#story">Read the story ↓</a>
     </div>
 
@@ -660,7 +656,7 @@ footer{
     <button class="cp" id="copyCa">Copy</button>
   </div>
   <div class="poster-actions">
-    <a class="btn btn-red" href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener">View the auction ↗</a>
+    <a class="btn btn-red js-auction" href="#">View the auction ↗</a>
     <a class="btn" href="https://x.com/NewFoundBull" target="_blank" rel="noopener">Follow on X ↗</a>
   </div>
 </section>
@@ -674,7 +670,7 @@ footer{
     <div class="foot-meta">
       © 2026 NEW FOUND BULL<br>
       BUILT ON ROBINHOOD CHAIN<br>
-      AUCTIONED VIA <a href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener">POOLS.TRADE CCA</a><br>
+      AUCTIONED VIA POOLS.TRADE CCA<br>
       <a href="https://x.com/NewFoundBull" target="_blank" rel="noopener">@NEWFOUNDBULL</a>
     </div>
   </div>
@@ -683,6 +679,16 @@ footer{
 <script>
 // ===== CA (isi setelah deploy, format 0x...) =====
 var caValue = 'Soon';
+// ===== Link lelang (isi dengan URL baru saat sudah ada) =====
+var auctionUrl = '';
+
+// tombol lelang: kalau URL belum diisi, tampilkan toast; kalau sudah, buka tab baru
+document.querySelectorAll('.js-auction').forEach(function(a){
+  a.addEventListener('click', function(e){
+    if(!auctionUrl){ e.preventDefault(); toast('AUCTION LINK DROPS AT LAUNCH'); }
+    else { a.href = auctionUrl; a.target = '_blank'; a.rel = 'noopener'; }
+  });
+});
 
 // ===== toast =====
 var toastT;
