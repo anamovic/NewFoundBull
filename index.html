@@ -130,52 +130,21 @@ img,svg{display:block}
 
 .bull-figure{
   width:min(300px,64%);margin:1.6rem auto 1.2rem;
-  cursor:pointer;outline:none;
 }
-.bull-figure:focus-visible{outline:3px solid var(--green);outline-offset:4px}
-.bull-figure svg{width:100%;height:auto;overflow:visible}
-
-/* --- Transformers-style assembly animation --- */
-.bull-figure .pc{
-  opacity:0;
-  transform-box:fill-box;transform-origin:center;
+.bull-figure img{
+  width:100%;height:auto;display:block;
+  opacity:0;transform:translateY(16px) scale(.96);
+  animation:bullFade 1.1s .2s var(--ease) forwards, breathe 5s 1.4s ease-in-out infinite;
 }
-.bull-figure .p-flash{opacity:0;pointer-events:none}
-.bull-figure.go .pc{
-  animation:asm .65s var(--d,0s) cubic-bezier(.2,1.35,.35,1) forwards;
+@keyframes bullFade{
+  to{opacity:1;transform:translateY(0) scale(1)}
 }
-@keyframes asm{
-  from{opacity:0;transform:var(--from)}
-  55%{opacity:1}
-  to{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}
-}
-/* full-logo "clank" impact when the last part locks in */
-.bull-figure.go svg{animation:clank .5s 1.55s cubic-bezier(.36,.07,.19,.97) both}
-@keyframes clank{
-  0%{transform:translate(0,0) scale(1)}
-  20%{transform:translate(-3px,2px) scale(1.04)}
-  40%{transform:translate(3px,-2px) scale(1.02)}
-  60%{transform:translate(-2px,1px) scale(1.03)}
-  80%{transform:translate(1px,-1px) scale(1.01)}
-  100%{transform:translate(0,0) scale(1)}
-}
-/* metal flash right after the impact */
-.bull-figure.go .p-flash{animation:flash .45s 1.6s ease-out both}
-@keyframes flash{
-  0%{opacity:0}
-  30%{opacity:.75}
-  100%{opacity:0}
-}
-/* slow breathing idle once assembled */
-.bull-figure.go{animation:breathe 4.5s 2.4s ease-in-out infinite}
 @keyframes breathe{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.025)}
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-4px) scale(1.02)}
 }
 @media(prefers-reduced-motion:reduce){
-  .bull-figure .pc{opacity:1;animation:none!important}
-  .bull-figure.go svg,.bull-figure.go{animation:none!important}
-  .bull-figure .p-flash{animation:none!important;opacity:0}
+  .bull-figure img{opacity:1;transform:none;animation:none}
 }
 
 .poster-desc{
@@ -465,50 +434,8 @@ footer{
 
     <h1 class="found-word">NEW <span class="stamp-box">FOUND</span><br>BULL <span class="nfb-tick">$NFB</span></h1>
 
-    <div class="bull-figure go" id="bullFigure" role="button" tabindex="0" aria-label="Replay logo assembly animation" title="Click to reassemble">
-      <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" fill="none">
-        <!-- horns -->
-        <g class="pc" style="--from:translate(-150px,-90px) rotate(-110deg) scale(.7);--d:.5s">
-          <path d="M60 78 C30 62, 22 34, 34 14 C40 42, 58 56, 84 60" stroke="#181410" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="#eadfc8"/>
-        </g>
-        <g class="pc" style="--from:translate(150px,-90px) rotate(110deg) scale(.7);--d:.6s">
-          <path d="M240 78 C270 62, 278 34, 266 14 C260 42, 242 56, 216 60" stroke="#181410" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="#eadfc8"/>
-        </g>
-        <!-- head -->
-        <g class="pc" style="--from:translate(0,140px) rotate(10deg) scale(.5);--d:.08s">
-          <path d="M84 62 C104 44, 196 44, 216 62 C232 78, 236 108, 224 136 C216 156, 196 168, 178 176 L178 190 C178 204, 162 212, 150 212 C138 212, 122 204, 122 190 L122 176 C104 168, 84 156, 76 136 C64 108, 68 78, 84 62 Z" fill="#181410"/>
-          <path d="M118 74 C134 64, 166 64, 182 74 C176 88, 160 94, 150 94 C140 94, 124 88, 118 74 Z" fill="#eadfc8" opacity=".14"/>
-        </g>
-        <!-- eyes -->
-        <g class="pc" style="--from:scale(0) rotate(-180deg);--d:.85s">
-          <circle cx="118" cy="112" r="9" fill="#eadfc8"/>
-          <circle cx="120" cy="112" r="4" fill="#181410"/>
-        </g>
-        <g class="pc" style="--from:scale(0) rotate(180deg);--d:.95s">
-          <circle cx="182" cy="112" r="9" fill="#eadfc8"/>
-          <circle cx="180" cy="112" r="4" fill="#181410"/>
-        </g>
-        <!-- muzzle -->
-        <g class="pc" style="--from:translate(0,95px) scale(.6);--d:1.1s">
-          <ellipse cx="150" cy="176" rx="42" ry="26" fill="#c2321c"/>
-          <ellipse cx="136" cy="176" rx="6.5" ry="9" fill="#181410"/>
-          <ellipse cx="164" cy="176" rx="6.5" ry="9" fill="#181410"/>
-        </g>
-        <!-- nose ring -->
-        <g class="pc" style="--from:translate(0,60px) rotate(200deg) scale(0);--d:1.3s">
-          <path d="M138 196 A16 14 0 0 0 162 196" stroke="#eadfc8" stroke-width="6" stroke-linecap="round"/>
-        </g>
-        <!-- ear tag -->
-        <g class="pc" style="--from:translate(-110px,-70px) rotate(-150deg) scale(.5);--d:1.45s">
-          <rect x="52" y="84" width="30" height="18" rx="2" fill="#0e7b3c" transform="rotate(-14 52 84)"/>
-          <text x="57" y="99" transform="rotate(-14 52 84)" font-family="Space Mono, monospace" font-size="10" font-weight="700" fill="#eadfc8">NFB</text>
-        </g>
-        <!-- metal flash on lock-in -->
-        <g class="p-flash">
-          <path d="M84 62 C104 44, 196 44, 216 62 C232 78, 236 108, 224 136 C216 156, 196 168, 178 176 L178 190 C178 204, 162 212, 150 212 C138 212, 122 204, 122 190 L122 176 C104 168, 84 156, 76 136 C64 108, 68 78, 84 62 Z" fill="#fff"/>
-          <ellipse cx="150" cy="176" rx="42" ry="26" fill="#fff"/>
-        </g>
-      </svg>
+    <div class="bull-figure" id="bullFigure">
+      <img src="nfb.png" alt="New Found Bull logo" width="300" height="300">
     </div>
 
     <p class="poster-desc">
@@ -838,20 +765,6 @@ document.querySelectorAll('.sheet').forEach(function(s){
     });
   },{threshold:.2}).observe(s);
 });
-
-// ===== replay the bull assembly animation on click =====
-(function(){
-  var fig = document.getElementById('bullFigure');
-  function replay(){
-    fig.classList.remove('go');
-    void fig.offsetWidth; // force reflow so the animation resets
-    fig.classList.add('go');
-  }
-  fig.addEventListener('click', replay);
-  fig.addEventListener('keydown', function(e){
-    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); replay(); }
-  });
-})();
 
 // ===== FAQ accordion =====
 document.querySelectorAll('.faq-q').forEach(function(btn){
