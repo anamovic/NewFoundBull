@@ -3,1147 +3,527 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEW FOUND BULL — $NFB · Uniswap Launch on Robinhood Chain</title>
-<meta name="description" content="$NFB — New Found Bull. Token distribution via a Uniswap Continuous Clearing Auction (CCA) — not live yet. 0/0 tax. Mint revoked. Floor price $0.00003, target FDV $30,000.">
-<link rel="icon" type="image/png" href="robin.png">
+<title>NEW FOUND BULL — $NFB · CCA Auction on Robinhood Chain</title>
+<meta name="description" content="$NFB — New Found Bull. The bull was lost. Now it's found. CCA auction on Pools.trade (Robinhood Chain). Floor $0.00003 · 0/0 tax · LP auto-seeded · Ownership renounced.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap">
 <style>
-:root {
-  --bg: #000000;
-  --deep-black: #0a0a0a;
-  --card: #141414;
-  --text: #ffffff;
-  --text-soft: rgba(255,255,255,0.6);
-  --text-mute: rgba(255,255,255,0.3);
-  --line: rgba(255,255,255,0.12);
-  --line-bright: rgba(255,255,255,0.22);
-  --highlight: #CCFF00;
-  --ease-quiet: cubic-bezier(.22, 1, .36, 1);
-  --ease-precise: cubic-bezier(.4, 0, .2, 1);
-  --ease-emphasis: cubic-bezier(.16, 1, .3, 1);
+:root{
+  --wall:#28231d;
+  --wall-deep:#1d1915;
+  --paper:#eadfc8;
+  --paper-2:#e2d4b6;
+  --paper-3:#d9c9a6;
+  --ink:#181410;
+  --ink-soft:rgba(24,20,16,.72);
+  --ink-mute:rgba(24,20,16,.5);
+  --line:rgba(24,20,16,.22);
+  --red:#c2321c;
+  --green:#0e7b3c;
+  --rh:#00c805;
+  --tape:rgba(250,244,225,.5);
+  --shadow:0 18px 50px rgba(0,0,0,.45);
+  --ease:cubic-bezier(.22,1,.36,1);
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  line-height: 1.5;
-  overflow-x: hidden;
-  cursor: none;
-  -webkit-font-smoothing: antialiased;
-  position: relative;
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--wall);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,244,214,.07), transparent),
+    repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,.05) 2px 4px);
+  color:var(--ink);
+  font-family:'Space Grotesk',sans-serif;
+  line-height:1.55;
+  overflow-x:hidden;
 }
-@media (pointer: coarse) { body { cursor: auto; } button, a { cursor: pointer; } }
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: none; background: none; border: none; color: inherit; }
-@media (pointer: coarse) { button { cursor: pointer; } }
-::selection { background: var(--highlight); color: var(--bg); }
+::selection{background:var(--red);color:var(--paper)}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;background:none;border:none;color:inherit;cursor:pointer}
+img,svg{display:block}
 
-/* Background Image Layer */
-.bg-image {
-  position: fixed;
-  inset: 0;
-  background-image: url('background%20bull.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: -2;
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.9rem 1.5rem;
+  background:rgba(29,25,21,.85);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(234,223,200,.12);
+  color:var(--paper);
 }
-.bg-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.78);
-  z-index: -1;
+.nav-brand{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:.08em;display:flex;align-items:center;gap:.6rem}
+.nav-brand .tag{
+  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;
+  border:1px solid var(--rh);color:var(--rh);padding:.15rem .45rem;border-radius:2px;
 }
+.nav-links{display:flex;gap:1.6rem;align-items:center}
+.nav-links a{
+  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(234,223,200,.65);transition:color .3s var(--ease);
+}
+.nav-links a:hover{color:var(--paper)}
+.nav-cta{
+  font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--red);color:var(--paper);padding:.6rem 1rem;border-radius:2px;
+  transition:transform .25s var(--ease), background .25s var(--ease);
+}
+.nav-cta:hover{background:#a52814;transform:translateY(-1px)}
+@media(max-width:760px){.nav-links a:not(.nav-cta){display:none}}
 
-/* particle canvas */
-#particle-canvas {
-  position: fixed; top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  z-index: 10; 
-  pointer-events: none;
-  mix-blend-mode: screen; 
+/* ---------- hero: the FOUND poster ---------- */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:7.5rem 1.25rem 5rem;
+  position:relative;
 }
+.poster{
+  position:relative;
+  width:min(680px,100%);
+  background:var(--paper);
+  background-image:
+    radial-gradient(ellipse at 20% 10%, rgba(255,255,255,.5), transparent 45%),
+    repeating-linear-gradient(90deg, transparent 0 3px, rgba(24,20,16,.015) 3px 6px);
+  border:1px solid rgba(24,20,16,.35);
+  box-shadow:var(--shadow);
+  padding:3rem 2.5rem 0;
+  transform:rotate(-.6deg);
+}
+@media(max-width:600px){.poster{padding:2.4rem 1.4rem 0;transform:rotate(-.4deg)}}
+.tape{
+  position:absolute;width:110px;height:34px;background:var(--tape);
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+  backdrop-filter:blur(1px);
+}
+.tape.tl{top:-14px;left:8%;transform:rotate(-8deg)}
+.tape.tr{top:-14px;right:8%;transform:rotate(6deg)}
 
-/* custom cursor */
-#custom-cursor {
-  position: fixed; top: 0; left: 0;
-  width: 12px; height: 12px;
-  border-radius: 50%; background: var(--text);
-  mix-blend-mode: difference;
-  pointer-events: none; z-index: 99999;
-  will-change: transform, width, height;
-  transition: width .3s var(--ease-quiet), height .3s var(--ease-quiet), opacity .3s var(--ease-quiet);
+.poster-top{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-mute);
+  border-bottom:2px solid var(--ink);padding-bottom:.7rem;margin-bottom:1.6rem;
 }
-@media (pointer: coarse) { #custom-cursor { display: none; } }
+.poster-top .live-dot{color:var(--red);font-weight:700}
 
-/* nav */
-.nav {
-  position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
-  padding: 1.25rem 2rem;
-  display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 1px solid var(--line);
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+.found-word{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(4.2rem,15vw,8.5rem);
+  line-height:.95;letter-spacing:.02em;
+  color:var(--red);
+  text-align:center;
+  text-transform:uppercase;
+  position:relative;
 }
-.nav-brand {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  display: flex; align-items: center; gap: 0.5rem;
+.found-word .stamp-box{
+  display:inline-block;border:6px solid var(--red);padding:0 .25em;
+  transform:rotate(-2deg);
+  box-shadow:inset 0 0 12px rgba(194,50,28,.15);
 }
-.nav-brand .dot {
-  display: inline-block;
-  width: 6px; height: 6px;
-  background: var(--highlight);
-  border-radius: 50%;
-  animation: pulse-dot 2.4s var(--ease-quiet) infinite;
+.one-bull{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(2.2rem,7.5vw,4rem);
+  letter-spacing:.06em;text-align:center;color:var(--ink);
+  margin-top:.9rem;text-transform:uppercase;
 }
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-.nav-brand span { color: var(--highlight); }
-.nav-links {
-  display: flex; gap: 2.25rem; align-items: center;
-}
-.nav-links a {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-soft);
-  transition: color 300ms var(--ease-quiet);
-  position: relative;
-}
-.nav-links a::after {
-  content: ''; position: absolute;
-  left: 0; bottom: -4px;
-  width: 0; height: 1px;
-  background: var(--highlight);
-  transition: width 400ms var(--ease-quiet);
-}
-.nav-links a:hover { color: var(--highlight); }
-.nav-links a:hover::after { width: 100%; }
-.nav-cta {
-  padding: 0.65rem 1.1rem;
-  border: 1px solid var(--highlight);
-  color: var(--highlight);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  transition: all 300ms var(--ease-quiet);
-}
-.nav-cta:hover { background: var(--highlight); color: var(--bg); }
-@media (max-width: 768px) {
-  .nav { padding: 1rem 1.25rem; }
-  .nav-links { display: none; }
-}
+.one-bull .ticker{color:var(--green)}
 
-/* hero */
-.hero {
-  position: relative;
-  width: 100vw; height: 100vh;
-  min-height: 720px;
-  overflow: hidden;
-  perspective: 1200px;
-  z-index: 2;
+.bull-figure{
+  width:min(300px,64%);margin:1.6rem auto 1.2rem;
 }
-.hero-grid {
-  position: absolute; inset: 0;
-  transform-style: preserve-3d;
-}
-.grid-cell {
-  position: absolute;
-  background-size: cover;
-  background-repeat: no-repeat;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  border: 0.5px solid rgba(0,0,0,0.6);
-}
-.grid-cell.is-amber { background: var(--highlight); }
-.grid-cell.is-black { background: var(--deep-black); }
-.grid-cell.is-text {
-  background: var(--deep-black);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--highlight);
-  letter-spacing: 0.1em;
-}
-.grid-cell.is-image {
-  filter: grayscale(0.6) contrast(1.05) brightness(0.45);
-  /* Blend mode supaya gelembung background menyatu dengan bull.png */
-  background-blend-mode: normal, screen;
-}
+.bull-figure svg{width:100%;height:auto}
 
-.hero::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 70%;
-  background: linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.6) 45%, transparent 100%);
-  pointer-events: none;
-  z-index: 3;
+.poster-desc{
+  max-width:520px;margin:0 auto;
+  text-align:center;font-size:15.5px;line-height:1.7;color:var(--ink-soft);
 }
+.poster-desc strong{color:var(--ink)}
+.poster-desc .hl{color:var(--green);font-weight:700}
 
-.hero-overlay {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 2rem 2rem 3.5rem;
-  z-index: 20; 
-  pointer-events: none;
+.poster-meta{
+  display:flex;justify-content:center;gap:1.4rem;flex-wrap:wrap;
+  margin:1.6rem 0 1.8rem;
+  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--ink-mute);
 }
-.hero-overlay > * { pointer-events: auto; }
+.poster-meta span b{color:var(--ink)}
 
-.hero-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--highlight);
-  margin-bottom: 1.75rem;
-  display: flex; align-items: center; gap: 0.85rem;
+.poster-actions{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;margin-bottom:2.2rem}
+.btn{
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:.95rem 1.5rem;border:2px solid var(--ink);border-radius:2px;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease), color .25s var(--ease);
+  background:transparent;color:var(--ink);
 }
-.hero-label::before {
-  content: ''; width: 32px; height: 1px; background: var(--highlight);
-}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.btn:active{transform:translate(0,0);box-shadow:none}
+.btn:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.btn-red{background:var(--red);border-color:var(--red);color:var(--paper)}
+.btn-red:hover{box-shadow:4px 4px 0 var(--ink)}
+.btn-green{background:var(--green);border-color:var(--green);color:var(--paper)}
 
-.hero-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: clamp(2.6rem, 10vw, 9rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-  margin-bottom: 2rem;
-  color: var(--text);
+/* tear-off tabs */
+.tabs-note{
+  text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink-mute);margin-bottom:.4rem;
 }
-.hero-title .accent { color: var(--highlight); }
-.hero-title .ticker {
-  display: inline-block;
-  font-size: 0.35em;
-  vertical-align: super;
-  color: var(--text-mute);
-  margin-left: 0.4em;
-  letter-spacing: 0.02em;
+.tear-row{
+  display:flex;justify-content:stretch;
+  border-top:2px dashed var(--ink);
+  margin:0 -2.5rem;
 }
+@media(max-width:600px){.tear-row{margin:0 -1.4rem}}
+.tear-tab{
+  flex:1;min-width:0;
+  padding:1.05rem .2rem 1.2rem;
+  border-right:2px dashed var(--line);
+  font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.05em;
+  writing-mode:vertical-rl;text-orientation:mixed;
+  color:var(--ink-soft);
+  background:var(--paper-2);
+  transition:transform .5s var(--ease), opacity .5s var(--ease), background .25s var(--ease);
+  transform-origin:top center;
+  display:flex;align-items:center;justify-content:center;
+}
+.tear-tab:last-child{border-right:none}
+.tear-tab:hover{background:var(--paper-3);color:var(--ink)}
+.tear-tab.torn{transform:rotate(14deg) translateY(70px);opacity:0;pointer-events:none}
+.tear-tab:focus-visible{outline:3px solid var(--green);outline-offset:-3px}
 
-.hero-sub {
-  max-width: 580px;
-  font-size: 16px;
-  line-height: 1.65;
-  color: var(--text-soft);
-  margin-bottom: 2.5rem;
+/* ---------- ticker tape ---------- */
+.tickerbar{
+  background:var(--ink);color:var(--paper);
+  border-top:3px solid var(--red);border-bottom:3px solid var(--red);
+  overflow:hidden;white-space:nowrap;padding:.85rem 0;
+  position:relative;z-index:2;
 }
-.hero-sub strong { color: var(--text); font-weight: 700; }
-.hero-sub .amber { color: var(--highlight); font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+.tickerbar .track{display:inline-block;animation:tick 36s linear infinite}
+.tickerbar span{
+  font-family:'Space Mono',monospace;font-size:13px;font-weight:700;letter-spacing:.1em;
+  margin-right:2.6rem;
+}
+.tickerbar .up{color:#7ee2a3}
+.tickerbar .rd{color:#f2a08f}
+.tickerbar .dm{color:rgba(234,223,200,.45);font-weight:400}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-.hero-actions {
-  display: flex; gap: 1rem; flex-wrap: wrap;
-  align-items: center;
+/* ---------- sections on the wall ---------- */
+.section{padding:6.5rem 1.5rem}
+.wrap{max-width:1080px;margin:0 auto}
+.sheet{
+  background:var(--paper);
+  border:1px solid rgba(24,20,16,.35);
+  box-shadow:var(--shadow);
+  padding:3rem 2.75rem;
+  position:relative;
 }
+@media(max-width:600px){.sheet{padding:2.2rem 1.4rem}}
+.sheet.tilt-l{transform:rotate(-.4deg)}
+.sheet.tilt-r{transform:rotate(.4deg)}
 
-.btn {
-  display: inline-flex; align-items: center; gap: 0.75rem;
-  padding: 1.05rem 1.75rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  border: 1px solid var(--line-bright);
-  background: transparent;
-  color: var(--text);
-  transition: all 300ms var(--ease-quiet);
-  text-decoration: none;
+.kicker{
+  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--red);display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem;
 }
-.btn:hover { border-color: var(--highlight); color: var(--highlight); }
-.btn-primary {
-  background: var(--highlight);
-  border-color: var(--highlight);
-  color: var(--bg);
-  font-weight: 700;
+.kicker::before{content:'';width:34px;height:2px;background:var(--red)}
+.h2{
+  font-family:'Anton',sans-serif;font-size:clamp(2.1rem,5.5vw,3.6rem);
+  line-height:1;letter-spacing:.02em;text-transform:uppercase;margin-bottom:2.2rem;
 }
-.btn-primary:hover {
-  background: var(--text); border-color: var(--text); color: var(--bg);
-}
-.btn .arrow {
-  font-family: 'JetBrains Mono', monospace;
-  transition: transform 300ms var(--ease-quiet);
-}
-.btn:hover .arrow { transform: translate(2px, -2px); }
+.h2 .rd{color:var(--red)}
+.h2 .gr{color:var(--green)}
 
-/* marquee */
-.marquee {
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: var(--bg);
-  padding: 1.4rem 0;
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;
-  z-index: 2;
-}
-.marquee-track {
-  display: inline-block;
-  animation: marquee-scroll 38s linear infinite;
-  will-change: transform;
-}
-.marquee-track span {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 1.35rem;
-  letter-spacing: -0.01em;
-  margin-right: 3rem;
-  color: var(--text);
-  display: inline-block;
-}
-.marquee-track span.dim { color: var(--text-mute); font-weight: 400; }
-.marquee-track span.amber { color: var(--highlight); }
-.marquee-track span.bull { font-size: 1.6rem; }
-@keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-/* section base */
-section { position: relative; z-index: 2; }
-.section-pad { padding: 8rem 2rem; }
-.container { max-width: 1400px; margin: 0 auto; }
-.container-narrow { max-width: 860px; margin: 0 auto; }
-
-.section-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--highlight);
-  margin-bottom: 2rem;
-  display: flex; align-items: center; gap: 0.85rem;
-}
-.section-label::before {
-  content: ''; width: 32px; height: 1px; background: var(--highlight);
-}
-
-.section-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-size: clamp(2.3rem, 5.5vw, 4.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.025em;
-  margin-bottom: 4rem;
-}
-.section-title .amber { color: var(--highlight); }
-.section-title em {
-  font-style: normal;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 400;
-  font-size: 0.85em;
-  letter-spacing: -0.02em;
-}
+.prose{max-width:640px;font-size:16px;line-height:1.75;color:var(--ink-soft)}
+.prose p{margin-bottom:1.2rem}
+.prose strong{color:var(--ink)}
+.prose .hl{color:var(--green);font-weight:700}
 
 /* fade up */
-.fade-up {
-  opacity: 0; transform: translateY(40px);
-  transition: opacity 1000ms var(--ease-quiet), transform 1000ms var(--ease-quiet);
-  will-change: transform, opacity;
-}
-.fade-up.is-in { opacity: 1; transform: none; }
+.fade{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.fade.in{opacity:1;transform:none}
 
-/* about / sticky two-col */
-.sticky-pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
-  align-items: start;
+/* ---------- auction lot card ---------- */
+.lot-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:2.6rem;align-items:start}
+@media(max-width:860px){.lot-grid{grid-template-columns:1fr}}
+.lot-card{
+  border:3px solid var(--ink);
+  background:var(--paper-2);
+  position:relative;
 }
-.sticky-pair .left {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 4rem 0;
+.lot-head{
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--ink);color:var(--paper);
+  padding:.75rem 1.2rem;
+  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
 }
-.sticky-pair .right {
-  display: flex;
-  flex-direction: column;
-  gap: 5rem;
-  padding: 4rem 0;
+.lot-head .status{color:#f2a08f;font-weight:700}
+.lot-body{padding:1.6rem 1.4rem}
+.lot-row{
+  display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+  padding:.85rem .2rem;border-bottom:1px solid var(--line);
 }
+.lot-row:last-child{border-bottom:none}
+.lot-label{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+.lot-value{font-family:'Anton',sans-serif;font-size:clamp(1.15rem,2.6vw,1.6rem);letter-spacing:.02em}
+.lot-value.gr{color:var(--green)}
+.lot-value.rd{color:var(--red)}
+.lot-foot{
+  padding:1rem 1.4rem;border-top:3px solid var(--ink);
+  font-size:13px;color:var(--ink-soft);background:var(--paper-3);
+}
+.how-cca{display:flex;flex-direction:column;gap:1.1rem}
+.cca-step{
+  display:flex;gap:1rem;align-items:flex-start;
+  border:1px solid var(--line);background:rgba(255,255,255,.35);padding:1.1rem 1.2rem;
+}
+.cca-num{
+  font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--red);line-height:1;min-width:2ch;
+}
+.cca-step h4{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;margin-bottom:.25rem}
+.cca-step p{font-size:13.5px;line-height:1.6;color:var(--ink-soft)}
 
-.about-block p {
-  font-size: 16.5px;
-  line-height: 1.75;
-  color: var(--text-soft);
-  margin-bottom: 1.5rem;
+/* ---------- tokenomics ---------- */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:2px solid var(--ink);margin-bottom:3rem;background:var(--paper-2);
 }
-.about-block p strong { color: var(--text); font-weight: 700; }
-.about-block p .amber {
-  color: var(--highlight);
-  font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
+@media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{
+  padding:1.6rem 1.3rem;border-right:1px solid var(--line);
 }
-.about-block h3 {
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 28px;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.5rem;
-  line-height: 1.15;
-}
+.stat:last-child{border-right:none}
+@media(max-width:860px){.stat:nth-child(2){border-right:none}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+.stat-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:.6rem}
+.stat-value{font-family:'Anton',sans-serif;font-size:clamp(1.3rem,3vw,1.9rem);letter-spacing:.02em;margin-bottom:.4rem}
+.stat-value.gr{color:var(--green)}
+.stat-note{font-size:12.5px;line-height:1.55;color:var(--ink-soft)}
 
-/* Bordered Image Styling (Kembali ke awal) */
-.about-image {
-  width: 100%;
-  aspect-ratio: 4/4;
-  background-size: cover;
-  background-position: center;
-  filter: grayscale(0.4) contrast(1.05) brightness(0.85);
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--line);
+.alloc-row{
+  display:grid;grid-template-columns:190px 1fr 72px;gap:1.4rem;align-items:center;
+  padding:1.15rem 0;border-bottom:1px solid var(--line);
 }
-/* Gelembung background menyatu di atas gambar about (bull1x.png & bull2x.png) */
-.about-image::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('background%20bull.png');
-  background-size: cover;
-  background-position: center;
-  mix-blend-mode: screen;
-  opacity: 0.9;
-  pointer-events: none;
-  z-index: 1;
-}
-.about-image::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, transparent 50%, rgba(204,255,0,0.15) 100%);
-  pointer-events: none;
-  z-index: 2;
-}
-.about-image-caption {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-mute);
-  margin-top: 0.85rem;
-  margin-bottom: 2rem;
-  display: flex; justify-content: space-between;
+.alloc-row:first-of-type{border-top:2px solid var(--ink)}
+.alloc-name{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.alloc-bar{height:14px;background:rgba(24,20,16,.08);border:1px solid var(--line);position:relative;overflow:hidden}
+.alloc-fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--green);transition:width 1.3s var(--ease)}
+.alloc-fill.rd{background:var(--red)}
+.alloc-pct{font-family:'Anton',sans-serif;font-size:1.25rem;text-align:right;color:var(--green)}
+.alloc-pct.rd{color:var(--red)}
+@media(max-width:640px){
+  .alloc-row{grid-template-columns:1fr 60px;row-gap:.5rem}
+  .alloc-name{grid-column:1/-1}
 }
 
-@media (max-width: 900px) {
-  .sticky-pair { grid-template-columns: 1fr; gap: 3rem; }
-  .sticky-pair .left {
-    position: static; height: auto; padding: 2rem 0;
-  }
-  .sticky-pair .right { gap: 3rem; padding: 1rem 0 2rem; }
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+@media(max-width:860px){.steps{grid-template-columns:1fr}}
+.step{
+  border:2px solid var(--ink);background:var(--paper-2);padding:1.8rem 1.5rem;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
 }
+.step:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink)}
+.step-num{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--red);margin-bottom:1.1rem}
+.step h3{font-family:'Anton',sans-serif;font-size:1.35rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:.7rem}
+.step p{font-size:14px;line-height:1.65;color:var(--ink-soft)}
+.step code{font-family:'Space Mono',monospace;font-size:12.5px;background:rgba(14,123,60,.12);color:var(--green);padding:.1rem .35rem;font-weight:700}
 
-/* tokenomics */
-.token-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-  margin-bottom: 6rem;
+/* ---------- FAQ ---------- */
+.faq{border-top:2px solid var(--ink)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{
+  width:100%;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;
+  text-align:left;padding:1.4rem .3rem;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1rem,2vw,1.2rem);
+  transition:color .3s var(--ease);
 }
-.stat-cell {
-  padding: 2.5rem;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: rgba(0,0,0,0.6);
-  transition: background 400ms var(--ease-quiet);
-  position: relative;
-  overflow: hidden;
-}
-.stat-cell::before {
-  content: ''; position: absolute;
-  left: 0; top: 0;
-  width: 2px; height: 0;
-  background: var(--highlight);
-  transition: height 600ms var(--ease-quiet);
-}
-.stat-cell:hover::before { height: 100%; }
-.stat-cell:hover { background: rgba(200,170,130,0.06); }
-.stat-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-mute);
-  margin-bottom: 1rem;
-}
-.stat-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: clamp(1.75rem, 3.8vw, 2.6rem);
-  line-height: 1;
-  color: var(--highlight);
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.02em;
-}
-.stat-note {
-  font-size: 13px;
-  color: var(--text-soft);
-  line-height: 1.55;
-}
+.faq-q:hover,.faq-item.open .faq-q{color:var(--red)}
+.faq-icon{font-family:'Space Mono',monospace;font-size:1.3rem;color:var(--red);transition:transform .35s var(--ease);flex-shrink:0}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}
+.faq-item.open .faq-a{max-height:400px}
+.faq-a p{font-size:14.5px;line-height:1.7;color:var(--ink-soft);padding:0 .3rem 1.4rem}
 
-@media (max-width: 768px) {
-  .token-stats { grid-template-columns: 1fr; }
+/* ---------- CTA & footer ---------- */
+.cta{
+  text-align:center;padding:7rem 1.5rem;color:var(--paper);
 }
+.cta .h2{color:var(--paper)}
+.cta .h2 .rd{color:#ff6b52}
+.cta p{max-width:520px;margin:0 auto 2.2rem;color:rgba(234,223,200,.65);font-size:15.5px;line-height:1.7}
+.ca-box{
+  display:inline-flex;align-items:stretch;margin-bottom:2rem;
+  border:2px solid var(--paper);font-family:'Space Mono',monospace;
+  max-width:92%;
+}
+.ca-box .lbl{padding:.8rem 1rem;font-size:10px;letter-spacing:.2em;display:flex;align-items:center;border-right:2px solid var(--paper);color:rgba(234,223,200,.6)}
+.ca-box .val{padding:.8rem 1.1rem;font-size:13px;font-weight:700;display:flex;align-items:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ca-box .cp{background:var(--paper);color:var(--ink);padding:.8rem 1.3rem;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;transition:background .25s var(--ease)}
+.ca-box .cp:hover{background:var(--paper-3)}
+.cta .btn{border-color:var(--paper);color:var(--paper)}
+.cta .btn:hover{box-shadow:4px 4px 0 rgba(234,223,200,.4)}
+.cta .btn-red{background:var(--red);border-color:var(--red)}
 
-.dist-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 28px;
-  letter-spacing: -0.02em;
-  margin-bottom: 3rem;
+footer{
+  border-top:1px solid rgba(234,223,200,.15);
+  padding:3rem 1.5rem;color:rgba(234,223,200,.55);
 }
+.foot-wrap{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;gap:2.5rem;flex-wrap:wrap}
+.foot-brand{font-family:'Anton',sans-serif;font-size:1.1rem;color:var(--paper);letter-spacing:.05em;margin-bottom:.6rem}
+.foot-disc{max-width:480px;font-size:12.5px;line-height:1.7}
+.foot-meta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;line-height:2.1;text-align:right}
+.foot-meta a{color:var(--rh)}
+.foot-meta a:hover{text-decoration:underline}
+@media(max-width:700px){.foot-meta{text-align:left}}
 
-.distribution-row {
-  display: grid;
-  grid-template-columns: 220px 1fr 80px;
-  gap: 2rem;
-  align-items: center;
-  padding: 1.75rem 0;
-  border-bottom: 1px solid var(--line);
-  position: relative;
+/* toast */
+.toast{
+  position:fixed;bottom:-90px;left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--paper);border:2px solid var(--red);
+  font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:.9rem 1.6rem;z-index:1000;transition:bottom .45s var(--ease);white-space:nowrap;
 }
-.distribution-row::before {
-  content: ''; position: absolute;
-  left: -2rem; top: 0;
-  width: 2px; height: 0;
-  background: var(--highlight);
-  transition: height 600ms var(--ease-quiet);
-}
-.distribution-row:hover::before { height: 100%; }
-.distribution-row:first-child { border-top: 1px solid var(--line); }
-.dist-name {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-.dist-bar {
-  height: 4px;
-  background: var(--card);
-  position: relative;
-  overflow: hidden;
-}
-.dist-bar-fill {
-  position: absolute; left: 0; top: 0; height: 100%;
-  background: var(--highlight);
-  width: 0;
-  transition: width 1400ms var(--ease-emphasis);
-}
-.dist-pct {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--highlight);
-  text-align: right;
-}
+.toast.show{bottom:34px}
 
-@media (max-width: 768px) {
-  .distribution-row { grid-template-columns: 1fr 60px; gap: 1rem; }
-  .dist-name { grid-column: 1 / -1; }
-  .dist-bar { grid-column: 1; }
-  .dist-pct { grid-column: 2; }
-}
-
-/* how to buy steps */
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-.step-card {
-  border: 1px solid var(--line);
-  padding: 2.5rem;
-  background: rgba(0,0,0,0.6);
-  transition: all 400ms var(--ease-quiet);
-  position: relative;
-  overflow: hidden;
-}
-.step-card::before {
-  content: ''; position: absolute;
-  left: 0; top: 0;
-  width: 0; height: 2px;
-  background: var(--highlight);
-  transition: width 500ms var(--ease-quiet);
-}
-.step-card:hover {
-  border-color: var(--line-bright);
-  transform: translateY(-4px);
-}
-.step-card:hover::before { width: 100%; }
-.step-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  color: var(--highlight);
-  margin-bottom: 2rem;
-  display: flex; align-items: center; gap: 0.5rem;
-}
-.step-num::after {
-  content: ''; flex: 1; height: 1px;
-  background: var(--line);
-}
-.step-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 22px;
-  letter-spacing: -0.01em;
-  margin-bottom: 1rem;
-  line-height: 1.2;
-}
-.step-body {
-  font-size: 14px;
-  line-height: 1.65;
-  color: var(--text-soft);
-}
-.step-body strong { color: var(--text); font-weight: 700; }
-.step-body code {
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--highlight);
-  font-size: 13px;
-  background: rgba(200,170,130,0.08);
-  padding: 0.1rem 0.4rem;
-}
-@media (max-width: 900px) {
-  .steps-grid { grid-template-columns: 1fr; }
-}
-
-/* roadmap */
-.roadmap-track {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-}
-.phase {
-  padding: 3rem 2rem;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  position: relative;
-  transition: background 400ms var(--ease-quiet);
-  background: rgba(0,0,0,0.5);
-}
-.phase:hover { background: rgba(200,170,130,0.05); }
-.phase::before {
-  content: ''; position: absolute;
-  left: 0; top: 0;
-  width: 2px; height: 0;
-  background: var(--highlight);
-  transition: height 500ms var(--ease-quiet);
-}
-.phase:hover::before { height: 100%; }
-.phase-marker {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  color: var(--highlight);
-  margin-bottom: 1rem;
-}
-.phase-status {
-  display: inline-block;
-  padding: 0.3rem 0.65rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  border: 1px solid var(--line);
-  margin-bottom: 1.5rem;
-  color: var(--text-soft);
-}
-.phase-status.live {
-  border-color: var(--highlight);
-  color: var(--highlight);
-  background: rgba(200,170,130,0.06);
-}
-.phase-status.live::before {
-  content: '●';
-  margin-right: 0.4rem;
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-.phase-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 22px;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.01em;
-}
-.phase-list {
-  list-style: none;
-}
-.phase-list li {
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--text-soft);
-  padding-left: 1.2rem;
-  position: relative;
-  margin-bottom: 0.4rem;
-}
-.phase-list li::before {
-  content: '—';
-  position: absolute; left: 0; top: 0;
-  color: var(--highlight);
-}
-@media (max-width: 900px) {
-  .roadmap-track { grid-template-columns: 1fr; }
-}
-
-/* FAQ */
-.faq-list {
-  border-top: 1px solid var(--line);
-}
-.faq-item {
-  border-bottom: 1px solid var(--line);
-  position: relative;
-  background: rgba(0,0,0,0.4);
-}
-.faq-item::before {
-  content: ''; position: absolute; left: 0; top: 0;
-  width: 2px; height: 0; background: var(--highlight);
-  transition: height 600ms var(--ease-quiet);
-}
-.faq-item.is-open::before { height: 100%; }
-.faq-item:hover::before { height: 30%; }
-.faq-item.is-open:hover::before { height: 100%; }
-.faq-q {
-  display: flex; justify-content: space-between; align-items: center; gap: 2rem;
-  padding: 2rem 2rem 2rem 2.5rem;
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-  letter-spacing: -0.01em;
-  transition: color 400ms var(--ease-quiet);
-  width: 100%;
-  text-align: left;
-  color: var(--text);
-}
-.faq-item.is-open .faq-q { color: var(--highlight); }
-.faq-icon {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 400;
-  font-size: 22px;
-  color: var(--highlight);
-  transition: transform 400ms var(--ease-quiet);
-  flex-shrink: 0;
-}
-.faq-item.is-open .faq-icon { transform: rotate(45deg); }
-.faq-a {
-  max-height: 0; overflow: hidden;
-  transition: max-height 500ms var(--ease-quiet);
-  padding-left: 2.5rem; padding-right: 2rem;
-}
-.faq-item.is-open .faq-a { max-height: 1000px; padding-bottom: 2rem; }
-.faq-a p {
-  font-size: 15px; line-height: 1.7; color: var(--text-soft);
-}
-.faq-a p code {
-  font-family: 'JetBrains Mono', monospace;
-  background: rgba(200,170,130,0.08);
-  padding: 0.15rem 0.45rem;
-  font-size: 13px;
-  color: var(--highlight);
-}
-
-/* CTA section */
-.cta-section {
-  padding: 10rem 2rem;
-  text-align: center;
-  border-top: 1px solid var(--line);
-  position: relative;
-  z-index: 2;
-}
-.cta-section .section-label {
-  justify-content: center;
-  display: inline-flex;
-  margin-bottom: 1.5rem;
-}
-.cta-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: clamp(2.3rem, 6.5vw, 5.5rem);
-  letter-spacing: -0.04em;
-  line-height: 0.95;
-  margin-bottom: 1.5rem;
-}
-.cta-title .amber { color: var(--highlight); }
-.cta-sub {
-  max-width: 560px;
-  margin: 0 auto 3rem;
-  color: var(--text-soft);
-  font-size: 16px;
-  line-height: 1.65;
-}
-
-/* CA Box (Tinggi sama, Copy di pinggir) */
-.ca-box {
-  display: inline-flex;
-  align-items: stretch;
-  border: 1px solid var(--line-bright);
-  background: var(--card);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--text);
-  margin-bottom: 2.5rem;
-  width: fit-content;
-  min-width: 450px;
-  max-width: 90%;
-  overflow: hidden;
-  height: 50px; 
-}
-.ca-box .ca-label {
-  display: flex;
-  align-items: center;
-  padding: 0 1rem 0 1.75rem;
-  color: var(--text-mute);
-  letter-spacing: 0.18em;
-  font-size: 10px;
-  text-transform: uppercase;
-  border-right: 1px solid var(--line);
-}
-.ca-box .ca-value {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  padding: 0 1rem;
-  color: var(--highlight);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 13px;
-}
-.copy-btn {
-  background: transparent;
-  border: none;
-  border-left: 1px solid var(--highlight);
-  color: var(--highlight);
-  padding: 0 1.75rem; 
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  transition: all 300ms var(--ease-quiet);
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.copy-btn:hover { background: var(--highlight); color: var(--bg); }
-
-.cta-actions {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 4rem;
-}
-
-.social-row {
-  display: flex;
-  justify-content: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-.social-link {
-  width: 56px; height: 56px;
-  border: 1px solid var(--line);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--highlight); 
-  transition: all 300ms var(--ease-quiet);
-  position: relative;
-  overflow: hidden;
-  background: rgba(0,0,0,0.5);
-}
-.social-link svg {
-  fill: currentColor;
-  width: 22px;
-  height: 22px;
-  position: relative;
-  z-index: 2;
-}
-.social-link::before {
-  content: ''; position: absolute; left: 0; top: 0;
-  width: 2px; height: 0; background: var(--highlight);
-  transition: height 400ms var(--ease-quiet);
-}
-.social-link:hover {
-  border-color: var(--highlight);
-  color: var(--text); 
-}
-.social-link:hover::before { height: 100%; }
-
-/* Toast Notification */
-.toast {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: var(--highlight);
-  color: var(--bg);
-  padding: 1rem 2rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  z-index: 10000;
-  opacity: 0;
-  transition: all 400ms var(--ease-emphasis);
-  pointer-events: none;
-  border: 1px solid var(--highlight);
-}
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
-@media (max-width: 768px) {
-  .toast { bottom: 20px; font-size: 11px; padding: 0.8rem 1.5rem; }
-  .ca-box { 
-    min-width: unset; 
-    width: 100%; 
-    height: 50px; 
-  }
-  .ca-box .ca-label { display: none; }
-  .ca-box .ca-value { font-size: 12px; padding: 0 0.75rem; }
-  .copy-btn { padding: 0 1rem; }
-}
-
-/* footer */
-footer {
-  border-top: 1px solid var(--line);
-  padding: 3.5rem 2rem 2.5rem;
-  position: relative; z-index: 2;
-  background: rgba(0,0,0,0.7);
-}
-.footer-inner {
-  max-width: 1400px; margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 3rem;
-}
-.footer-brand {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.5rem;
-}
-.footer-brand span { color: var(--highlight); }
-.footer-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  color: var(--text-mute);
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-}
-.footer-disclaimer {
-  font-size: 12px;
-  color: var(--text-mute);
-  max-width: 460px;
-  line-height: 1.65;
-}
-.footer-meta {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  color: var(--text-mute);
-  text-transform: uppercase;
-  line-height: 2;
-  text-align: right;
-}
-.footer-meta .amber { color: var(--highlight); font-weight: 700; }
-  .footer-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.footer-logo img {
-  width: 120px;
-  height: 120px;
-  object-fit: contain;
-  opacity: 0.9;
-}
-@media (max-width: 768px) {
-  .footer-inner {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto;
-    row-gap: 1.75rem;
-    column-gap: 1rem;
-  }
-  .footer-inner > div:first-child {
-    grid-column: 1 / -1;
-    grid-row: 1;
-  }
-  .footer-meta {
-    grid-column: 1;
-    grid-row: 2;
-    text-align: left;
-    margin-left: 0;
-    align-self: center;
-  }
-  .footer-logo {
-    grid-column: 2;
-    grid-row: 2;
-    justify-self: center;
-    align-self: center;
-  }
-  .footer-logo img {
-    width: 76px;
-    height: 76px;
-  }
-}
-
-@media (max-width: 768px) {
-  .section-pad { padding: 5rem 1.5rem; }
-  .nav { padding: 1rem 1.25rem; }
-  .hero-overlay { padding: 1.5rem 1.5rem 2.5rem; }
-  .cta-section { padding: 6rem 1.5rem; }
-  .stat-cell { padding: 1.75rem; }
-  .step-card { padding: 2rem; }
-  .phase { padding: 2.5rem 1.5rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-  .marquee-track { animation: none; }
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .tickerbar .track{animation:none}
+  .fade{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
 
-<div class="bg-image"></div>
-<div class="bg-overlay"></div>
-<canvas id="particle-canvas"></canvas>
-<div id="custom-cursor"></div>
-
-<!-- Toast Notification Element -->
-<div id="toast" class="toast">BULL HAS BEEN ADDED</div>
+<div class="toast" id="toast">CA DROPS AT LAUNCH</div>
 
 <nav class="nav">
-  <a href="#hero" class="nav-brand">
-    <span class="dot"></span>
-    NEW FOUND BULL <span>· $NFB</span>
-  </a>
+  <a href="#top" class="nav-brand">NEW FOUND BULL <span class="tag">ROBINHOOD CHAIN</span></a>
   <div class="nav-links">
-    <a href="#about">Manifesto</a>
+    <a href="#story">Story</a>
+    <a href="#auction">Auction</a>
     <a href="#tokenomics">Tokenomics</a>
-    <a href="#roadmap">Roadmap</a>
     <a href="#faq">FAQ</a>
+    <a class="nav-cta" href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener">View auction ↗</a>
   </div>
-  <a href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener" class="nav-cta">Bid on Uniswap ↗</a>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-grid" id="hero-grid"></div>
-  <div class="hero-overlay">
-    <div class="hero-label fade-up">ROBINHOOD · UNISWAP · CCA AUCTION · NOT LIVE YET</div>
-    <h1 class="hero-title fade-up">NEW FOUND<br><span class="accent">BULL</span><span class="ticker">$NFB</span></h1>
-    <p class="hero-sub fade-up">The bull was lost. The bear market was long. Now the horns are sharpened and the herd is forming again. <strong>$NFB</strong> is the mascot of the next run — distributed through a <span class="amber">Uniswap Continuous Clearing Auction (CCA)</span>, no presale, no insider dump, just a transparent onchain price discovery for the herd.</p>
-    <div class="hero-actions fade-up">
-      <a href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener" class="btn btn-primary">View Auction <span class="arrow">↗</span></a>
-      <button class="btn" id="hero-copy-ca">Copy contract <span class="arrow">⎘</span></button>
-      <a href="#about" class="btn">Read the manifesto <span class="arrow">↓</span></a>
+<!-- HERO: the FOUND poster -->
+<section class="hero" id="top">
+  <div class="poster">
+    <div class="tape tl"></div>
+    <div class="tape tr"></div>
+
+    <div class="poster-top">
+      <span>NOTICE № 001 / 2026</span>
+      <span class="live-dot">● AUCTION NOT LIVE YET</span>
+    </div>
+
+    <h1 class="found-word"><span class="stamp-box">FOUND</span></h1>
+    <div class="one-bull">One bull <span class="ticker">· $NFB</span></div>
+
+    <div class="bull-figure" aria-hidden="true">
+      <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <!-- horns -->
+        <path d="M60 78 C30 62, 22 34, 34 14 C40 42, 58 56, 84 60" stroke="#181410" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="#eadfc8"/>
+        <path d="M240 78 C270 62, 278 34, 266 14 C260 42, 242 56, 216 60" stroke="#181410" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="#eadfc8"/>
+        <!-- head -->
+        <path d="M84 62 C104 44, 196 44, 216 62 C232 78, 236 108, 224 136 C216 156, 196 168, 178 176 L178 190 C178 204, 162 212, 150 212 C138 212, 122 204, 122 190 L122 176 C104 168, 84 156, 76 136 C64 108, 68 78, 84 62 Z" fill="#181410"/>
+        <!-- brow patch -->
+        <path d="M118 74 C134 64, 166 64, 182 74 C176 88, 160 94, 150 94 C140 94, 124 88, 118 74 Z" fill="#eadfc8" opacity=".14"/>
+        <!-- eyes -->
+        <circle cx="118" cy="112" r="9" fill="#eadfc8"/>
+        <circle cx="182" cy="112" r="9" fill="#eadfc8"/>
+        <circle cx="120" cy="112" r="4" fill="#181410"/>
+        <circle cx="180" cy="112" r="4" fill="#181410"/>
+        <!-- muzzle -->
+        <ellipse cx="150" cy="176" rx="42" ry="26" fill="#c2321c"/>
+        <ellipse cx="136" cy="176" rx="6.5" ry="9" fill="#181410"/>
+        <ellipse cx="164" cy="176" rx="6.5" ry="9" fill="#181410"/>
+        <!-- nose ring -->
+        <path d="M138 196 A16 14 0 0 0 162 196" stroke="#eadfc8" stroke-width="6" stroke-linecap="round"/>
+        <!-- ear tags -->
+        <rect x="52" y="84" width="30" height="18" rx="2" fill="#0e7b3c" transform="rotate(-14 52 84)"/>
+        <text x="57" y="99" transform="rotate(-14 52 84)" font-family="Space Mono, monospace" font-size="10" font-weight="700" fill="#eadfc8">NFB</text>
+      </svg>
+    </div>
+
+    <p class="poster-desc">
+      Last seen: <strong>top of the last cycle.</strong> Answers to the name <strong>$NFB</strong>.
+      Distinguishing marks: green candles, zero tax, no owner. If encountered,
+      <span class="hl">do not attempt to short.</span> The herd has been notified.
+    </p>
+
+    <div class="poster-meta">
+      <span>FLOOR <b>$0.00003</b></span>
+      <span>TARGET FDV <b>$30,000</b></span>
+      <span>VENUE <b>POOLS.TRADE · CCA</b></span>
+    </div>
+
+    <div class="poster-actions">
+      <a class="btn btn-red" href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener">View the auction ↗</a>
+      <a class="btn" href="#story">Read the story ↓</a>
+    </div>
+
+    <div class="tabs-note">Take one — tap a tab to copy the CA</div>
+    <div class="tear-row" id="tearRow"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="tickerbar" aria-hidden="true">
+  <div class="track" id="tickTrack">
+    <span class="up">$NFB ▲</span><span class="dm">NEW FOUND BULL</span><span>0/0 TAX</span><span class="dm">OWNERSHIP RENOUNCED</span><span class="up">LP AUTO-SEEDED</span><span class="dm">FLOOR $0.00003</span><span class="rd">CCA AUCTION</span><span class="dm">ROBINHOOD CHAIN</span><span>POOLS.TRADE</span><span class="dm">ERC-20</span>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="section" id="story">
+  <div class="wrap">
+    <div class="sheet tilt-l fade">
+      <div class="kicker">001 / The story</div>
+      <h2 class="h2">The bull was<br>never gone. It was <span class="gr">hiding.</span></h2>
+      <div class="prose">
+        <p>Every cycle the herd panics. They call the top, they call the bottom, they call their moms. They swear the bull is dead and crypto is over — again. And every cycle, somewhere between despair and disbelief, the bull wanders back.</p>
+        <p>This time somebody found it first. Grazing quietly on <strong>Robinhood Chain</strong>, fattened on cheap gas and tokenized stocks, wearing a green ear tag that reads <span class="hl">$NFB</span>.</p>
+        <p>No presale herd-culling. No insider feedlot. The bull gets distributed the only fair way left in this market: <strong>a public onchain auction where everyone pays the same discovered price.</strong> You don't chase this bull. You bid for it.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee">
-  <div class="marquee-track">
-    <span class="amber bull">$NFB</span>
-    <span class="dim">NEW FOUND BULL</span>
-    <span>0/0 TAX</span>
-    <span class="dim">LP AUTO-SEEDED</span>
-    <span class="amber">MINT REVOKED</span>
-    <span class="dim">CCA AUCTION</span>
-    <span>ROBINHOOD</span>
-    <span class="dim">UNISWAP</span>
-    <span class="amber bull">$NFB</span>
-    <span class="dim">NEW FOUND BULL</span>
-    <span>0/0 TAX</span>
-    <span class="dim">LP AUTO-SEEDED</span>
-    <span class="amber">MINT REVOKED</span>
-    <span class="dim">CCA AUCTION</span>
-    <span>ROBINHOOD</span>
-    <span class="dim">UNISWAP</span>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<section class="section-pad" id="about">
-  <div class="container">
-    <div class="sticky-pair">
-      <div class="left">
-        <div class="section-label fade-up">001 / MANIFESTO</div>
-        <h2 class="section-title fade-up">The bull was<br>never gone.<br>It was <em class="amber">waiting.</em></h2>
-        <p class="fade-up" style="color: var(--text-soft); font-size: 16.5px; line-height: 1.7; max-width: 460px; margin-bottom: 1.5rem;">
-          Every cycle the herd panics. They say the bull is dead. They sell, they leave, they swear off crypto forever. And every cycle, the bull returns — leaner, louder, and ready to charge.
-        </p>
-        <p class="fade-up" style="color: var(--text-soft); font-size: 16.5px; line-height: 1.7; max-width: 460px;">
-          <span style="color:var(--highlight); font-family:'JetBrains Mono',monospace; font-weight:700;">$NFB</span> is for the ones who stayed. The ones who stacked through the dark. The ones who never stopped believing the bull would find its way back home.
-        </p>
-      </div>
-      <div class="right">
-        <div class="about-block fade-up">
-          <div class="about-image" style="background-image: url('robin1.png')"></div>
-          <div class="about-image-caption">
-            <span>FIG. 01 — THE CHARGE</span>
-            <span>$NFB / 2026</span>
+<!-- AUCTION -->
+<section class="section" id="auction" style="padding-top:0">
+  <div class="wrap">
+    <div class="sheet tilt-r fade">
+      <div class="kicker">002 / The auction</div>
+      <h2 class="h2">Going once.<br>Going twice. <span class="rd">Sold fair.</span></h2>
+      <div class="lot-grid">
+        <div class="lot-card">
+          <div class="lot-head"><span>LOT № 001 — $NFB</span><span class="status">NOT LIVE YET</span></div>
+          <div class="lot-body">
+            <div class="lot-row"><span class="lot-label">Floor price</span><span class="lot-value gr">$0.00003</span></div>
+            <div class="lot-row"><span class="lot-label">Target FDV</span><span class="lot-value">$30,000</span></div>
+            <div class="lot-row"><span class="lot-label">On the block</span><span class="lot-value">70% of supply</span></div>
+            <div class="lot-row"><span class="lot-label">Venue</span><span class="lot-value rd">Pools.trade</span></div>
+            <div class="lot-row"><span class="lot-label">Engine</span><span class="lot-value">Uniswap CCA</span></div>
+            <div class="lot-row"><span class="lot-label">Chain</span><span class="lot-value gr">Robinhood</span></div>
           </div>
+          <div class="lot-foot">A Continuous Clearing Auction (CCA) is Uniswap's fully onchain launch mechanism — transparent bidding, no sniper bots, no gas wars.</div>
         </div>
-        <div class="about-block fade-up">
-          <h3>A found bull, not a lost cause.</h3>
-          <p>Most memecoins die in the first 24 hours. They launch with hidden team allocations, hidden mints, and roadmap promises written in crayon. <strong>$NFB</strong> is the opposite — <span class="amber">distributed via a Uniswap CCA auction, mint revoked, liquidity auto-seeded onchain once the auction ends.</span></p>
-          <p>No VC unlocks. No advisor cliffs. No foundation wallet waiting to dump on your grandma. Just a bull that was lost, then found, then set free to run.</p>
-        </div>
-        <div class="about-block fade-up">
-          <div class="about-image" style="background-image: url('robin2.png')"></div>
-          <div class="about-image-caption">
-            <span>FIG. 02 — HORNS UP</span>
-            <span>ON-CHAIN</span>
+        <div class="how-cca">
+          <div class="cca-step">
+            <div class="cca-num">1</div>
+            <div><h4>Bids, not races</h4><p>During the auction window you submit a bid with your budget and max price. No racing bots to block one — your bid is automatically spread across the remaining auction blocks.</p></div>
           </div>
-        </div>
-        <div class="about-block fade-up">
-          <h3>Born on Robinhood Chain. Stamped on Uniswap.</h3>
-          <p>Robinhood is fast, cheap, and built for retail. Uniswap is the most proven onchain auction venue in crypto history. <strong>$NFB</strong> launches there because that's where bulls belong — out in the open, not in some closed presale group.</p>
-          <p>Once the CCA auction ends, $NFB automatically seeds a Uniswap v4 liquidity pool at the price discovered during the auction. From there: listings, integrations, and the long, slow charge toward the next all-time high.</p>
-        </div>
-        <div class="about-block fade-up">
-          <h3>The herd is the utility.</h3>
-          <p>Forget promises of metaverses and AI integrations that never ship. The utility of <strong>$NFB</strong> is the herd itself — a coordinated community of holders who raid, meme, and push the chart forward. Every holder is a horn on the bull's head.</p>
+          <div class="cca-step">
+            <div class="cca-num">2</div>
+            <div><h4>One price for everyone</h4><p>Bids clear block by block and the market discovers a single fair price. Everyone in the same clearing pays the same — whales and shrimps alike.</p></div>
+          </div>
+          <div class="cca-step">
+            <div class="cca-num">3</div>
+            <div><h4>Liquidity, instantly</h4><p>When the auction settles, the contract automatically seeds a Uniswap v4 pool at the discovered price. No manual LP add, no team hands on the pool. Trading starts deep.</p></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1151,640 +531,252 @@ footer {
 </section>
 
 <!-- TOKENOMICS -->
-<section class="section-pad" id="tokenomics" style="border-top: 1px solid var(--line);">
-  <div class="container">
-    <div class="section-label fade-up">002 / TOKENOMICS</div>
-    <h2 class="section-title fade-up">Numbers that<br>aren't <span class="amber">suspicious.</span></h2>
-    
-    <div class="token-stats">
-      <div class="stat-cell fade-up">
-        <div class="stat-label">Total Supply</div>
-        <div class="stat-value">1,000,000,000</div>
-        <div class="stat-note">1 billion $NFB. Fixed at deploy. No more will ever exist.</div>
-      </div>
-      <div class="stat-cell fade-up">
-        <div class="stat-label">Tax · Buy / Sell</div>
-        <div class="stat-value">0% / 0%</div>
-        <div class="stat-note">Zero tax. Zero friction. Every ETH you put in buys $NFB.</div>
-      </div>
-      <div class="stat-cell fade-up">
-        <div class="stat-label">Floor Price</div>
-        <div class="stat-value">$0.00003</div>
-        <div class="stat-note">Starting price of the CCA auction, based on a $30,000 target FDV.</div>
-      </div>
-      <div class="stat-cell fade-up">
-        <div class="stat-label">Target FDV</div>
-        <div class="stat-value">$30,000</div>
-        <div class="stat-note">Fully diluted valuation implied by the auction floor price.</div>
-      </div>
-      <div class="stat-cell fade-up">
-        <div class="stat-label">Liquidity Pool</div>
-        <div class="stat-value">AUTO-SEEDED</div>
-        <div class="stat-note">125M tokens (12,5%) Automatically form a Uniswap v4 pool at the price discovered by the CCA auction.</div>
-      </div>
-      <div class="stat-cell fade-up">
-        <div class="stat-label">Mint Authority</div>
-        <div class="stat-value">REVOKED</div>
-        <div class="stat-note">Supply cannot be inflated. Ever. Verified on robinhoodchain blockscout.</div>
-      </div>
-    </div>
+<section class="section" id="tokenomics" style="padding-top:0">
+  <div class="wrap">
+    <div class="sheet tilt-l fade">
+      <div class="kicker">003 / Tokenomics</div>
+      <h2 class="h2">Numbers that<br>aren't <span class="rd">suspicious.</span></h2>
 
-    <h3 class="dist-title fade-up">Allocation breakdown.</h3>
-    <div class="distribution fade-up">
-      <div class="distribution-row">
-        <div class="dist-name">Liquidity Pool</div>
-        <div class="dist-bar"><div class="dist-bar-fill" data-pct="70"></div></div>
-        <div class="dist-pct">70%</div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Total supply</div>
+          <div class="stat-value">1,000,000,000</div>
+          <div class="stat-note">1 billion $NFB. Fixed at deploy. No more will ever exist.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Tax · buy / sell</div>
+          <div class="stat-value gr">0% / 0%</div>
+          <div class="stat-note">No tax logic in the contract. Standard ERC-20, nothing hidden.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Liquidity pool</div>
+          <div class="stat-value gr">AUTO-SEEDED</div>
+          <div class="stat-note">Seeded by the CCA contract into Uniswap v4 at the clearing price.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Mint function</div>
+          <div class="stat-value">NONE</div>
+          <div class="stat-note">Ownership renounced. Verify on Robinhood Chain Blockscout.</div>
+        </div>
       </div>
-      <div class="distribution-row">
-        <div class="dist-name">Auction (CCA)</div>
-        <div class="dist-bar"><div class="dist-bar-fill" data-pct="25"></div></div>
-        <div class="dist-pct">25%</div>
-      </div>
-      <div class="distribution-row">
-        <div class="dist-name">Team</div>
-        <div class="dist-bar"><div class="dist-bar-fill" data-pct="3"></div></div>
-        <div class="dist-pct">3%</div>
-      </div>
-      <div class="distribution-row">
-        <div class="dist-name">Community Active</div>
-        <div class="dist-bar"><div class="dist-bar-fill" data-pct="2"></div></div>
-        <div class="dist-pct">2%</div>
+
+      <div class="alloc fade" id="alloc">
+        <div class="alloc-row">
+          <div class="alloc-name">Auction (CCA)</div>
+          <div class="alloc-bar"><div class="alloc-fill" data-pct="70"></div></div>
+          <div class="alloc-pct">70%</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-name">Liquidity pool</div>
+          <div class="alloc-bar"><div class="alloc-fill" data-pct="25"></div></div>
+          <div class="alloc-pct">25%</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-name">Team</div>
+          <div class="alloc-bar"><div class="alloc-fill rd" data-pct="3"></div></div>
+          <div class="alloc-pct rd">3%</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-name">Community rewards</div>
+          <div class="alloc-bar"><div class="alloc-fill rd" data-pct="2"></div></div>
+          <div class="alloc-pct rd">2%</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- HOW TO BUY -->
-<section class="section-pad" style="border-top: 1px solid var(--line);">
-  <div class="container">
-    <div class="section-label fade-up">003 / HOW TO BUY</div>
-    <h2 class="section-title fade-up">Three steps to<br>find the bull.</h2>
-    <div class="steps-grid">
-      <div class="step-card fade-up">
-        <div class="step-num">STEP 01</div>
-        <div class="step-title">Get a ETH wallet.</div>
-        <div class="step-body">Install <strong>Metamask</strong> or <strong>Rabby</strong> as a browser extension or mobile app. Create a fresh wallet, write down your seed phrase on paper, and never share it. Fund it with ETH from an exchange or another wallet.</div>
-      </div>
-      <div class="step-card fade-up">
-        <div class="step-num">STEP 02</div>
-        <div class="step-title">Open Uniswap.</div>
-        <div class="step-body">Head to <code>Uniswap</code> and paste the $NFB contract address into the search bar. Verify the ticker, supply, and that you're on the correct token page before swapping. Always check the CA — fakes exist.</div>
-      </div>
-      <div class="step-card fade-up">
-        <div class="step-num">STEP 03</div>
-        <div class="step-title">Swap ETH for $NFB.</div>
-        <div class="step-body">Submit your bid with a budget and max price during the CCA auction, then confirm in your wallet. Once the auction ends, $NFB liquidity is automatically seeded on Uniswap for continuous trading. Welcome to the herd.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ROADMAP -->
-<section class="section-pad" id="roadmap" style="border-top: 1px solid var(--line);">
-  <div class="container">
-    <div class="section-label fade-up">004 / ROADMAP</div>
-    <h2 class="section-title fade-up">From lost<br>to leading<br>the <span class="amber">charge.</span></h2>
-    <div class="roadmap-track fade-up">
-      <div class="phase">
-        <div class="phase-marker">PHASE 01</div>
-        <div class="phase-status">UPCOMING</div>
-        <div class="phase-title">Genesis</div>
-        <ul class="phase-list">
-          <li>CCA auction not live yet — date TBA</li>
-          <li>Mint authority revoked</li>
-          <li>125% LP auto-seeded on Uniswap v4 after auction ends</li>
-          <li>Website & socials live</li>
-          <li>Community allocation snapshot</li>
-        </ul>
-      </div>
-      <div class="phase">
-        <div class="phase-marker">PHASE 02</div>
-        <div class="phase-status">STAMPEDE</div>
-        <div class="phase-title">Stampede</div>
-        <ul class="phase-list">
-          <li>1,000 holder milestone</li>
-          <li>DexScreener & DexTools listings</li>
-          <li>Daily Spaces, daily raids</li>
-        </ul>
-      </div>
-      <div class="phase">
-        <div class="phase-marker">PHASE 03</div>
-        <div class="phase-status">HORNS UP</div>
-        <div class="phase-title">Horns Up</div>
-        <ul class="phase-list">
-          <li>Uniswap graduation complete</li>
-          <li>10,000 holder milestone</li>
-          <li>Robinhood Chain ecosystem partnerships</li>
-        </ul>
-      </div>
-      <div class="phase">
-        <div class="phase-marker">PHASE 04</div>
-        <div class="phase-status">BULL RUN</div>
-        <div class="phase-title">Bull Run</div>
-        <ul class="phase-list">
-          <li>Real-world billboard campaigns</li>
-          <li>The bull is no longer found — it's leading</li>
-        </ul>
+<!-- HOW TO BID -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="sheet tilt-r fade">
+      <div class="kicker">004 / How to bid</div>
+      <h2 class="h2">Three steps to<br><span class="gr">claim the bull.</span></h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">STEP 01</div>
+          <h3>Saddle up a wallet</h3>
+          <p>Install <code>MetaMask</code> or <code>Rabby</code>. Write your seed phrase on paper, never share it, and fund the wallet with ETH on <strong>Robinhood Chain</strong> — it's the gas token there.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">STEP 02</div>
+          <h3>Find the lot</h3>
+          <p>Open the official $NFB auction via the button on this page, or through <code>Pools.trade</code> / the Uniswap Auctions tab. Verify the contract address — fake bulls exist.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">STEP 03</div>
+          <h3>Raise your paddle</h3>
+          <p>Submit a bid with your budget and max price, confirm in your wallet, and wait for the clearing. After settlement, claim your $NFB and trade freely on Uniswap v4. Welcome to the herd.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="section-pad" id="faq">
-  <div class="container container-narrow">
-    <div class="section-label fade-up">005 / FAQ</div>
-    <h2 class="section-title fade-up">Questions<br>the herd asks.</h2>
-    <div class="faq-list fade-up">
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">What exactly is NEW FOUND BULL ($NFB)?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>$NFB is a community-driven memecoin on Robinhood Chain, distributed through a Uniswap Continuous Clearing Auction (CCA) — a fully onchain, permissionless auction that discovers a fair market price over time instead of a single fixed price. It celebrates the return of the bull market and the people who held through the dark. No presale, no insider allocation dumped on day one — just a transparent, onchain price-discovery process open to anyone.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">How do I buy $NFB?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Get an ETH wallet (Metamask or Rabby), fund it with ETH on Robinhood Chain, then head to the Uniswap Auctions tab and find the $NFB auction. Submit a bid with your budget and max price — it's automatically spread across the remaining auction blocks. Once the auction ends, tokens are distributed and a Uniswap v4 pool is created automatically at the discovered price.</p></div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Is there a buy or sell tax?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Zero. <code>0% buy</code>, <code>0% sell</code>. Every ETH you put in buys $NFB at the auction's clearing price with no friction. The contract has no tax logic — it's a standard ERC-20 token, audited and verified on robinhoodchain blockscout.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Is the liquidity really burned?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>70% of total supply (700,000,000 $NFB) is reserved for liquidity and is Manually seeded into a Uniswap v4 pool the moment the CCA auction ends, at the price discovered during the auction. No manual liquidity add, no team control over the pool. Verify it yourself on robinhoodchain blockscout.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Is mint authority revoked?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Yes. Mint authority is revoked at deployment. The total supply of 1,000,000,000 $NFB is fixed forever. No additional tokens can ever be minted — no inflation, no surprise team unlocks, no supply games.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Where can I store $NFB?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Any ETH-compatible wallet works: <code>Metamask</code>, <code>Rabby</code>, . For hardware security, Ledger with Metamask integration is the recommended setup for holdings above what you'd be comfortable losing.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Was there a presale or team allocation?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>No presale. No private round. No OTC deals. Distribution runs through a Uniswap CCA: 12,5% of supply is sold in the public onchain auction, 12,5% is auto-seeded as Uniswap v4 liquidity at the discovered price, 3% goes to the team, and 2% to active community rewards. All allocations are publicly trackable onchain.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Is $NFB financial advice?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Absolutely not. $NFB is a memecoin — a piece of internet culture on a blockchain. It has no intrinsic value, no promise of returns, no roadmap guarantee. Treat it as the speculative asset it is: never invest more than you can afford to lose, do your own research, and remember that even bulls rest sometimes.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">How can I join the herd?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Telegram and X (Twitter) links are at the bottom of this page. Jump in, introduce yourself, and start memeing. The herd is open to anyone who believes the bull is back — no vetting, no alpha-group paywalls, just a found bull and the people who found it.</p></div>
+<section class="section" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sheet tilt-l fade">
+      <div class="kicker">005 / FAQ</div>
+      <h2 class="h2">Questions the<br>herd asks.</h2>
+      <div class="faq">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What exactly is NEW FOUND BULL ($NFB)?<span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>A community memecoin on Robinhood Chain, distributed through a Uniswap Continuous Clearing Auction on Pools.trade. It celebrates the return of the bull market and the people who held through the dark. No presale, no insider allocation — just a found bull and a fair auction.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How do I buy $NFB?<span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>You bid, you don't snipe. Get an ETH wallet, fund it on Robinhood Chain, open the official $NFB auction, and submit a bid with your budget and max price. When the auction ends, tokens are distributed at the discovered price and a Uniswap v4 pool opens automatically for trading.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is there a buy or sell tax?<span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Zero. 0% buy, 0% sell. The contract has no tax logic — it's a standard ERC-20, verified on the Robinhood Chain Blockscout explorer.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Who controls the liquidity?<span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>The protocol, not us. 25% of supply (250,000,000 $NFB) is reserved for liquidity and automatically seeded into a Uniswap v4 pool by the auction contract at the clearing price. No manual LP add, no team control over the pool. Verify it yourself on Blockscout.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Can the supply be inflated?<span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>No. Total supply of 1,000,000,000 $NFB is fixed at deployment. The contract has no mint function and ownership is renounced — no inflation, no surprise unlocks, no supply games.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is this financial advice?<span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Absolutely not. $NFB is a memecoin — internet culture on a blockchain, with no intrinsic value and no promise of returns. Only bid what you can afford to lose entirely, and do your own research. Even found bulls wander off sometimes.</p></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section class="cta-section">
-  <div class="section-label fade-up">006 / JOIN THE HERD</div>
-  <h2 class="cta-title fade-up">FIND THE BULL.<br><span class="amber">BE THE HERD.</span></h2>
-  <p class="cta-sub fade-up">Copy the contract, head to Uniswap, and become part of the found-bull story. The next chapter is written by everyone who holds.</p>
-  
-  <div class="ca-box fade-up" id="ca-box">
-    <span class="ca-label">CA</span>
-    <span class="ca-value" id="ca-value">Soon</span>
-    <button class="copy-btn" id="copy-ca-btn">Copy</button>
+<section class="cta" id="join">
+  <div class="kicker" style="justify-content:center">006 / Join the herd</div>
+  <h2 class="h2">The bull is found.<br><span class="rd">Come get it.</span></h2>
+  <p>Copy the contract when it drops, raise your paddle at the auction, and write the next chapter of the found-bull story with the rest of the herd.</p>
+  <div class="ca-box">
+    <span class="lbl">CA</span>
+    <span class="val" id="caValue">Soon</span>
+    <button class="cp" id="copyCa">Copy</button>
   </div>
-  
-  <div class="cta-actions fade-up">
-    <a href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener" class="btn btn-primary">Bid on Uniswap <span class="arrow">↗</span></a>
-  </div>
-
-  <div class="social-row fade-up">
-    <a href="https://x.com/NewFoundBull" class="social-link" title="Twitter / X" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
-    </a>
-   <a href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener" class="social-link" title="Uniswap">
-  <svg viewBox="0 0 400 434" aria-hidden="true">
-    <path d="M325.144 65.7698C325.727 55.5419 327.119 48.7957 329.918 42.6348C331.025 40.1962 332.063 38.2003 332.223 38.2003C332.383 38.2003 331.902 40.0003 331.153 42.1999C329.118 48.1791 328.784 56.3572 330.186 65.872C331.965 77.9447 332.976 79.6866 345.782 92.7278C351.788 98.8446 358.775 106.559 361.307 109.871L365.912 115.894L361.307 111.59C355.676 106.327 342.724 96.0618 339.863 94.5945C337.945 93.6104 337.66 93.6274 336.477 94.801C335.387 95.8823 335.157 97.5072 335.005 105.189C334.77 117.16 333.132 124.845 329.18 132.528C327.042 136.684 326.705 135.797 328.64 131.106C330.084 127.604 330.231 126.064 330.22 114.475C330.198 91.1888 327.424 85.5906 311.153 76.0005C307.032 73.5711 300.24 70.0674 296.062 68.2141C291.883 66.3608 288.564 64.7467 288.685 64.6261C289.146 64.1691 305.013 68.7839 311.399 71.2318C320.899 74.8731 322.467 75.3449 323.621 74.9057C324.394 74.6113 324.768 72.367 325.144 65.7698Z" fill="currentColor"/>
-    <path d="M124.431 31.8931C118.795 31.0236 118.557 30.9216 121.209 30.5162C126.292 29.7389 138.292 30.7983 146.562 32.754C165.867 37.3182 183.434 49.0103 202.186 69.7754L207.168 75.2919L214.295 74.1524C244.318 69.3537 274.861 73.1675 300.407 84.9049C307.435 88.134 318.516 94.5618 319.9 96.2136C320.341 96.7401 321.151 100.129 321.699 103.745C323.597 116.255 322.647 125.843 318.8 133.005C316.707 136.903 316.59 138.138 317.997 141.473C319.121 144.135 322.253 146.105 325.355 146.1C331.703 146.092 338.536 135.885 341.702 121.683L342.96 116.042L345.452 118.849C359.117 134.248 369.85 155.248 371.694 170.196L372.174 174.093L369.877 170.55C365.924 164.454 361.952 160.303 356.866 156.956C347.697 150.922 338.002 148.868 312.327 147.523C289.139 146.307 276.015 144.337 263.002 140.117C240.861 132.937 229.699 123.375 203.399 89.0559C191.717 73.8123 184.497 65.3784 177.314 58.5864C160.994 43.1536 144.958 35.0599 124.431 31.8931Z" fill="currentColor"/>
-    <path d="M135.377 105.713C123.937 90.0473 116.858 66.0289 118.391 48.0742L118.864 42.518L121.469 42.9906C126.359 43.8778 134.791 46.9992 138.739 49.3844C149.574 55.9291 154.265 64.5458 159.037 86.6722C160.435 93.1531 162.269 100.487 163.113 102.97C164.472 106.967 169.605 116.302 173.779 122.365C176.785 126.731 174.788 128.8 168.143 128.204C157.994 127.293 144.246 117.856 135.377 105.713Z" fill="currentColor"/>
-    <path d="M311.254 222.301C257.789 200.891 238.958 182.307 238.958 150.95C238.958 146.336 239.118 142.56 239.313 142.56C239.507 142.56 241.576 144.083 243.909 145.945C254.751 154.593 266.891 158.287 300.501 163.164C320.279 166.034 331.408 168.352 341.675 171.738C374.308 182.502 394.497 204.345 399.312 234.098C400.711 242.743 399.891 258.955 397.623 267.5C395.832 274.248 390.367 286.413 388.918 286.879C388.516 287.009 388.122 285.477 388.019 283.393C387.469 272.221 381.793 261.345 372.26 253.197C361.421 243.934 346.859 236.559 311.254 222.301Z" fill="currentColor"/>
-    <path d="M273.719 231.195C273.049 227.231 271.888 222.168 271.138 219.944L269.773 215.901L272.307 218.73C275.814 222.645 278.585 227.654 280.933 234.325C282.726 239.417 282.927 240.932 282.914 249.206C282.9 257.33 282.676 259.032 281.021 263.616C278.411 270.843 275.172 275.967 269.737 281.468C259.971 291.354 247.415 296.828 229.295 299.098C226.145 299.492 216.965 300.157 208.895 300.574C188.556 301.626 175.17 303.8 163.142 308C161.412 308.605 159.868 308.972 159.711 308.816C159.225 308.334 167.414 303.479 174.178 300.238C183.716 295.668 193.211 293.175 214.484 289.651C224.992 287.91 235.844 285.799 238.6 284.958C264.624 277.023 278.001 256.544 273.719 231.195Z" fill="currentColor"/>
-    <path d="M298.228 274.486C291.125 259.299 289.493 244.635 293.385 230.959C293.802 229.498 294.471 228.302 294.874 228.302C295.276 228.302 296.953 229.203 298.598 230.305C301.872 232.496 308.437 236.188 325.928 245.672C347.754 257.507 360.198 266.672 368.66 277.142C376.071 286.312 380.658 296.755 382.865 309.49C384.115 316.704 383.383 334.061 381.521 341.325C375.653 364.229 362.015 382.22 342.562 392.718C339.712 394.256 337.153 395.519 336.876 395.524C336.599 395.53 337.638 392.904 339.184 389.688C345.728 376.083 346.473 362.849 341.526 348.118C338.496 339.099 332.32 328.094 319.849 309.493C305.35 287.868 301.795 282.113 298.228 274.486Z" fill="currentColor"/>
-    <path d="M97.4084 356.432C117.249 339.771 141.935 327.934 164.422 324.301C174.113 322.735 190.257 323.357 199.231 325.641C213.616 329.302 226.484 337.503 233.176 347.273C239.716 356.823 242.522 365.144 245.443 383.659C246.596 390.962 247.849 398.296 248.228 399.957C250.422 409.552 254.691 417.222 259.982 421.074C268.385 427.191 282.854 427.571 297.087 422.049C299.503 421.111 301.6 420.464 301.748 420.61C302.264 421.12 295.097 425.892 290.04 428.404C283.237 431.784 277.827 433.09 270.638 433.09C257.602 433.09 246.779 426.495 237.748 413.046C235.971 410.399 231.976 402.471 228.871 395.429C219.336 373.799 214.628 367.21 203.556 359.998C193.922 353.723 181.496 352.599 172.148 357.158C159.87 363.146 156.444 378.752 165.238 388.642C168.733 392.573 175.251 395.964 180.581 396.623C190.552 397.856 199.121 390.312 199.121 380.299C199.121 373.798 196.609 370.088 190.284 367.249C181.646 363.372 172.36 367.904 172.405 375.975C172.424 379.417 173.931 381.578 177.4 383.139C179.625 384.14 179.677 384.22 177.862 383.845C169.936 382.21 168.079 372.707 174.452 366.398C182.103 358.824 197.924 362.166 203.357 372.504C205.64 376.847 205.905 385.495 203.915 390.717C199.461 402.405 186.475 408.552 173.302 405.207C164.333 402.93 160.681 400.464 149.867 389.386C131.077 370.135 123.782 366.405 96.6926 362.198L91.5016 361.393L97.4084 356.432Z" fill="currentColor"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.2415 11.8782C71.9927 87.6272 115.213 118.88 120.016 125.483C123.981 130.935 122.489 135.836 115.695 139.678C111.917 141.813 104.15 143.977 100.261 143.977C95.8623 143.977 94.3522 142.29 94.3522 142.29C91.8018 139.884 90.3654 140.305 77.2685 117.183C59.0858 89.1221 43.8693 65.8442 43.4542 65.4545C42.4943 64.5531 42.5108 64.5836 75.4146 123.138C80.7309 135.342 76.472 139.822 76.472 141.56C76.472 145.096 75.5021 146.955 71.1164 151.82C63.8053 159.933 60.537 169.047 58.1777 187.911C55.5328 209.058 48.0957 223.995 27.485 249.56C15.4202 264.526 13.446 267.269 10.4018 273.3C6.56722 280.896 5.51286 285.15 5.08553 294.742C4.63386 304.883 5.51354 311.434 8.62869 321.13C11.3559 329.619 14.2026 335.224 21.4801 346.435C27.7605 356.109 31.3768 363.299 31.3768 366.111C31.3768 368.349 31.8063 368.352 41.5383 366.166C64.8282 360.936 83.7395 351.736 94.3756 340.462C100.958 333.483 102.503 329.63 102.554 320.067C102.587 313.812 102.365 312.503 100.665 308.904C97.898 303.048 92.8603 298.178 81.7568 290.629C67.2082 280.737 60.9944 272.774 59.2779 261.822C57.8699 252.836 59.5033 246.496 67.5518 229.719C75.8822 212.353 77.9466 204.953 79.3431 187.449C80.245 176.141 81.4941 171.681 84.761 168.101C88.1682 164.368 91.2354 163.104 99.6675 161.958C113.414 160.09 122.168 156.552 129.363 149.958C135.605 144.238 138.217 138.725 138.618 130.427L138.922 124.138L135.434 120.093C122.802 105.445 0.782165 0.363281 0.00480791 0.363281C-0.161257 0.363281 3.99542 5.54535 9.2415 11.8782ZM38.4675 306.217C41.3235 301.186 39.8061 294.719 35.0288 291.56C30.515 288.574 23.503 289.98 23.503 293.87C23.503 295.057 24.163 295.921 25.6504 296.683C28.155 297.965 28.3368 299.406 26.3662 302.352C24.3705 305.335 24.5316 307.958 26.8207 309.741C30.5099 312.614 35.7324 311.034 38.4675 306.217Z" fill="currentColor"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M147.597 165.257C141.144 167.228 134.87 174.031 132.928 181.164C131.744 185.515 132.416 193.149 134.19 195.506C137.057 199.314 139.829 200.317 147.336 200.264C162.033 200.162 174.809 193.893 176.294 186.056C177.512 179.632 171.901 170.729 164.172 166.82C160.183 164.804 151.701 164.004 147.597 165.257ZM164.778 178.619C167.044 175.416 166.053 171.954 162.198 169.613C154.858 165.155 143.757 168.844 143.757 175.741C143.757 179.174 149.546 182.92 154.852 182.92C158.384 182.92 163.217 180.825 164.778 178.619Z" fill="currentColor"/>
-  </svg>
-</a>
-    <a href="https://dexscreener.com/" target="_blank" rel="noopener" class="social-link" title="DexScreener">
-  <svg viewBox="0 0 48 48" aria-hidden="true">
-    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12.951 10.765c-4.384 7.074.244 15.697-5.366 25.358l4.657-3.436v0l3.196 5.208l3.23-3.12L24 43.492l5.332-8.715l3.23 3.12l3.196-5.21l4.657 3.437c-5.61-9.66-.982-18.284-5.366-25.358"/>
-    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m19.89 23.502l-3.424 2.037c4.622.794 6.467 7.03 7.534 12.389c1.067-5.36 2.912-11.595 7.534-12.389l-3.423-2.037c.436-3.3-1.91-6.552-4.111-6.552s-4.547 3.253-4.11 6.552"/>
-    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M26.522 17.69c4.604-2.337 9.597-6.354 11.318-12.439c-1.07 1.375-2.66 2.767-4.518 3.283a15 15 0 0 0-.685-.66C29.536 5.057 27.25 4.508 24 4.508s-5.536.55-8.637 3.364q-.36.329-.685.661c-1.858-.516-3.449-1.908-4.518-3.283c1.72 6.085 6.714 10.102 11.318 12.44"/>
-    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M16.049 14.43c-1.098.875-1.352 2.643-.558 3.899c.928 1.47 3.689 2.26 5.117.995m11.343-4.894c1.098.875 1.352 2.643.558 3.899c-.928 1.47-3.689 2.26-5.117.995"/>
-  </svg>
-</a>
-    <a href="#" target="_blank" rel="noopener" class="social-link" title="Robinhood">
-      <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.0559 0.6412C19.5739 0.222 18.873 0.0255 17.786 0.0015c-0.9876 -0.0218 -2.16 0.1922 -3.4893 0.6288 -0.1987 0.0699 -0.3582 0.1812 -0.4994 0.3188a64.271 64.271 0 0 0 -3.9086 4.004l-0.0959 0.1048a0.0937 0.0937 0 0 0 -0.0113 0.107c0.02 0.035 0.0619 0.0525 0.1011 0.0437l0.1395 -0.0306c2.0022 -0.4279 4.0236 -0.7554 6.0084 -0.9715a0.4605 0.4605 0 0 1 0.3626 0.1179 0.4657 0.4657 0 0 1 0.1499 0.3515c-0.0323 1.9693 0.0392 3.9474 0.2144 5.8795l0.0105 0.1267a0.0927 0.0927 0 0 0 0.0706 0.0808c0.006 0.0022 0.013 0.0022 0.0218 0.0044a0.1 0.1 0 0 0 0.0784 -0.0394l0.0715 -0.1025a55.8263 55.8263 0 0 1 3.614 -4.6112c0.1437 -0.1637 0.1812 -0.2664 0.2074 -0.4148 0.401 -2.5719 -0.2206 -4.4757 -0.7758 -4.9582Zm-4.3967 5.528 -0.0026 -0.1222a0.0945 0.0945 0 0 0 -0.061 -0.0852 0.0952 0.0952 0 0 0 -0.102 0.0263l-0.081 0.0917c-3.3995 3.932 -6.2577 8.2942 -8.4927 12.9686l-0.0523 0.109a0.093 0.093 0 0 0 0.0149 0.1049 0.095 0.095 0 0 0 0.0653 0.0284 0.123 0.123 0 0 0 0.0375 -0.0065l0.1116 -0.0459c1.9098 -0.7903 3.8597 -1.4759 5.7957 -2.037a0.4419 0.4419 0 0 0 0.2693 -0.2227c0.849 -1.6549 2.8207 -4.86 2.8207 -4.86 0.0497 -0.072 0.0366 -0.179 0.0366 -0.179s-0.3382 -3.8316 -0.36 -5.7704zM6.7317 17.341c0.068 -0.131 0.3783 -0.7292 0.448 -0.8624l0.013 -0.024c2.0781 -3.919 4.6112 -7.6174 7.526 -10.9884l0.081 -0.0939a0.0974 0.0974 0 0 0 0.0105 -0.1047 0.094 0.094 0 0 0 -0.0941 -0.048l-0.122 0.0174a60.3806 60.3806 0 0 0 -5.7574 1.085c-0.19 0.0524 -0.312 0.1769 -0.3382 0.2052a64.6783 64.6783 0 0 0 -4.02 5.3534c-0.061 0.0939 -0.0829 0.2162 -0.0672 0.3166 0.013 0.0982 0.312 2.4016 0.7662 4.17 -1.1262 3.2421 -2.133 7.5148 -2.133 7.5148a0.0947 0.0947 0 0 0 0.0131 0.0808 0.0888 0.0888 0 0 0 0.0741 0.0371h0.6416a0.0987 0.0987 0 0 0 0.0923 -0.0612l0.0436 -0.12c0.6546 -1.786 1.4017 -3.55 2.2271 -5.2704 0.1918 -0.3974 0.5954 -1.2074 0.5954 -1.2074Zm3.8257 1.489 -0.1595 0.0525c-1.026 0.3405 -2.5435 0.8667 -3.906 1.4933 -0.0723 0.035 -0.1202 0.131 -0.1202 0.131 -0.0262 0.059 -0.0567 0.131 -0.0915 0.2117l-0.0044 0.011c-0.1534 0.3471 -0.3626 0.8689 -0.4541 1.0829l-0.0698 0.1681a0.067 0.067 0 0 0 0.0175 0.0764 0.0615 0.0615 0 0 0 0.0453 0.0197c0.0087 0 0.02 -0.0022 0.0305 -0.0065l0.1639 -0.0786c0.3739 -0.1769 0.8455 -0.4454 1.3388 -0.6812l0.0175 -0.0087a885.5338 885.5338 0 0 0 2.6411 -1.2554s0.1029 -0.0546 0.1552 -0.1572l0.4785 -0.9606a0.0703 0.0703 0 0 0 -0.0087 -0.0765 0.0685 0.0685 0 0 0 -0.074 -0.0218z" fill="currentColor" stroke-width="1"></path></svg>
-    </a>
+  <div class="poster-actions">
+    <a class="btn btn-red" href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener">View the auction ↗</a>
+    <a class="btn" href="https://x.com/NewFoundBull" target="_blank" rel="noopener">Follow on X ↗</a>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
+  <div class="foot-wrap">
     <div>
-      <div class="footer-brand">NEW FOUND BULL <span>· $NFB</span></div>
-      <div class="footer-tag">ROBINHOOD CHAIN · UNISWAP · CCA AUCTION</div>
-      <p class="footer-disclaimer">$NFB is a memecoin with no intrinsic value or expectation of financial return. Nothing on this site is financial advice. Always do your own research. Cryptocurrencies are volatile; only risk what you can afford to lose. The bull was lost. The bull is found. The bull runs.</p>
+      <div class="foot-brand">NEW FOUND BULL · $NFB</div>
+      <p class="foot-disc">$NFB is a memecoin with no intrinsic value or expectation of financial return. Nothing on this site is financial advice. Cryptocurrencies are volatile — only risk what you can afford to lose. The bull was lost. The bull is found. The bull runs.</p>
     </div>
-    <div class="footer-logo">
-      <img src="robin.png" alt="New Found Bull Logo">
-    </div>
-    <div class="footer-meta">
+    <div class="foot-meta">
       © 2026 NEW FOUND BULL<br>
       BUILT ON ROBINHOOD CHAIN<br>
-      LAUNCHED ON UNISWAP<br>
-      <span class="amber">THE BULL IS FOUND.</span>
+      AUCTIONED VIA <a href="https://app.uniswap.org/explore/auctions/robinhood/0x606d8467659426014CEAe0988eaEFE658455011D" target="_blank" rel="noopener">POOLS.TRADE CCA</a><br>
+      <a href="https://x.com/NewFoundBull" target="_blank" rel="noopener">@NEWFOUNDBULL</a>
     </div>
   </div>
 </footer>
 
-<!-- three.js for particles -->
-<script type="importmap">
-{ "imports": { "three": "https://unpkg.com/three@0.183/build/three.module.js" } }
-</script>
-<script type="module">
-import * as THREE from 'three';
-
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-
-// ============ PARTICLE FIELD ============
-const canvas = document.getElementById('particle-canvas');
-let renderer, scene, camera, points, points2;
-let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-let particleVisible = true;
-
-if (!reduceMotion) {
-  try {
-    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.z = 8;
-
-    function makePoints(count, color, sizeMul, spread) {
-      const positions = new Float32Array(count * 3);
-      const sizes = new Float32Array(count);
-      const offsets = new Float32Array(count);
-      for (let i = 0; i < count; i++) {
-        positions[i*3]   = (Math.random()-0.5) * spread;
-        positions[i*3+1] = (Math.random()-0.5) * (spread * 0.7);
-        positions[i*3+2] = (Math.random()-0.5) * (spread * 0.7);
-        sizes[i]   = Math.random() * 1.6 + 0.4;
-        offsets[i] = Math.random() * Math.PI * 2;
-      }
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      geo.setAttribute('aSize',    new THREE.BufferAttribute(sizes, 1));
-      geo.setAttribute('aOffset',  new THREE.BufferAttribute(offsets, 1));
-      const mat = new THREE.ShaderMaterial({
-        uniforms: {
-          uTime: { value: 0 },
-          uColor: { value: new THREE.Color(color) },
-          uSize: { value: sizeMul }
-        },
-        vertexShader: `
-          attribute float aSize; attribute float aOffset;
-          uniform float uTime; uniform float uSize;
-          varying float vAlpha;
-          void main() {
-            vec3 p = position;
-            p.y += sin(uTime*0.3 + aOffset) * 0.4;
-            p.x += cos(uTime*0.25 + aOffset*0.7) * 0.2;
-            vec4 mv = modelViewMatrix * vec4(p, 1.0);
-            gl_PointSize = aSize * uSize * (180.0 / -mv.z);
-            gl_Position = projectionMatrix * mv;
-            vAlpha = 0.55 + 0.45 * sin(uTime*0.6 + aOffset);
-          }`,
-        fragmentShader: `
-          varying float vAlpha; uniform vec3 uColor;
-          void main() {
-            vec2 uv = gl_PointCoord - vec2(0.5);
-            if (length(uv) > 0.5) discard;
-            gl_FragColor = vec4(uColor, smoothstep(0.5, 0.0, length(uv)) * vAlpha * 0.4);
-          }`,
-        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-      });
-      return new THREE.Points(geo, mat);
-    }
-
-    points = makePoints(800, 0xccff00, 1.0, 20);
-    scene.add(points);
-    points2 = makePoints(600, 0xffffff, 0.7, 18);
-    scene.add(points2);
-
-    window.addEventListener('mousemove', e => {
-      mouseX = (e.clientX / window.innerWidth - 0.5);
-      mouseY = (e.clientY / window.innerHeight - 0.5);
-    });
-
-    window.addEventListener('resize', () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-    });
-
-    const clock = new THREE.Clock();
-    function animate() {
-      if (particleVisible) {
-        const t = clock.getElapsedTime();
-        points.material.uniforms.uTime.value = t;
-        points2.material.uniforms.uTime.value = t;
-        targetX += (mouseX - targetX) * 0.05;
-        targetY += (mouseY - targetY) * 0.05;
-        scene.rotation.y = targetX * 0.2;
-        scene.rotation.x = targetY * 0.1;
-        renderer.render(scene, camera);
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    document.addEventListener('visibilitychange', () => {
-      particleVisible = !document.hidden;
-    });
-  } catch (err) {
-    console.warn('Particle field disabled:', err);
-    canvas.style.display = 'none';
-  }
-}
-
-// ============ CUSTOM CURSOR ============
-if (!isCoarse) {
-  const cur = document.getElementById('custom-cursor');
-  const target = { x: 0, y: 0 }, pos = { x: 0, y: 0 };
-  let hover = false;
-  window.addEventListener('mousemove', e => {
-    target.x = e.clientX; target.y = e.clientY;
-  });
-  window.addEventListener('mouseover', e => {
-    const t = e.target;
-    hover = !!(t.closest('a,button,.faq-q,.step-card,.stat-cell,.phase,.social-link,.copy-btn,.distribution-row'));
-  });
-  (function loop(){
-    pos.x += (target.x - pos.x) * 0.25;
-    pos.y += (target.y - pos.y) * 0.25;
-    const s = hover ? 48 : 12;
-    cur.style.transform = `translate(${pos.x - s/2}px, ${pos.y - s/2}px)`;
-    cur.style.width = cur.style.height = s + 'px';
-    cur.style.opacity = hover ? 0.6 : 1;
-    requestAnimationFrame(loop);
-  })();
-}
-
-// ============ HERO TILE FLIP GRID ============
-const heroGrid = document.getElementById('hero-grid');
-
-let isMobile, rows, cols, amberCells, blackCells, textCells, allCells;
-
-const amberCellsDesktop = [{r:6,c:6},{r:5,c:7},{r:4,c:3},{r:5,c:5},{r:7,c:2},{r:8,c:6}];
-const blackCellsDesktop = [{r:0,c:0},{r:1,c:2},{r:6,c:3},{r:4,c:7},{r:6,c:0},{r:8,c:4}];
-const textCellsDesktop = [{r:0,c:6, txt:'$NFB'},{r:1,c:7, txt:'BULL'},{r:5,c:1, txt:'ROBINHOOD'},{r:7,c:5, txt:'001'},{r:1,c:4, txt:'VLAD'}];
-
-const amberCellsMobile = [{r:6,c:3},{r:4,c:0},{r:4,c:3},{r:6,c:1}];
-const blackCellsMobile = [{r:0,c:0},{r:4,c:2},{r:5,c:0},{r:7,c:3}];
-const textCellsMobile = [{r:0,c:3, txt:'$NFB'},{r:1,c:0, txt:'BULL'},{r:5,c:2, txt:'ROBINHOOD'},{r:7,c:0, txt:'001'},{r:1,c:3, txt:'VLAD'}];
-
-function buildHeroGrid() {
-  const wasMobile = isMobile;
-  isMobile = window.innerWidth <= 768;
-
-  // Kalau breakpoint-nya nggak berubah (misal cuma sedikit resize di desktop),
-  // nggak perlu rebuild grid dari nol — cukup update posisi gambar.
-  if (wasMobile === isMobile && heroGrid.children.length > 0) {
-    updateHeroImageSize();
-    return;
-  }
-
-  rows = isMobile ? 8 : 9;
-  cols = isMobile ? 4 : 8;
-  amberCells = isMobile ? amberCellsMobile : amberCellsDesktop;
-  blackCells = isMobile ? blackCellsMobile : blackCellsDesktop;
-  textCells = isMobile ? textCellsMobile : textCellsDesktop;
-
-  heroGrid.innerHTML = ''; // bersihin sel lama sebelum rebuild
-
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const isAmber = amberCells.some(p => p.r===r && p.c===c);
-      const isBlack = blackCells.some(p => p.r===r && p.c===c);
-      const textCell = textCells.find(p => p.r===r && p.c===c);
-      const cell = document.createElement('div');
-      cell.className = 'grid-cell';
-      cell.dataset.r = r;
-      cell.dataset.c = c;
-
-      if (isAmber) cell.classList.add('is-amber');
-      else if (isBlack) cell.classList.add('is-black');
-      else if (textCell) {
-        cell.classList.add('is-text');
-        cell.textContent = textCell.txt;
-      } else {
-        cell.classList.add('is-image');
-      }
-
-      const cellW = 100 / cols;
-      const cellH = 100 / rows;
-      cell.style.left = `${c*cellW}%`;
-      cell.style.top = `${r*cellH}%`;
-      cell.style.width = `${cellW}%`;
-      cell.style.height = `${cellH}%`;
-      heroGrid.appendChild(cell);
-    }
-  }
-
-  allCells = heroGrid.querySelectorAll('.grid-cell');
-  updateHeroImageSize();
-
-  // Replay animasi masuk hanya di build pertama (biar nggak flicker tiap resize)
-  if (wasMobile === undefined) {
-    playHeroGridEntranceAnimation();
-  } else {
-    allCells.forEach(cell => { cell.style.opacity = '1'; cell.style.transform = 'none'; });
-  }
-}
-
-function updateHeroImageSize() {
-  const W = window.innerWidth;
-  const H = window.innerHeight;
-  const imgRatio = W <= 768 ? (9 / 16) : (16 / 9);
-  let bgW, bgH;
-
-  if (W / H > imgRatio) {
-    bgW = W;
-    bgH = W / imgRatio;
-  } else {
-    bgH = H;
-    bgW = H * imgRatio;
-  }
-
-  const offsetX = W <= 768 ? (bgW - W) / 2 : (bgW - W);
-  const offsetY = W > 768 ? (bgH - H) * 0.2 : (bgH - H) / 2;
-
-  const cellWPx = heroGrid.offsetWidth / cols;
-  const cellHPx = heroGrid.offsetHeight / rows;
-
-  allCells.forEach(cell => {
-    if (cell.classList.contains('is-image')) {
-      const r = parseInt(cell.dataset.r);
-      const c = parseInt(cell.dataset.c);
-
-      const mainImg = isMobile ? "url('robinherohp.png')" : "url('robinhero.png')";
-      const bubbleImg = "url('background%20bull.png')";
-
-      cell.style.backgroundImage = `${mainImg}, ${bubbleImg}`;
-      cell.style.backgroundSize = `${bgW}px ${bgH}px, ${bgW}px ${bgH}px`;
-      cell.style.backgroundPosition = `-${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px, -${c * cellWPx + offsetX}px -${r * cellHPx + offsetY}px`;
-    }
-  });
-}
-
-function playHeroGridEntranceAnimation() {
-  if (!reduceMotion) {
-    allCells.forEach(cell => {
-      cell.style.opacity = '0';
-      cell.style.transform = 'rotateX(90deg) translateY(-100px)';
-      cell.style.transformOrigin = 'top center';
-    });
-    const indices = Array.from(allCells.keys()).sort(() => Math.random() - 0.5);
-    setTimeout(() => {
-      indices.forEach((idx, order) => {
-        const cell = allCells[idx];
-        cell.style.transition = 'opacity 900ms var(--ease-emphasis), transform 900ms var(--ease-emphasis)';
-        cell.style.transitionDelay = (order * 0.025) + 's';
-        requestAnimationFrame(() => {
-          cell.style.opacity = '1';
-          cell.style.transform = 'none';
-        });
-      });
-    }, 250);
-  } else {
-    allCells.forEach(cell => {
-      cell.style.opacity = '1';
-      cell.style.transform = 'none';
-    });
-  }
-}
-
-buildHeroGrid();
-
-let resizeTimeout;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(buildHeroGrid, 200); // debounce 200ms
-});
-
-// ============ FADE UP OBSERVER ============
-const fadeObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-in');
-      if (entry.target.classList.contains('distribution')) {
-        entry.target.querySelectorAll('.dist-bar-fill').forEach(bar => {
-          bar.style.width = bar.dataset.pct + '%';
-        });
-      }
-      fadeObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
-document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
-
-// ============ FAQ ACCORDION ============
-document.querySelectorAll('.faq-q').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.parentElement;
-    const isOpen = item.classList.contains('is-open');
-    document.querySelectorAll('.faq-item').forEach(i => {
-      i.classList.remove('is-open');
-      i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
-    });
-    if (!isOpen) {
-      item.classList.add('is-open');
-      btn.setAttribute('aria-expanded', 'true');
-    }
-  });
-});
-
-// ============ TOAST NOTIFICATION ============
-let toastTimeout; 
-function showToast() {
-  const toast = document.getElementById('toast');
-  toast.classList.add('show');
-  
-  clearTimeout(toastTimeout); 
-  toastTimeout = setTimeout(() => {
-    toast.classList.remove('show');
-  }, 2500); 
-}
-
-// ============ COPY CA ============
-const caValue = 'Soon';
-const copyBtn = document.getElementById('copy-ca-btn');
-const heroCopyBtn = document.getElementById('hero-copy-ca');
-
-function copyCA(e) {
-  const fallback = () => {
-    const ta = document.createElement('textarea');
-    ta.value = caValue;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); } catch (err) {}
-    document.body.removeChild(ta);
-  };
-  
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(caValue).then(() => {
-      showToast();
-    }).catch(() => {
-      fallback();
-      showToast();
-    });
-  } else {
-    fallback();
-    showToast();
-  }
-}
-if (copyBtn) copyBtn.addEventListener('click', copyCA);
-if (heroCopyBtn) heroCopyBtn.addEventListener('click', copyCA);
-
-// ============ NAV SCROLL STATE ============
-let lastScroll = 0;
-const nav = document.querySelector('.nav');
-window.addEventListener('scroll', () => {
-  const cur = window.scrollY;
-  if (cur > 80) {
-    nav.style.background = 'rgba(0,0,0,0.92)';
-  } else {
-    nav.style.background = 'rgba(0,0,0,0.7)';
-  }
-  lastScroll = cur;
-}, { passive: true });
-
-</script>
-
-<!-- Blokir shortcut lihat kode (klik kanan, Ctrl+U, DevTools) -->
 <script>
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('keydown', e => {
-  if (
-    e.key === 'F12' ||
-    (e.ctrlKey && e.key.toLowerCase() === 'u') ||
-    (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
-    (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'c') ||
-    (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'j')
-  ) {
-    e.preventDefault();
+// ===== CA (isi setelah deploy, format 0x...) =====
+var caValue = 'Soon';
+
+// ===== toast =====
+var toastT;
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ t.classList.remove('show'); }, 2400);
+}
+
+// ===== copy CA =====
+function copyCA(){
+  if(caValue === 'Soon'){ toast('CA DROPS AT LAUNCH'); return; }
+  function fallback(){
+    var ta = document.createElement('textarea');
+    ta.value = caValue; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
   }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(caValue).then(function(){ toast('BULL CAPTURED — CA COPIED'); }, function(){ fallback(); toast('BULL CAPTURED — CA COPIED'); });
+  } else { fallback(); toast('BULL CAPTURED — CA COPIED'); }
+}
+document.getElementById('copyCa').addEventListener('click', copyCA);
+
+// ===== tear-off tabs =====
+(function(){
+  var row = document.getElementById('tearRow');
+  var N = window.innerWidth <= 600 ? 7 : 10;
+  for(var i=0;i<N;i++){
+    var b = document.createElement('button');
+    b.className = 'tear-tab';
+    b.type = 'button';
+    b.textContent = '$NFB';
+    b.setAttribute('aria-label','Sobek tab untuk copy contract address');
+    b.addEventListener('click', function(){
+      copyCA();
+      this.classList.add('torn');
+      var left = row.querySelectorAll('.tear-tab:not(.torn)').length;
+      if(left === 0){
+        setTimeout(function(){
+          row.querySelectorAll('.tear-tab').forEach(function(t){ t.classList.remove('torn'); });
+          toast('FRESH POSTER, FRESH TABS');
+        }, 900);
+      }
+    });
+    row.appendChild(b);
+  }
+})();
+
+// ===== ticker duplicate for seamless loop =====
+(function(){
+  var tr = document.getElementById('tickTrack');
+  tr.innerHTML += tr.innerHTML;
+})();
+
+// ===== fade-up + allocation bars =====
+var obs = new IntersectionObserver(function(entries){
+  entries.forEach(function(en){
+    if(en.isIntersecting){
+      en.target.classList.add('in');
+      en.target.querySelectorAll('.alloc-fill').forEach(function(f){
+        f.style.width = f.dataset.pct + '%';
+      });
+      obs.unobserve(en.target);
+    }
+  });
+},{threshold:.15});
+document.querySelectorAll('.fade').forEach(function(el){ obs.observe(el); });
+// bar alokasi juga bisa berada di dalam .sheet.fade
+document.querySelectorAll('.sheet').forEach(function(s){
+  new IntersectionObserver(function(entries,o){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        en.target.querySelectorAll('.alloc-fill').forEach(function(f){ f.style.width = f.dataset.pct + '%'; });
+        o.unobserve(en.target);
+      }
+    });
+  },{threshold:.2}).observe(s);
+});
+
+// ===== FAQ accordion =====
+document.querySelectorAll('.faq-q').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var item = btn.parentElement;
+    var open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){
+      i.classList.remove('open');
+      i.querySelector('.faq-q').setAttribute('aria-expanded','false');
+    });
+    if(!open){ item.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+  });
 });
 </script>
 </body>
