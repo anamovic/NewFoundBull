@@ -134,7 +134,7 @@ img,svg{display:block}
 .bull-figure:focus-visible{outline:3px solid var(--green);outline-offset:4px}
 .bull-figure svg{width:100%;height:auto;overflow:visible}
 
-/* --- animasi rakit ala Transformers --- */
+/* --- Transformers-style assembly animation --- */
 .bull-figure .pc{
   opacity:0;
   transform-box:fill-box;transform-origin:center;
@@ -148,7 +148,7 @@ img,svg{display:block}
   55%{opacity:1}
   to{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}
 }
-/* hentakan "clank" seluruh logo saat bagian terakhir menyatu */
+/* full-logo "clank" impact when the last part locks in */
 .bull-figure.go svg{animation:clank .5s 1.55s cubic-bezier(.36,.07,.19,.97) both}
 @keyframes clank{
   0%{transform:translate(0,0) scale(1)}
@@ -158,14 +158,14 @@ img,svg{display:block}
   80%{transform:translate(1px,-1px) scale(1.01)}
   100%{transform:translate(0,0) scale(1)}
 }
-/* kilatan logam sesudah hentakan */
+/* metal flash right after the impact */
 .bull-figure.go .p-flash{animation:flash .45s 1.6s ease-out both}
 @keyframes flash{
   0%{opacity:0}
   30%{opacity:.75}
   100%{opacity:0}
 }
-/* napas pelan setelah selesai dirakit */
+/* slow breathing idle once assembled */
 .bull-figure.go{animation:breathe 4.5s 2.4s ease-in-out infinite}
 @keyframes breathe{
   0%,100%{transform:scale(1)}
@@ -463,7 +463,7 @@ footer{
 
     <h1 class="found-word">NEW <span class="stamp-box">FOUND</span><br>BULL <span class="nfb-tick">$NFB</span></h1>
 
-    <div class="bull-figure go" id="bullFigure" role="button" tabindex="0" aria-label="Putar ulang animasi logo" title="Klik untuk rakit ulang">
+    <div class="bull-figure go" id="bullFigure" role="button" tabindex="0" aria-label="Replay logo assembly animation" title="Click to reassemble">
       <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" fill="none">
         <!-- horns -->
         <g class="pc" style="--from:translate(-150px,-90px) rotate(-110deg) scale(.7);--d:.5s">
@@ -501,7 +501,7 @@ footer{
           <rect x="52" y="84" width="30" height="18" rx="2" fill="#0e7b3c" transform="rotate(-14 52 84)"/>
           <text x="57" y="99" transform="rotate(-14 52 84)" font-family="Space Mono, monospace" font-size="10" font-weight="700" fill="#eadfc8">NFB</text>
         </g>
-        <!-- metal flash saat menyatu -->
+        <!-- metal flash on lock-in -->
         <g class="p-flash">
           <path d="M84 62 C104 44, 196 44, 216 62 C232 78, 236 108, 224 136 C216 156, 196 168, 178 176 L178 190 C178 204, 162 212, 150 212 C138 212, 122 204, 122 190 L122 176 C104 168, 84 156, 76 136 C64 108, 68 78, 84 62 Z" fill="#fff"/>
           <ellipse cx="150" cy="176" rx="42" ry="26" fill="#fff"/>
@@ -742,12 +742,12 @@ footer{
 </footer>
 
 <script>
-// ===== CA (isi setelah deploy, format 0x...) =====
+// ===== CA (fill in after deploy, 0x... format) =====
 var caValue = 'Soon';
-// ===== Link lelang (isi dengan URL baru saat sudah ada) =====
+// ===== Auction link (fill in with the new URL once available) =====
 var auctionUrl = '';
 
-// tombol lelang: kalau URL belum diisi, tampilkan toast; kalau sudah, buka tab baru
+// auction buttons: if the URL is empty, show a toast; otherwise open in a new tab
 document.querySelectorAll('.js-auction').forEach(function(a){
   a.addEventListener('click', function(e){
     if(!auctionUrl){ e.preventDefault(); toast('AUCTION LINK DROPS AT LAUNCH'); }
@@ -790,7 +790,7 @@ document.getElementById('copyCa').addEventListener('click', copyCA);
     b.className = 'tear-tab';
     b.type = 'button';
     b.textContent = '$NFB';
-    b.setAttribute('aria-label','Sobek tab untuk copy contract address');
+    b.setAttribute('aria-label','Tear off a tab to copy the contract address');
     b.addEventListener('click', function(){
       copyCA();
       this.classList.add('torn');
@@ -825,7 +825,7 @@ var obs = new IntersectionObserver(function(entries){
   });
 },{threshold:.15});
 document.querySelectorAll('.fade').forEach(function(el){ obs.observe(el); });
-// bar alokasi juga bisa berada di dalam .sheet.fade
+// allocation bars may also live inside .sheet.fade
 document.querySelectorAll('.sheet').forEach(function(s){
   new IntersectionObserver(function(entries,o){
     entries.forEach(function(en){
@@ -837,12 +837,12 @@ document.querySelectorAll('.sheet').forEach(function(s){
   },{threshold:.2}).observe(s);
 });
 
-// ===== replay animasi rakit banteng saat diklik =====
+// ===== replay the bull assembly animation on click =====
 (function(){
   var fig = document.getElementById('bullFigure');
   function replay(){
     fig.classList.remove('go');
-    void fig.offsetWidth; // paksa reflow supaya animasi reset
+    void fig.offsetWidth; // force reflow so the animation resets
     fig.classList.add('go');
   }
   fig.addEventListener('click', replay);
