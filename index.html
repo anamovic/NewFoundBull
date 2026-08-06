@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEW FOUND BULL — $NFB · CCA Auction on Robinhood Chain</title>
-<meta name="description" content="$NFB — New Found Bull. The bull was lost. Now it's found. CCA auction on Pools.trade (Robinhood Chain). Floor $0.00003 · 0/0 tax · LP auto-seeded · Ownership renounced.">
+<title>NEW FOUND BULL — $NFB · Crowd Launch on Robinhood Chain</title>
+<meta name="description" content="$NFB — New Found Bull. The bull was lost. Now it's found. Crowd Launch on Pools.trade (Robinhood Chain). $10K FDV graduation · bundle-resistant · liquidity locked forever · ownership renounced.">
 <link rel="icon" type="image/png" href="nfb.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -257,7 +257,7 @@ img,svg{display:block}
 .fade{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .fade.in{opacity:1;transform:none}
 
-/* ---------- auction lot card ---------- */
+/* ---------- launch lot card ---------- */
 .lot-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:2.6rem;align-items:start}
 @media(max-width:860px){.lot-grid{grid-template-columns:1fr}}
 .lot-card{
@@ -286,16 +286,16 @@ img,svg{display:block}
   padding:1rem 1.4rem;border-top:3px solid var(--ink);
   font-size:13px;color:var(--ink-soft);background:var(--paper-3);
 }
-.how-cca{display:flex;flex-direction:column;gap:1.1rem}
-.cca-step{
+.how-launch{display:flex;flex-direction:column;gap:1.1rem}
+.launch-step{
   display:flex;gap:1rem;align-items:flex-start;
   border:1px solid var(--line);background:rgba(255,255,255,.35);padding:1.1rem 1.2rem;
 }
-.cca-num{
+.launch-num{
   font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--red);line-height:1;min-width:2ch;
 }
-.cca-step h4{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;margin-bottom:.25rem}
-.cca-step p{font-size:13.5px;line-height:1.6;color:var(--ink-soft)}
+.launch-step h4{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;margin-bottom:.25rem}
+.launch-step p{font-size:13.5px;line-height:1.6;color:var(--ink-soft)}
 
 /* ---------- tokenomics ---------- */
 .stats{
@@ -414,10 +414,10 @@ footer{
   <a href="#top" class="nav-brand">NEW FOUND BULL <span class="tag">ROBINHOOD CHAIN</span></a>
   <div class="nav-links">
     <a href="#story">Story</a>
-    <a href="#auction">Auction</a>
+    <a href="#launch">Launch</a>
     <a href="#tokenomics">Tokenomics</a>
     <a href="#faq">FAQ</a>
-    <a class="nav-cta js-auction" href="#">View auction ↗</a>
+    <a class="nav-cta js-auction" href="#">Launch on Pools ↗</a>
   </div>
 </nav>
 
@@ -429,7 +429,7 @@ footer{
 
     <div class="poster-top">
       <span>NOTICE № 001 / 2026</span>
-      <span class="live-dot">● AUCTION NOT LIVE YET</span>
+      <span class="live-dot">● CROWD LAUNCH · NOT LIVE YET</span>
     </div>
 
     <h1 class="found-word">NEW <span class="stamp-box">FOUND</span><br>BULL <span class="nfb-tick">$NFB</span></h1>
@@ -445,13 +445,13 @@ footer{
     </p>
 
     <div class="poster-meta">
-      <span>FLOOR <b>$0.00003</b></span>
-      <span>TARGET FDV <b>$30,000</b></span>
-      <span>VENUE <b>POOLS.TRADE · CCA</b></span>
+      <span>GRADUATION <b>$10K FDV</b></span>
+      <span>WINDOW <b>4 HOURS</b></span>
+      <span>VENUE <b>POOLS.TRADE</b></span>
     </div>
 
     <div class="poster-actions">
-      <a class="btn btn-red js-auction" href="#">View the auction ↗</a>
+      <a class="btn btn-red js-auction" href="#">Join the launch ↗</a>
       <a class="btn" href="#story">Read the story ↓</a>
     </div>
 
@@ -463,7 +463,7 @@ footer{
 <!-- TICKER -->
 <div class="tickerbar" aria-hidden="true">
   <div class="track" id="tickTrack">
-    <span class="up">$NFB ▲</span><span class="dm">NEW FOUND BULL</span><span>0/0 TAX</span><span class="dm">OWNERSHIP RENOUNCED</span><span class="up">LP AUTO-SEEDED</span><span class="dm">FLOOR $0.00003</span><span class="rd">CCA AUCTION</span><span class="dm">ROBINHOOD CHAIN</span><span>POOLS.TRADE</span><span class="pk">UNISWAP</span>
+    <span class="up">$NFB ▲</span><span class="dm">NEW FOUND BULL</span><span>0/0 TAX</span><span class="dm">OWNERSHIP RENOUNCED</span><span class="up">LIQUIDITY LOCKED FOREVER</span><span class="dm">$10K FDV GRADUATION</span><span class="rd">CROWD LAUNCH</span><span class="dm">BUNDLE RESISTANT</span><span>ROBINHOOD CHAIN</span><span class="dm">POOLS.TRADE</span><span class="pk">UNISWAP</span>
   </div>
 </div>
 
@@ -476,43 +476,43 @@ footer{
       <div class="prose">
         <p>Every cycle the herd panics. They call the top, they call the bottom, they call their moms. They swear the bull is dead and crypto is over — again. And every cycle, somewhere between despair and disbelief, the bull wanders back.</p>
         <p>This time somebody found it first. Grazing quietly on <strong>Robinhood Chain</strong>, fattened on cheap gas and tokenized stocks, wearing a green ear tag that reads <span class="hl">$NFB</span>.</p>
-        <p>No presale herd-culling. No insider feedlot. The bull gets distributed the only fair way left in this market: <strong>a public onchain auction where everyone pays the same discovered price.</strong> You don't chase this bull. You bid for it.</p>
+        <p>No presale herd-culling. No insider feedlot. The bull gets distributed the only fair way left in this market: <strong>a bundle-resistant Crowd Launch where the crowd — not snipers — sets the pace.</strong> You don't chase this bull. You join the herd for it.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- AUCTION -->
-<section class="section" id="auction" style="padding-top:0">
+<!-- LAUNCH -->
+<section class="section" id="launch" style="padding-top:0">
   <div class="wrap">
     <div class="sheet tilt-r fade">
-      <div class="kicker">002 / The auction</div>
-      <h2 class="h2">Going once.<br>Going twice. <span class="rd">Sold fair.</span></h2>
+      <div class="kicker">002 / The launch</div>
+      <h2 class="h2">Crowd Launch.<br>The herd <span class="rd">decides.</span></h2>
       <div class="lot-grid">
         <div class="lot-card">
           <div class="lot-head"><span>LOT № 001 — $NFB</span><span class="status">NOT LIVE YET</span></div>
           <div class="lot-body">
-            <div class="lot-row"><span class="lot-label">Floor price</span><span class="lot-value gr">$0.00003</span></div>
-            <div class="lot-row"><span class="lot-label">Target FDV</span><span class="lot-value">$30,000</span></div>
-            <div class="lot-row"><span class="lot-label">On the block</span><span class="lot-value">25% of supply</span></div>
+            <div class="lot-row"><span class="lot-label">Launch type</span><span class="lot-value gr">Crowd Launch</span></div>
+            <div class="lot-row"><span class="lot-label">Graduation</span><span class="lot-value">$10K FDV</span></div>
+            <div class="lot-row"><span class="lot-label">Window</span><span class="lot-value">4 hours</span></div>
+            <div class="lot-row"><span class="lot-label">Sold in launch</span><span class="lot-value">50% of supply</span></div>
             <div class="lot-row"><span class="lot-label">Venue</span><span class="lot-value rd">Pools.trade</span></div>
-            <div class="lot-row"><span class="lot-label">Engine</span><span class="lot-value">Uniswap CCA</span></div>
             <div class="lot-row"><span class="lot-label">Chain</span><span class="lot-value gr">Robinhood</span></div>
           </div>
-          <div class="lot-foot">A Continuous Clearing Auction (CCA) is Uniswap's fully onchain launch mechanism — transparent bidding, no sniper bots, no gas wars.</div>
+          <div class="lot-foot">Crowd Launch is Pools.trade's bundle-resistant launch mode. If the $10K FDV target isn't reached inside the 4-hour window, every order is refunded — no soft rug, no dead pool.</div>
         </div>
-        <div class="how-cca">
-          <div class="cca-step">
-            <div class="cca-num">1</div>
-            <div><h4>Bids, not races</h4><p>During the auction window you submit a bid with your budget and max price. No racing bots to block one — your bid is automatically spread across the remaining auction blocks.</p></div>
+        <div class="how-launch">
+          <div class="launch-step">
+            <div class="launch-num">1</div>
+            <div><h4>TWAP beats bots</h4><p>Orders are averaged over time (TWAP), so bundlers and snipers can't grab a cheap first block. Fairer distribution for the crowd that actually shows up.</p></div>
           </div>
-          <div class="cca-step">
-            <div class="cca-num">2</div>
-            <div><h4>One price for everyone</h4><p>Bids clear block by block and the market discovers a single fair price. Everyone in the same clearing pays the same — whales and shrimps alike.</p></div>
+          <div class="launch-step">
+            <div class="launch-num">2</div>
+            <div><h4>Graduate or refund</h4><p>The launch must hit a $10K FDV target within 4 hours to graduate. If it falls short, all orders are refunded automatically. No half-alive token limping onto the market.</p></div>
           </div>
-          <div class="cca-step">
-            <div class="cca-num">3</div>
-            <div><h4>Liquidity, instantly</h4><p>When the auction settles, the contract automatically seeds a Uniswap v4 pool at the discovered price. No manual LP add, no team hands on the pool. Trading starts deep.</p></div>
+          <div class="launch-step">
+            <div class="launch-num">3</div>
+            <div><h4>Deep liquidity, locked</h4><p>On graduation, 50% of supply becomes a Uniswap v4 liquidity pool — locked forever. Trading opens deep from block one, and no one can pull the rug.</p></div>
           </div>
         </div>
       </div>
@@ -541,7 +541,7 @@ footer{
         <div class="stat">
           <div class="stat-label">Liquidity pool</div>
           <div class="stat-value gr">AUTO-SEEDED</div>
-          <div class="stat-note">Seeded by the CCA contract into Uniswap v4 at the clearing price.</div>
+          <div class="stat-note">50% of supply becomes a Uniswap v4 pool on graduation — locked forever.</div>
         </div>
         <div class="stat">
           <div class="stat-label">Mint function</div>
@@ -552,24 +552,14 @@ footer{
 
       <div class="alloc fade" id="alloc">
         <div class="alloc-row">
-          <div class="alloc-name">Liquidity pool</div>
-          <div class="alloc-bar"><div class="alloc-fill" data-pct="70"></div></div>
-          <div class="alloc-pct">70%</div>
+          <div class="alloc-name">Crowd Launch</div>
+          <div class="alloc-bar"><div class="alloc-fill" data-pct="50"></div></div>
+          <div class="alloc-pct">50%</div>
         </div>
         <div class="alloc-row">
-          <div class="alloc-name">Auction (CCA)</div>
-          <div class="alloc-bar"><div class="alloc-fill" data-pct="25"></div></div>
-          <div class="alloc-pct">25%</div>
-        </div>
-        <div class="alloc-row">
-          <div class="alloc-name">Team</div>
-          <div class="alloc-bar"><div class="alloc-fill rd" data-pct="3"></div></div>
-          <div class="alloc-pct rd">3%</div>
-        </div>
-        <div class="alloc-row">
-          <div class="alloc-name">Community rewards</div>
-          <div class="alloc-bar"><div class="alloc-fill rd" data-pct="2"></div></div>
-          <div class="alloc-pct rd">2%</div>
+          <div class="alloc-name">Liquidity (locked)</div>
+          <div class="alloc-bar"><div class="alloc-fill" data-pct="50"></div></div>
+          <div class="alloc-pct">50%</div>
         </div>
       </div>
     </div>
@@ -580,7 +570,7 @@ footer{
 <section class="section" style="padding-top:0">
   <div class="wrap">
     <div class="sheet tilt-r fade">
-      <div class="kicker">004 / How to bid</div>
+      <div class="kicker">004 / How to join</div>
       <h2 class="h2">Three steps to<br><span class="gr">claim the bull.</span></h2>
       <div class="steps">
         <div class="step">
@@ -590,13 +580,13 @@ footer{
         </div>
         <div class="step">
           <div class="step-num">STEP 02</div>
-          <h3>Find the lot</h3>
-          <p>Open the official $NFB auction via the button on this page, or through <code>Pools.trade</code> / the Uniswap Auctions tab. Verify the contract address — fake bulls exist.</p>
+          <h3>Find the launch</h3>
+          <p>Open the official $NFB Crowd Launch via the button on this page, or through <code>Pools.trade</code> on Robinhood Chain. Verify the contract address — fake bulls exist.</p>
         </div>
         <div class="step">
           <div class="step-num">STEP 03</div>
-          <h3>Raise your paddle</h3>
-          <p>Submit a bid with your budget and max price, confirm in your wallet, and wait for the clearing. After settlement, claim your $NFB and trade freely on Uniswap v4. Welcome to the herd.</p>
+          <h3>Join the crowd</h3>
+          <p>Place your order during the 4-hour window and confirm in your wallet. If the launch hits its <code>$10K FDV</code> target it graduates and your $NFB is tradable on Uniswap v4; if it falls short, your order is refunded. Welcome to the herd.</p>
         </div>
       </div>
     </div>
@@ -612,11 +602,11 @@ footer{
       <div class="faq">
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">What exactly is NEW FOUND BULL ($NFB)?<span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>A community memecoin on Robinhood Chain, distributed through a Uniswap Continuous Clearing Auction on Pools.trade. It celebrates the return of the bull market and the people who held through the dark. No presale, no insider allocation — just a found bull and a fair auction.</p></div>
+          <div class="faq-a"><p>A community memecoin on Robinhood Chain, distributed through a Crowd Launch on Pools.trade. It celebrates the return of the bull market and the people who held through the dark. No presale, no insider allocation — just a found bull and a fair, bundle-resistant launch.</p></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">How do I buy $NFB?<span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>You bid, you don't snipe. Get an ETH wallet, fund it on Robinhood Chain, open the official $NFB auction, and submit a bid with your budget and max price. When the auction ends, tokens are distributed at the discovered price and a Uniswap v4 pool opens automatically for trading.</p></div>
+          <button class="faq-q" aria-expanded="false">How do I join the launch?<span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Get an ETH wallet, fund it on Robinhood Chain, open the official $NFB Crowd Launch on Pools.trade, and place your order during the 4-hour window. Orders are averaged over time (TWAP) so bots can't front-run you. If the launch reaches its $10K FDV target it graduates and $NFB becomes tradable on Uniswap v4; if it doesn't, your order is refunded.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">Is there a buy or sell tax?<span class="faq-icon">+</span></button>
@@ -624,7 +614,7 @@ footer{
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">Who controls the liquidity?<span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>The protocol, not us. 70% of supply (700,000,000 $NFB) is reserved for liquidity and automatically seeded into a Uniswap v4 pool by the auction contract at the clearing price. No manual LP add, no team control over the pool. Verify it yourself on Blockscout.</p></div>
+          <div class="faq-a"><p>The protocol, not us. On graduation, 50% of supply (500,000,000 $NFB) becomes a Uniswap v4 liquidity pool and is locked forever — no manual LP add, no team control, no rug. Verify it yourself on Blockscout.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">Can the supply be inflated?<span class="faq-icon">+</span></button>
@@ -632,7 +622,7 @@ footer{
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">Is this financial advice?<span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>Absolutely not. $NFB is a memecoin — internet culture on a blockchain, with no intrinsic value and no promise of returns. Only bid what you can afford to lose entirely, and do your own research. Even found bulls wander off sometimes.</p></div>
+          <div class="faq-a"><p>Absolutely not. $NFB is a memecoin — internet culture on a blockchain, with no intrinsic value and no promise of returns. Only commit what you can afford to lose entirely, and do your own research. Even found bulls wander off sometimes.</p></div>
         </div>
       </div>
     </div>
@@ -643,14 +633,14 @@ footer{
 <section class="cta" id="join">
   <div class="kicker" style="justify-content:center">006 / Join the herd</div>
   <h2 class="h2">The bull is found.<br><span class="rd">Come get it.</span></h2>
-  <p>Copy the contract when it drops, raise your paddle at the auction, and write the next chapter of the found-bull story with the rest of the herd.</p>
+  <p>Copy the contract when it drops, join the Crowd Launch on Pools.trade, and write the next chapter of the found-bull story with the rest of the herd.</p>
   <div class="ca-box">
     <span class="lbl">CA</span>
     <span class="val" id="caValue">Soon</span>
     <button class="cp" id="copyCa">Copy</button>
   </div>
   <div class="poster-actions">
-    <a class="btn btn-red js-auction" href="#">View the auction ↗</a>
+    <a class="btn btn-red js-auction" href="#">Join the launch ↗</a>
     <a class="btn" href="https://x.com/NewFoundBull" target="_blank" rel="noopener">Follow on X ↗</a>
   </div>
 </section>
@@ -664,7 +654,7 @@ footer{
     <div class="foot-meta">
       © 2026 NEW FOUND BULL<br>
       BUILT ON ROBINHOOD CHAIN<br>
-      AUCTIONED VIA POOLS.TRADE CCA<br>
+      LAUNCHED VIA POOLS.TRADE CROWD LAUNCH<br>
       <a href="https://x.com/NewFoundBull" target="_blank" rel="noopener">@NEWFOUNDBULL</a>
     </div>
   </div>
@@ -673,13 +663,13 @@ footer{
 <script>
 // ===== CA (fill in after deploy, 0x... format) =====
 var caValue = 'Soon';
-// ===== Auction link (fill in with the new URL once available) =====
+// ===== Launch link (fill in with the Pools.trade URL once available) =====
 var auctionUrl = '';
 
-// auction buttons: if the URL is empty, show a toast; otherwise open in a new tab
+// launch buttons: if the URL is empty, show a toast; otherwise open in a new tab
 document.querySelectorAll('.js-auction').forEach(function(a){
   a.addEventListener('click', function(e){
-    if(!auctionUrl){ e.preventDefault(); toast('AUCTION LINK DROPS AT LAUNCH'); }
+    if(!auctionUrl){ e.preventDefault(); toast('LAUNCH LINK DROPS AT GO-LIVE'); }
     else { a.href = auctionUrl; a.target = '_blank'; a.rel = 'noopener'; }
   });
 });
